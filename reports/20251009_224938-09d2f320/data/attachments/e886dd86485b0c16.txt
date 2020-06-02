@@ -1,0 +1,104 @@
+QA output created by 1617
+Start test key server ...
+PING
+PONG
+
+Start test pmproxy ...
+=== pmlogpush to pmproxy ===
+sample.bin
+sample.bucket
+sample.colour
+sample.milliseconds
+sampledso.bin
+sampledso.bucket
+sampledso.colour
+sampledso.milliseconds
+=== pmseries value check ===
+
+0786b3badb53a087e918af364db3f47ada938332
+    [Mon May  3 11:53:38 1999] 4.147e+06
+=== pmseries labels check ===
+hostname
+=== pmseries metrics check ===
+sample.bin
+sample.bucket
+sample.colour
+sample.milliseconds
+sampledso.bin
+sampledso.bucket
+sampledso.colour
+sampledso.milliseconds
+=== valgrind stdout ===
+16,393 (832 direct, 15,561 indirect) bytes in 1 blocks are definitely lost in loss record 1,036 of 1,066
+at 0x4873181: calloc (vg_replace_malloc.c:1675)
+by 0x48CA3BE: pmSeriesDiscoverSource (load.c:1258)
+by 0x48D93A3: pmDiscoverInvokeSourceCallBacks (discover.c:684)
+by 0x48E21D1: process_metadata (discover.c:1744)
+by 0x48E27C8: directory_changed_cb (discover.c:1986)
+by 0x48E2BF1: changed_callback.lto_priv.0 (discover.c:211)
+by 0x48E187B: fs_change_callBack.lto_priv.0 (discover.c:483)
+by 0x4F75A81: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4F7607A: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4F5D631: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x400A236: main_loop (server.c:921)
+by 0x4008D84: main (pmproxy.c:471)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:process_metadata
+   fun:directory_changed_cb
+   fun:changed_callback.lto_priv.0
+   fun:fs_change_callBack.lto_priv.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+437,195 (832 direct, 436,363 indirect) bytes in 1 blocks are definitely lost in loss record 1,066 of 1,066
+at 0x4873181: calloc (vg_replace_malloc.c:1675)
+by 0x48CA3BE: pmSeriesDiscoverSource (load.c:1258)
+by 0x48D93A3: pmDiscoverInvokeSourceCallBacks (discover.c:684)
+by 0x48E14EA: pmDiscoverNewSource.lto_priv.0 (discover.c:1192)
+by 0x48E277C: directory_changed_cb (discover.c:1959)
+by 0x48E2BF1: changed_callback.lto_priv.0 (discover.c:211)
+by 0x48E187B: fs_change_callBack.lto_priv.0 (discover.c:483)
+by 0x4F75A81: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4F7607A: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4F5D631: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x400A236: main_loop (server.c:921)
+by 0x4008D84: main (pmproxy.c:471)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:pmDiscoverNewSource.lto_priv.0
+   fun:directory_changed_cb
+   fun:changed_callback.lto_priv.0
+   fun:fs_change_callBack.lto_priv.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+=== valgrind stderr ===
+Log for pmproxy on HOST started DATE
+
+pmproxy: PID = PID
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+ok FD unix UNIX_DOMAIN_SOCKET
+ok FD PORT inet INADDR_ANY
+[DATE] pmproxy(PID) Info: pmproxy caught SIGTERM
+[DATE] pmproxy(PID) Info: pmproxy Shutdown
+
+Log finished DATE
