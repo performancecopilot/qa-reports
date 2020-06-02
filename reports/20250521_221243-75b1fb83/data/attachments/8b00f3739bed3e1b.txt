@@ -1,0 +1,138 @@
+QA output created by 1770
+Creating temporary sasldb, add some usernames to it
+Verify saslpasswd2 has successfully added new users
+USER@HOST: userPassword
+remoteuser@HOST: userPassword
+Ensure pmcd can read the password file
+New pmdaproc config without any authentication
+New pmdaproc config with remote authentication
+New pmdaproc config with mapped authentication
+Start pmcd with this shiny new sasldb and no access
+Start pmproxy with mandatory authentication
+
+=== Establish context for an unauthenticated user ===
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json; print(json.load(sys.stdin)["context"])
+                           ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib64/python3.13/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/usr/lib64/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib64/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+=== I/O metric access using unauthenticated context ===
+pmjson failed: No data available
+NO VALUES
+
+Restart pmcd with this sasldb and remote auth mode
+
+=== Establish context for authenticated local user ===
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json; print(json.load(sys.stdin)["context"])
+                           ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib64/python3.13/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/usr/lib64/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib64/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+=== I/O metric local user access using authenticated context ===
+pmjson failed: No data available
+NO VALUES
+
+
+=== Establish context for authenticated remote user ===
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json; print(json.load(sys.stdin)["context"])
+                           ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib64/python3.13/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/usr/lib64/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib64/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+=== I/O metric remote user access using authenticated context ===
+pmjson failed: No data available
+NO VALUES
+
+Restart pmcd with this sasldb and mapped auth mode
+
+=== Establish context for authenticated user ===
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json; print(json.load(sys.stdin)["context"])
+                           ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib64/python3.13/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/usr/lib64/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib64/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+=== I/O metric access using mapped authentication ===
+pmjson failed: No data available
+NO VALUES
+
+pmproxy failed to start on port 44322 after 20 seconds
+likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmproxy logfile (/var/log/pcp/pmlogger/pmproxy/pmproxy.log) not created
+--- start systemctl status for pmproxy.service ---
+* pmproxy.service - Proxy for Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmproxy.service; disabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             `-10-timeout-abort.conf
+     Active: activating (start) since Wed 2025-05-21 21:09:51 UTC; 747ms ago
+        Job: 63427
+ Invocation: 37b0d45e4ab84254b49eab03c7d4a914
+       Docs: man:pmproxy(1)
+   Main PID: 1734839 (rc)
+      Tasks: 2 (limit: 307)
+     Memory: 1M (peak: 3.5M)
+        CPU: 81ms
+     CGroup: /system.slice/pmproxy.service
+             |-1734839 /usr/bin/sh /etc/pcp/pmproxy/rc start-systemd
+             `-1734892 sleep 3
+--- end systemctl status for pmproxy.service ---
