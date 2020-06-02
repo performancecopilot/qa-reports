@@ -1,0 +1,289 @@
+QA output created by 1196
+=== no-error case ===
+Installing files ...
+make: Nothing to be done for 'install'.
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+Updating the PMCD control file, and notifying PMCD ...
+Check whacko metrics have appeared ... 1 metrics and 1 values
+
+whacko.time PMID: 241.0.0
+    value NUMBER
+    inst [29 or "sample"] value 0
+    inst [30 or "sampledso"] value 0
+    inst [241 or "whacko"] value 0
+Culling the Performance Metrics Name Space ...
+whacko ... done
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check whacko metrics have gone away ... OK
+Error: whacko: Unknown metric name
+    inst [29 or "sample"] value 0
+    inst [30 or "sampledso"] value 0
+
+=== domain number clash case ... will clobber and remove sample PMDA ===
+Installing files ...
+make: Nothing to be done for 'install'.
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+Warning: PCP_PMCDCONF_PATH[N] culling entry with same PMDA domain (29) but different name (sample not whacko)
+Updating the PMCD control file, and notifying PMCD ...
+Check whacko metrics have appeared ... 1 metrics and 1 values
+
+whacko.time PMID: 29.0.0
+    value NUMBER
+    inst [29 or "whacko"] value 0
+    inst [30 or "sampledso"] value 0
+Culling the Performance Metrics Name Space ...
+whacko ... done
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check whacko metrics have gone away ... OK
+Error: whacko: Unknown metric name
+    inst [30 or "sampledso"] value 0
+
+=== domain name clash case ... will clobber and remove sample PMDA ===
+Installing files ...
+make: Nothing to be done for 'install'.
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+Warning: PCP_PMCDCONF_PATH[N] culling entry with same PMDA name (sample) but different domain (29 not 241)
+Updating the PMCD control file, and notifying PMCD ...
+Check sample metrics have appeared ... 1 warnings, 1 metrics and 0 values
+
+whacko.time PMID: 241.0.0
+    value NUMBER
+    inst [30 or "sampledso"] value 0
+    inst [241 or "sample"] value 0
+Culling the Performance Metrics Name Space ...
+sample ... not found in Name Space, this is OK
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check sample metrics have gone away ... OK
+whacko.time: pmLookupDesc: Unknown or illegal metric identifier
+    inst [30 or "sampledso"] value 0
+Culling the Performance Metrics Name Space ...
+whacko ... done
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check whacko metrics have gone away ... OK
+Sat Jun 22 19:40:03 UTC 2024
+Arrgh ... pmlogger (primary) failed to start after 20 seconds
+at Sat Jun 22 19:40:03 UTC 2024.
+++ pmlogger log (/var/log/pcp/pmlogger/2a6dd47829eb/pmlogger.log) ...
+-rw-r--r-- 1 pcp pcp 29698 Jun 22 19:39 /var/log/pcp/pmlogger/2a6dd47829eb/pmlogger.log
+Log for pmlogger on 2a6dd47829eb started Sat Jun 22 19:38:52 2024
+
+[Sat Jun 22 19:38:52] pmlogger(1001390) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting primary logger for host "2a6dd47829eb" via "local:"
+__pmLogNewFile: "/var/log/pcp/pmlogger/2a6dd47829eb/20240622.19.38.index" already exists, not over-written
+__pmLogNewFile: "/var/log/pcp/pmlogger/2a6dd47829eb/20240622.19.38-00.index" already exists, not over-written
+__pmLogNewFile: "/var/log/pcp/pmlogger/2a6dd47829eb/20240622.19.38-01.index" already exists, not over-written
+Archive basename: /var/log/pcp/pmlogger/2a6dd47829eb/20240622.19.38-02
+
+Group [1017 metrics] {
+	kvm.tlb_flush
+	kvm.signal_exits
+        ...
+} logged every 10 sec: 32216 bytes or 265.45 Mbytes/day
+
+Group [3 metrics] {
+	proc.memory.rss
+	proc.memory.size
+        ...
+} logged every 300 sec: 836 bytes or 0.23 Mbytes/day
+
+Group [83 metrics] {
+	hinv.nfchost
+	kernel.all.pid_max
+        ...
+} logged once: 6192 bytes
+
+Group [46 metrics] {
+	proc.io.cancelled_write_bytes
+	proc.io.write_bytes
+        ...
+} logged every 60 sec: 19320 bytes or 26.53 Mbytes/day
+pmlogger: Validating metrics after PMCD state changed at Sat Jun 22 19:39:23 2024
+pmlogger: Lost connection to PMCD on "2a6dd47829eb" at Sat Jun 22 19:39:27 2024
+pmlogger: re-established connection to PMCD on "2a6dd47829eb" at Sat Jun 22 19:39:33 2024
+pmlogger: Validating metrics after PMCD state changed at Sat Jun 22 19:39:33 2024
+pmlogger: Lost connection to PMCD on "2a6dd47829eb" at Sat Jun 22 19:39:42 2024
+pmlogger: re-established connection to PMCD on "2a6dd47829eb" at Sat Jun 22 19:39:43 2024
+pmlogger: Validating metrics after PMCD state changed at Sat Jun 22 19:39:43 2024
+[Sat Jun 22 19:39:43] pmlogger(1001390) Info: pmlogger: Caught signal 15, exiting
+
+Log finished Sat Jun 22 19:39:43 2024
+
+++ previous pmlogger log (/var/log/pcp/pmlogger/2a6dd47829eb/pmlogger.log.prev) ...
+-rw-r--r-- 1 pcp pcp 29213 Jun 22 19:38 /var/log/pcp/pmlogger/2a6dd47829eb/pmlogger.log.prev
+Log for pmlogger on 2a6dd47829eb started Sat Jun 22 19:38:51 2024
+
+[Sat Jun 22 19:38:51] pmlogger(999134) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting primary logger for host "2a6dd47829eb" via "local:"
+__pmLogNewFile: "/var/log/pcp/pmlogger/2a6dd47829eb/20240622.19.38.index" already exists, not over-written
+__pmLogNewFile: "/var/log/pcp/pmlogger/2a6dd47829eb/20240622.19.38-00.index" already exists, not over-written
+Archive basename: /var/log/pcp/pmlogger/2a6dd47829eb/20240622.19.38-01
+
+Group [1024 metrics] {
+	kvm.tlb_flush
+	kvm.signal_exits
+        ...
+} logged every 10 sec: 32272 bytes or 265.91 Mbytes/day
+
+Group [3 metrics] {
+	proc.memory.rss
+	proc.memory.size
+        ...
+} logged every 300 sec: 876 bytes or 0.24 Mbytes/day
+
+Group [83 metrics] {
+	hinv.nfchost
+	kernel.all.pid_max
+        ...
+} logged once: 6192 bytes
+
+Group [46 metrics] {
+	proc.io.cancelled_write_bytes
+	proc.io.write_bytes
+        ...
+} logged every 60 sec: 18532 bytes or 25.45 Mbytes/day
+[Sat Jun 22 19:38:52] pmlogger(999134) Info: pmlogger: Caught signal 15, exiting
+
+Log finished Sat Jun 22 19:38:52 2024
+++ /var/log/pcp/pmlogger/pmlogger_check.log.prev
+-rw-r--r-- 1 pcp pcp 382 Jun 22 19:38 /var/log/pcp/pmlogger/pmlogger_check.log.prev
+pmlogger_check [/etc/pcp/pmlogger/control.d/local:26]
+Warning: no write access to pmlogconf file "/var/lib/pcp/config/pmlogger/config.default"
+-rw-r--r-- 1 root root 43280 Jun 22 19:38 /var/lib/pcp/config/pmlogger/config.default
+Trying to remove and replace "/var/lib/pcp/config/pmlogger/config.default" ...
+Restarting primary pmlogger for host "local:" ... [process 1001390]  done
+++ /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+-rw-r--r-- 1 pcp pcp 172 Jun 22 19:09 /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+pmlogger_janitor: [/etc/pcp/pmlogger/control.d/local.510:26]
+Error: Cannot start more than one pmlogger instance for archive directory "/var/log/pcp/pmlogger/2a6dd47829eb"
+
+++ no systemctl/journalctl status for pmcd.service ($PCPQA_SYSTEMD=no)
+
+++ no systemctl/journalctl status for pmlogger.service ($PCPQA_SYSTEMD=no)
+
+++ no systemctl/journalctl status for pmlogger_farm.service ($PCPQA_SYSTEMD=no)
+++ pmlc output ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1001390       1  0 19:38 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -N -P -d "/var/log/pcp/pmlogger/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m pmlogger_check %Y%m%d.%H.%M
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+
+++ archive created ...
+Log Label (Log Format Version 3)
+Performance metrics from host 2a6dd47829eb
+    commencing Sat Jun 22 19:38:53.161544670 2024
+    ending     Sat Jun 22 19:39:43.403914584 2024
+++ archive contains 14 records
+
+++ local pmlogger map ...
+++ No files in /var/lib/pcp/tmp/pmlogger !?
+
+++ Likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
