@@ -1,0 +1,58 @@
+QA output created by 662
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 601, in _update_chunk_length
+    self.chunk_left = int(line, 16)
+ValueError: invalid literal for int() with base 16: b''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 360, in _error_catcher
+    yield
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 666, in read_chunked
+    self._update_chunk_length()
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 605, in _update_chunk_length
+    raise httplib.IncompleteRead(line)
+http.client.IncompleteRead: IncompleteRead(0 bytes read)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/requests/models.py", line 750, in generate
+    for chunk in self.raw.stream(chunk_size, decode_content=True):
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 490, in stream
+    for line in self.read_chunked(amt, decode_content=decode_content):
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 694, in read_chunked
+    self._original_response.close()
+  File "/usr/lib64/python3.6/contextlib.py", line 99, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 378, in _error_catcher
+    raise ProtocolError('Connection broken: %r' % e, e)
+urllib3.exceptions.ProtocolError: ('Connection broken: IncompleteRead(0 bytes read)', IncompleteRead(0 bytes read))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/lib/pcp/testsuite/src/test_webapi.py", line 111, in <module>
+    test_metric_enumeration(ctx_host,'')
+  File "/var/lib/pcp/testsuite/src/test_webapi.py", line 85, in test_metric_enumeration
+    ('?prefix='+prefix if prefix != '' else ''))
+  File "/usr/lib/python3.6/site-packages/requests/api.py", line 75, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3.6/site-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3.6/site-packages/requests/sessions.py", line 535, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3.6/site-packages/requests/sessions.py", line 688, in send
+    r.content
+  File "/usr/lib/python3.6/site-packages/requests/models.py", line 828, in content
+    self._content = b''.join(self.iter_content(CONTENT_CHUNK_SIZE)) or b''
+  File "/usr/lib/python3.6/site-packages/requests/models.py", line 753, in generate
+    raise ChunkedEncodingError(e)
+requests.exceptions.ChunkedEncodingError: ('Connection broken: IncompleteRead(0 bytes read)', IncompleteRead(0 bytes read))
+Received PM_CONTEXT_HOST ####
+command NOSUCHAPI response code 400
+context NOSUCHCONTEXT response code 400
+context 0 response code 400
+non-pmwebapi response code 400
+context #### host metric .* enumeration with pminfo ####

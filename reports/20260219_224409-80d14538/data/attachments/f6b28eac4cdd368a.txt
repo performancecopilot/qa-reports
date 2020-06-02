@@ -1,0 +1,91 @@
+QA output created by 1204
+== usage
+Usage: pmlogctl [options] command [host ...]
+
+Options:
+ -a, --all apply action to all matching hosts
+ -c NAME, --class=NAME pmlogger instances belong to the NAME class
+ [default: default]
+ -C ARGS, --checkargs=ARGS
+ pass command line ARGS to pmlogger_check
+ -f, --force force action if possible
+ -i IDENT, --ident=IDENT
+ over-ride instance id (only for create and cond-create)
+ -m, --migrate migrate matching processes to farm services (for create and check)
+ -N, --showme perform a dry run, showing what would be done
+ -p POLICY, --policy=POLICY
+ use POLICY as the class policy file
+ [default: PCP_ETC_DIR/pcp/pmlogger/class.d/<class>]
+ -V, --verbose increase verbosity
+ -?, --help show this usage message and exit
+
+Available commands:
+ [-c classname] create host ...
+ {-c classname|-i ident} cond-create host ...
+ [-c classname] {start|stop|restart|destroy|check|status} [host ...]
+
+ and host may be a valid hostname or an egrep(1) pattern that matches
+ the start of a hostname
+
+== -N -V create -c default
+--- start control file ---
+# created by pmlogctl on DATE
+$class=default
+#DO NOT REMOVE OR EDIT THE FOLLOWING LINE
+$version=1.1
+localhost n n PCP_ARCHIVE_DIR/localhost -c ./localhost.config
+--- end control file ---
+Installing control file: PCP_ETC_DIR/pcp/pmlogger/control.d/localhost
++ cp PCP_TMPFILE_DIR/pmlogctl.XXXXX/control PCP_ETC_DIR/pcp/pmlogger/control.d/localhost
++ PCP_BINADM_DIR/runaspcp PCP_BINADM_DIR/pmlogger_check  -c "PCP_ETC_DIR/pcp/pmlogger/control.d/localhost"
+
+== create -c default
+== status
+pmcd Host Archive Class PID State 
+localhost <archivename> default <pid> running 
+== status localhost
+pmcd Host Archive Class PID State 
+localhost <archivename> default <pid> running 
+
+== stop -c default
+== status
+pmcd Host Archive Class PID State 
+localhost ? default ? stopped by pmlogctl
+== status localhost
+pmcd Host Archive Class PID State 
+localhost ? default <pid> stopped by pmlogctl
+
+== start -c default
+== status
+pmcd Host Archive Class PID State 
+localhost <archivename> default <pid> stopped by pmlogctl
+== status localhost
+pmcd Host Archive Class PID State 
+localhost <archivename> default <pid> stopped by pmlogctl
+
+== restart -c default
+Warning: pmlogger for host localhost already stopped, nothing to do
+== status
+pmcd Host Archive Class PID State 
+localhost <archivename> default <pid> stopped by pmlogctl
+== status localhost
+pmcd Host Archive Class PID State 
+localhost <archivename> default <pid> stopped by pmlogctl
+
+== destroy -c default
+Warning: pmlogger for host localhost already stopped, nothing to do
+== status
+pmcd Host Archive Class PID State 
+== status localhost
+Warning: host localhost not defined in any pmlogger control file
+pmcd Host Archive Class PID State 
+
+== cond-create -c pmfind
+== status
+pmcd Host Archive Class PID State 
+localhost <archivename> pmfind <pid> running 
+
+== cond-create -c pmfind -i 1204-foo
+== status
+pmcd Host Archive Class PID State Instance Id
+localhost <archivename> pmfind <pid> running 1204-foo

@@ -1,0 +1,68 @@
+QA output created by 1232
+--- start control file ---
+# created by pmlogctl on DATE
+$class=default
+#DO NOT REMOVE OR EDIT THE FOLLOWING LINE
+$version=1.1
+localhost n n PCP_ARCHIVE_DIR/localhost -c ./localhost.config
+--- end control file ---
+Installing control file: PCP_ETC_DIR/pcp/pmlogger/control.d/localhost
+Warning: _get_pids_by_name: pid=1446878: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1446878       1 40 20:40 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h localhost -d "PCP_ARCHIVE_DIR/localhost" -c ./localhost.config -m pmlogger_check %Y%m%d.%H.%M
+
+only one current archive, expect no culling
+
+Check pmlogger -h localhost ... in PCP_ARCHIVE_DIR/localhost ...
+Info: find_dirs=.
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1446878       1 33 20:40 ?        DATE.00:00 PCP_BINADM_DIR/pmlogger -h localhost -d "PCP_ARCHIVE_DIR/localhost" -c ./localhost.config -m pmlogger_check %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+non-primary pmlogger process(es) PID identified, OK
+CULLAFTER=0
+[control.d/localhost:5] skip cull for current DATE archive
+Warning: no archive files found to cull
+
+one archive, cull it
+Warning: _get_pids_by_name: pid=1446878: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1446878       1 30 20:40 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -h localhost -d "/var/log/pcp/pmlogger/localhost" -c ./localhost.config -m pmlogger_check %Y%m%d.%H.%M
+
+Check pmlogger -h localhost ... in PCP_ARCHIVE_DIR/localhost ...
+Info: find_dirs=.
+No non-primary pmlogger process(es) found
+pmlogger_daily: [control.d/localhost:5]
+pmlogger_daily: [control.d/localhost:5]
+CULLAFTER=0
+Archive files older than 0 days being removed ...
+    DATE.0 DATE.index DATE.meta
+
+cull old archive, skip current one
+Warning: _get_pids_by_name: pid=1447883: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1447883       1 34 20:40 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -h localhost -d "/var/log/pcp/pmlogger/localhost" -c ./localhost.config -m pmlogger_check %Y%m%d.%H.%M
+
+Check pmlogger -h localhost ... in PCP_ARCHIVE_DIR/localhost ...
+Info: find_dirs=.
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1447883       1 29 20:40 ?        DATE.00:00 PCP_BINADM_DIR/pmlogger -h localhost -d "PCP_ARCHIVE_DIR/localhost" -c ./localhost.config -m pmlogger_check %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+non-primary pmlogger process(es) PID identified, OK
+CULLAFTER=0
+[control.d/localhost:5] skip cull for current DATE archive
+Archive files older than 0 days being removed ...
+    DATE.0 DATE.index DATE.meta
+
+two archives, cull 'em
+Warning: _get_pids_by_name: pid=1447883: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1447883       1 26 20:40 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -h localhost -d "/var/log/pcp/pmlogger/localhost" -c ./localhost.config -m pmlogger_check %Y%m%d.%H.%M
+
+Check pmlogger -h localhost ... in PCP_ARCHIVE_DIR/localhost ...
+Info: find_dirs=.
+No non-primary pmlogger process(es) found
+pmlogger_daily: [control.d/localhost:5]
+pmlogger_daily: [control.d/localhost:5]
+CULLAFTER=0
+Archive files older than 0 days being removed ...
+    DATE.0 DATE.index DATE.meta DATE.0 DATE.index DATE.meta

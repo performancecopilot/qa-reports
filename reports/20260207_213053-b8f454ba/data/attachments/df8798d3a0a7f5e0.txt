@@ -1,0 +1,105 @@
+Usage: pmlogctl [options] command [host ...]
+
+Options:
+  -a, --all             apply action to all matching hosts
+  -c NAME, --class=NAME pmlogger instances belong to the NAME class
+                        [default: default]
+  -C ARGS, --checkargs=ARGS
+                        pass command line ARGS to pmlogger_check
+  -f, --force           force action if possible
+  -i IDENT, --ident=IDENT
+                        over-ride instance id (only for create and cond-create)
+  -m, --migrate         migrate matching processes to farm services (for create and check)
+  -N, --showme          perform a dry run, showing what would be done
+  -p POLICY, --policy=POLICY
+                        use POLICY as the class policy file
+                        [default: /etc/pcp/pmlogger/class.d/<class>]
+  -V, --verbose         increase verbosity
+  -?, --help            show this usage message and exit
+
+Available commands:
+   [-c classname] create  host ...
+   {-c classname|-i ident} cond-create host ...
+   [-c classname] {start|stop|restart|destroy|check|status} [host ...]
+
+   and host may be a valid hostname or an egrep(1) pattern that matches
+   the start of a hostname
+== -N -V create -c default
+--- start control file ---
+# created by pmlogctl on Sat Feb  7 20:23:07 UTC 2026
+$class=default
+#DO NOT REMOVE OR EDIT THE FOLLOWING LINE
+$version=1.1
+localhost n n PCP_ARCHIVE_DIR/localhost -c ./localhost.config
+--- end control file ---
+Installing control file: /etc/pcp/pmlogger/control.d/localhost
++ cp /var/tmp/pmlogctl.fn6j3DKOu/control /etc/pcp/pmlogger/control.d/localhost
++ /usr/lib/pcp/bin/runaspcp /usr/lib/pcp/bin/pmlogger_check  -c "/etc/pcp/pmlogger/control.d/localhost"
+
+== create -c default
+== status
+pmcd Host            Archive           Class        PID State   
+976efd93fc0b         20260207.20.23-00 primary  1186441 running 
+localhost            20260207.20.23    default  1188475 running 
+== status localhost
+pmcd Host            Archive           Class        PID State   
+localhost            20260207.20.23    default  1188475 running 
+
+== stop -c default
+== status
+pmcd Host            Archive           Class        PID State   
+976efd93fc0b         20260207.20.23-00 primary  1186441 running 
+localhost            ?                 default        ? stopped by pmlogctl
+== status localhost
+pmcd Host            Archive           Class        PID State   
+localhost            ?                 default        ? stopped by pmlogctl
+
+== start -c default
+== status
+pmcd Host            Archive           Class        PID State   
+976efd93fc0b         20260207.20.23-00 primary  1186441 running 
+localhost            20260207.20.23-00 default  1189902 running 
+== status localhost
+pmcd Host            Archive           Class        PID State   
+localhost            20260207.20.23-00 default  1189902 running 
+
+== restart -c default
+== status
+pmcd Host            Archive           Class        PID State   
+976efd93fc0b         20260207.20.23-00 primary  1186441 running 
+localhost            20260207.20.23-01 default  1190928 running 
+== status localhost
+pmcd Host            Archive           Class        PID State   
+localhost            20260207.20.23-01 default  1190928 running 
+
+== destroy -c default
+== status
+pmcd Host            Archive           Class        PID State   
+976efd93fc0b         20260207.20.23-00 primary  1186441 running 
+== status localhost
+pmcd Host            Archive           Class        PID State   
+976efd93fc0b         20260207.20.23-00 primary  1186441 running 
+
+== cond-create -c pmfind
+== status
+pmcd Host            Archive           Class        PID State   
+976efd93fc0b         20260207.20.23-00 primary  1186441 running 
+localhost            20260207.20.23    pmfind   1192446 running 
+
+== cond-create -c pmfind -i 1204-foo
+== status
+Warning: _get_pids_by_name: pid=1193453: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1193453       1 33 20:23 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -h localhost -d "/var/log/pcp/pmlogger/1204-foo" -c ./1204-foo.config -m pmlogger_check %Y%m%d.%H.%M
+pmcd Host            Archive           Class        PID State    Instance Id
+976efd93fc0b         20260207.20.23-00 primary  1186441 running  976efd93fc0b
+localhost            20260207.20.23    pmfind   1193453 running  1204-foo
+_cleanup: ...
+Warning: _get_pids_by_name: pid=1193453: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1193453       1 16 20:23 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -h localhost -d "/var/log/pcp/pmlogger/1204-foo" -c ./1204-foo.config -m pmlogger_check %Y%m%d.%H.%M
+Warning: host localhost not defined in class default for any pmlogger control file
+Error: no matching host(s) to destroy
+Warning: _get_pids_by_name: pid=1193453: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1193453       1 16 20:23 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -h localhost -d "/var/log/pcp/pmlogger/1204-foo" -c ./1204-foo.config -m pmlogger_check %Y%m%d.%H.%M

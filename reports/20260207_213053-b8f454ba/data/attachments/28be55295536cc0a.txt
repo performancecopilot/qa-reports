@@ -1,0 +1,196 @@
+Usage: pmiectl [options] command [host ...]
+
+Options:
+  -a, --all             apply action to all matching hosts
+  -c NAME, --class=NAME pmie instances belong to the NAME class
+                        [default: default]
+  -C ARGS, --checkargs=ARGS
+                        pass command line ARGS to pmie_check
+  -f, --force           force action if possible
+  -i IDENT, --ident=IDENT
+                        over-ride instance id (only for create and cond-create)
+  -m, --migrate         migrate matching processes to farm services (for create and check)
+  -N, --showme          perform a dry run, showing what would be done
+  -p POLICY, --policy=POLICY
+                        use POLICY as the class policy file
+                        [default: /etc/pcp/pmie/class.d/<class>]
+  -V, --verbose         increase verbosity
+  -?, --help            show this usage message and exit
+
+Available commands:
+   [-c classname] create  host ...
+   {-c classname|-i ident} cond-create host ...
+   [-c classname] {start|stop|restart|destroy|check|status} [host ...]
+
+   and host may be a valid hostname or an egrep(1) pattern that matches
+   the start of a hostname
+== -N -V create
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:27:15 UTC 2026
+$class=default
+#DO NOT REMOVE OR EDIT THE FOLLOWING LINE
+$version=1.1
+localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/localhost
++ cp /var/tmp/pmiectl.1yyjjxaZw/control /etc/pcp/pmie/control.d/localhost
++ /usr/lib/pcp/bin/runaspcp /usr/lib/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/localhost"
+
+== create
+Warning: _get_pids_by_name: pid=1322725: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1322725       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+== status
+Warning: _get_pids_by_name: pid=1322725: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1322725       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host            Rules Evaluations Class        PID State   
+976efd93fc0b            25          25 primary  1322279 running 
+localhost               24          24 default  1322725 running 
+== status localhost
+Warning: _get_pids_by_name: pid=1322725: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1322725       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               24          24 default  1322725 running 
+
+== stop
+Using default class
+Using default policy
+Warning: _get_pids_by_name: pid=1322725: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1322725       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+Running pmie processes: 1322279 1322725 
+Lock acquired 1323103 pmiectl -r--r--r-- 1 root root 16 Feb  7 20:27 /etc/pcp/pmie/lock
+Looking for host localhost in class default ...
+Candidate control files:
+/etc/pcp/pmie/control.d/localhost
+_get_matching_hosts results:
+# control class host dir args
+/etc/pcp/pmie/control.d/localhost - localhost /var/log/pcp/pmie/localhost/pmie.log 
+# end
+Looking for pmie using directory /var/log/pcp/pmie/localhost/pmie.log and args -c ./localhost.config ...
+Found PID 1322725 to stop using signal TERM
+Stopped? . yes
+Diffs for control file /etc/pcp/pmie/control.d/localhost after disabling host localhost and directory PCP_LOG_DIR/pmie/localhost/pmie.log ...
+5c5
+< localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+---
+> #!#localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+Lock released
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+976efd93fc0b            25          25 primary  1322279 running 
+localhost                ?           ? default        ? stopped by pmiectl
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost                ?           ? default        ? stopped by pmiectl
+
+== start
+Warning: _get_pids_by_name: pid=1323781: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1323781       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+== status
+Warning: _get_pids_by_name: pid=1323781: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1323781       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host            Rules Evaluations Class        PID State   
+976efd93fc0b            25          25 primary  1322279 running 
+localhost               24          24 default  1323781 running 
+== status localhost
+Warning: _get_pids_by_name: pid=1323781: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1323781       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               24          24 default  1323781 running 
+
+== restart
+Warning: _get_pids_by_name: pid=1323781: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1323781       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+Warning: _get_pids_by_name: pid=1324436: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1324436       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+== status
+Warning: _get_pids_by_name: pid=1324436: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1324436       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host            Rules Evaluations Class        PID State   
+976efd93fc0b            25          25 primary  1322279 running 
+localhost               24          24 default  1324436 running 
+== status localhost
+Warning: _get_pids_by_name: pid=1324436: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1324436       1  3 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               24          24 default  1324436 running 
+
+== destroy
+Using default class
+Using default policy
+Warning: _get_pids_by_name: pid=1324436: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1324436       1  3 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+Running pmie processes: 1322279 1324436 
+Lock acquired 1324834 pmiectl -r--r--r-- 1 root root 16 Feb  7 20:27 /etc/pcp/pmie/lock
+Looking for host localhost in class default ...
+Candidate control files:
+/etc/pcp/pmie/control.d/localhost
+_get_matching_hosts results:
+# control class host dir args
+/etc/pcp/pmie/control.d/localhost - localhost /var/log/pcp/pmie/localhost/pmie.log 
+# end
+Looking for pmie using directory /var/log/pcp/pmie/localhost/pmie.log and args -c ./localhost.config ...
+Found PID 1324436 to stop using signal TERM
+Stopped? . yes
+Diffs for control file /etc/pcp/pmie/control.d/localhost after removing host localhost and directory PCP_LOG_DIR/pmie/localhost/pmie.log ...
+5d4
+< localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+Remove control file /etc/pcp/pmie/control.d/localhost
+Lock released
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+976efd93fc0b            25          25 primary  1322279 running 
+== status localhost
+Warning: host localhost not defined in any pmie control file
+pmcd Host            Rules Evaluations Class        PID State   
+976efd93fc0b            25          25 primary  1322279 running 
+
+== cond-create
+Warning: _get_pids_by_name: pid=1325456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1325456       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/pmfind-localhost/pmie.log -c ./pmfind-localhost.config
+== status
+Warning: _get_pids_by_name: pid=1325456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1325456       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/pmfind-localhost/pmie.log -c ./pmfind-localhost.config
+pmcd Host            Rules Evaluations Class        PID State   
+976efd93fc0b            25          25 primary  1322279 running 
+localhost               24          24 pmfind   1325456 running 
+Warning: _get_pids_by_name: pid=1325456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1325456       1  3 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/pmfind-localhost/pmie.log -c ./pmfind-localhost.config
+
+== cond-create -i 1226-foo
+Warning: _get_pids_by_name: pid=1326077: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1326077       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1226-foo/pmie.log -c ./1226-foo.config
+== status
+Warning: _get_pids_by_name: pid=1326077: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1326077       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1226-foo/pmie.log -c ./1226-foo.config
+pmcd Host            Rules Evaluations Class        PID State    Instance Id
+976efd93fc0b            25          25 primary  1322279 running  976efd93fc0b
+localhost               24          24 pmfind   1326077 running  1226-foo
+_cleanup: ...
+Warning: _get_pids_by_name: pid=1326077: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1326077       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1226-foo/pmie.log -c ./1226-foo.config
+Warning: host localhost not defined in class default for any pmie control file
+Error: no matching host(s) to destroy
+Warning: _get_pids_by_name: pid=1326077: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1326077       1  0 20:27 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1226-foo/pmie.log -c ./1226-foo.config
+Warning: host localhost not defined in any pmie control file
+pmcd Host            Rules Evaluations Class        PID State   
+976efd93fc0b            25          25 primary  1322279 running 

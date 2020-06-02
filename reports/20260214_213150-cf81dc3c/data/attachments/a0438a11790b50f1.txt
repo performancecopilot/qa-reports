@@ -1,0 +1,43 @@
+QA output created by 662
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/site-packages/requests/models.py", line 820, in generate
+    yield from self.raw.stream(chunk_size, decode_content=True)
+  File "/usr/lib/python3.14/site-packages/urllib3/response.py", line 1250, in stream
+    yield from self.read_chunked(amt, decode_content=decode_content)
+  File "/usr/lib/python3.14/site-packages/urllib3/response.py", line 1418, in read_chunked
+    self._update_chunk_length()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/site-packages/urllib3/response.py", line 1344, in _update_chunk_length
+    raise ProtocolError("Response ended prematurely") from None
+urllib3.exceptions.ProtocolError: Response ended prematurely
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/lib/pcp/testsuite/src/test_webapi.py", line 111, in <module>
+    test_metric_enumeration(ctx_host,'')
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/var/lib/pcp/testsuite/src/test_webapi.py", line 84, in test_metric_enumeration
+    req = requests.get(url=ctxurl + '_metric' + \
+                           ('?prefix='+prefix if prefix != '' else ''))
+  File "/usr/lib/python3.14/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+  File "/usr/lib/python3.14/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3.14/site-packages/requests/sessions.py", line 746, in send
+    r.content
+  File "/usr/lib/python3.14/site-packages/requests/models.py", line 902, in content
+    self._content = b"".join(self.iter_content(CONTENT_CHUNK_SIZE)) or b""
+                    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/requests/models.py", line 822, in generate
+    raise ChunkedEncodingError(e)
+requests.exceptions.ChunkedEncodingError: Response ended prematurely
+Received PM_CONTEXT_HOST ####
+command NOSUCHAPI response code 400
+context NOSUCHCONTEXT response code 400
+context 0 response code 400
+non-pmwebapi response code 400
+context #### host metric .* enumeration with pminfo ####

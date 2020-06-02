@@ -1,0 +1,37 @@
+QA output created by 169
+
+Test pmcd timeouts with the pmcd PMDA's pmcd.control.timeout
+
+
+*** pmcd agent timeout < app timeout ***
+*** pmcd will killoff agent ***
+
+app timeout = 10
+pmcd timeout = 5
+pmcd.control.timeout old value=5 new value=5
+
+Expect dummyproc to fail (IPC protocol failure):
+dummyproc: pmLookupDesc: IPC protocol failure
+
+pmcd terminated dummy the dumb_pmda agent as desired
+
+Warning: _get_pids_by_name: pid=453491: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       453491       1  0 19:08 ?        00:00:00 /usr/libexec/pcp/bin/pmcd -A -T 3 -C 512
+
+*** pmcd agent timeout > app timeout ***
+*** pmcd will not killoff agent until later ***
+
+app timeout = 5
+pmcd timeout = 10
+pmcd.control.timeout old value=5 new value=10
+
+Expect dummyproc to fail (timeout for pmcd failure):
+dummyproc: pmLookupDesc: Timeout waiting for a response from PMCD
+
+pmcd did NOT terminate the dumb_pmda agent as desired
+
+Now wait for pmcd to timeout...
+
+pmcd terminated the dumb_pmda agent as desired
+

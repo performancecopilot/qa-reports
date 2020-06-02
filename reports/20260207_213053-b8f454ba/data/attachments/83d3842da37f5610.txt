@@ -1,0 +1,134 @@
+QA output created by 1226
+== usage
+Usage: pmiectl [options] command [host ...]
+
+Options:
+  -a, --all             apply action to all matching hosts
+  -c NAME, --class=NAME pmie instances belong to the NAME class
+                        [default: default]
+  -C ARGS, --checkargs=ARGS
+                        pass command line ARGS to pmie_check
+  -f, --force           force action if possible
+  -i IDENT, --ident=IDENT
+                        over-ride instance id (only for create and cond-create)
+  -m, --migrate         migrate matching processes to farm services (for create and check)
+  -N, --showme          perform a dry run, showing what would be done
+  -p POLICY, --policy=POLICY
+                        use POLICY as the class policy file
+                        [default: PCP_ETC_DIR/pcp/pmie/class.d/<class>]
+  -V, --verbose         increase verbosity
+  -?, --help            show this usage message and exit
+
+Available commands:
+   [-c classname] create  host ...
+   {-c classname|-i ident} cond-create host ...
+   [-c classname] {start|stop|restart|destroy|check|status} [host ...]
+
+   and host may be a valid hostname or an egrep(1) pattern that matches
+   the start of a hostname
+
+== -N -V create
+--- start control file ---
+# created by pmiectl on DATE
+$class=default
+#DO NOT REMOVE OR EDIT THE FOLLOWING LINE
+$version=1.1
+localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+--- end control file ---
+Installing control file: PCP_ETC_DIR/pcp/pmie/control.d/localhost
++ cp PCP_TMPFILE_DIR/pmiectl.XXXXX/control PCP_ETC_DIR/pcp/pmie/control.d/localhost
++ PCP_BINADM_DIR/runaspcp PCP_BINADM_DIR/pmie_check  -c "PCP_ETC_DIR/pcp/pmie/control.d/localhost"
+
+== create
+Warning: _get_pids_by_name: pid=1382588: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1382588       1  0 20:28 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+== status
+Warning: _get_pids_by_name: pid=1382588: unknown cgroup pattern: 0::/init.scope
+UID PID PPID C STIME TTY TIME CMD
+localhost <nrule> <neval> default <pid> running
+pcp <nrule> <neval> 0 20:28 ? 00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host Rules Evaluations Class PID State 
+== status localhost
+Warning: _get_pids_by_name: pid=1382588: unknown cgroup pattern: 0::/init.scope
+UID PID PPID C STIME TTY TIME CMD
+localhost <nrule> <neval> default <pid> running
+pcp <nrule> <neval> 0 20:28 ? 00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host Rules Evaluations Class PID State 
+
+== stop
+== status
+pmcd Host Rules Evaluations Class PID State 
+localhost ? ? default ? stopped by pmiectl
+== status localhost
+pmcd Host Rules Evaluations Class PID State 
+localhost ? ? default ? stopped by pmiectl
+
+== start
+Warning: _get_pids_by_name: pid=1383641: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1383641       1  3 20:28 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+== status
+Warning: _get_pids_by_name: pid=1383641: unknown cgroup pattern: 0::/init.scope
+UID PID PPID C STIME TTY TIME CMD
+localhost <nrule> <neval> default <pid> running
+pcp <nrule> <neval> 3 20:28 ? 00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host Rules Evaluations Class PID State 
+== status localhost
+Warning: _get_pids_by_name: pid=1383641: unknown cgroup pattern: 0::/init.scope
+UID PID PPID C STIME TTY TIME CMD
+localhost <nrule> <neval> default <pid> running
+pcp <nrule> <neval> 3 20:28 ? 00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host Rules Evaluations Class PID State 
+
+== restart
+Warning: _get_pids_by_name: pid=1383641: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1383641       1  3 20:28 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+Warning: _get_pids_by_name: pid=1384294: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1384294       1  0 20:28 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+== status
+Warning: _get_pids_by_name: pid=1384294: unknown cgroup pattern: 0::/init.scope
+UID PID PPID C STIME TTY TIME CMD
+localhost <nrule> <neval> default <pid> running
+pcp <nrule> <neval> 0 20:28 ? 00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host Rules Evaluations Class PID State 
+== status localhost
+Warning: _get_pids_by_name: pid=1384294: unknown cgroup pattern: 0::/init.scope
+UID PID PPID C STIME TTY TIME CMD
+localhost <nrule> <neval> default <pid> running
+pcp <nrule> <neval> 0 20:28 ? 00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/localhost/pmie.log -c ./localhost.config
+pmcd Host Rules Evaluations Class PID State 
+
+== destroy
+== status
+pmcd Host Rules Evaluations Class PID State 
+== status localhost
+Warning: host localhost not defined in any pmie control file
+pmcd Host Rules Evaluations Class PID State 
+
+== cond-create
+Warning: _get_pids_by_name: pid=1385310: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1385310       1  0 20:28 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l PCP_LOG_DIR/pmie/pmfind-localhost/pmie.log -c ./pmfind-localhost.config
+== status
+Warning: _get_pids_by_name: pid=1385310: unknown cgroup pattern: 0::/init.scope
+UID PID PPID C STIME TTY TIME CMD
+localhost <nrule> <neval> pmfind <pid> running
+pcp <nrule> <neval> 0 20:28 ? 00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/pmfind-localhost/pmie.log -c ./pmfind-localhost.config
+pmcd Host Rules Evaluations Class PID State 
+Warning: _get_pids_by_name: pid=1385310: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1385310       1  0 20:28 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l PCP_LOG_DIR/pmie/pmfind-localhost/pmie.log -c ./pmfind-localhost.config
+
+== cond-create -i 1226-foo
+Warning: _get_pids_by_name: pid=1385930: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1385930       1  0 20:28 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l PCP_LOG_DIR/pmie/1226-foo/pmie.log -c ./1226-foo.config
+== status
+Warning: _get_pids_by_name: pid=1385930: unknown cgroup pattern: 0::/init.scope
+UID PID PPID C STIME TTY TIME CMD
+localhost <nrule> <neval> pmfind <pid> running 1226-foo
+pcp <nrule> <neval> 0 20:28 ? 00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1226-foo/pmie.log -c ./1226-foo.config
+pmcd Host Rules Evaluations Class PID State Instance Id

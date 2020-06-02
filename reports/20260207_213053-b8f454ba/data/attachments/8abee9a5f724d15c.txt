@@ -1,0 +1,985 @@
+QA output created by 430
+
+# PCP archive logging configuration/control - for qa/430
+#
+$version=1.1
+$PMLOGGER_CHECK_SKIP_JANITOR=yes
+#
+# 1. Test duplicate directory names;  non-primary and then primary
+#
+LOCALHOSTNAME	n   n	TMP -c TMP/config
+LOCALHOSTNAME	y   n	TMP	-c TMP/config
+# 
+
+Start [check]: DATESTAMP
+Restarting pmlogger for host "LOCALHOST" [dots] [process PID]  done
+PMLOGGER.CHECK: [TMP/control:LINE]
+Error: Duplicate pmlogger instances for archive directory "TMP"
+[dots] logging for host "LOCALHOST" unchanged
+Prior instance(s) for this directory:
+TMP TMP/control:LINE
+End [check]: DATESTAMP status=1
+Warning: _get_pids_by_name: pid=605236: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       605236       1  0 19:34 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -h local: -d "/tmp/430-604651" -c /tmp/430-604651/config -m pmlogger_check %Y%m%d.%H.%M
+
+# PCP archive logging configuration/control - for qa/430
+#
+$version=1.1
+$PMLOGGER_CHECK_SKIP_JANITOR=yes
+#
+# 2. Test duplicate directory names ; primary and then non-primary
+#
+LOCALHOSTNAME	y   n	TMP	-c TMP/config
+LOCALHOSTNAME	n   n	TMP	-c TMP/config
+# 
+
+Start [check]: DATESTAMP
+Restarting primary pmlogger for host "LOCALHOST" [dots] [process PID]  done
+PMLOGGER.CHECK: [TMP/control:LINE]
+Error: Duplicate pmlogger instances for archive directory "TMP"
+[dots] logging for host "LOCALHOST" unchanged
+Prior instance(s) for this directory:
+TMP TMP/control:LINE
+End [check]: DATESTAMP status=1
+Warning: _get_pids_by_name: pid=605597: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       605597       1  0 19:34 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -N -P -d "/tmp/430-604651" -c /tmp/430-604651/config -m pmlogger_check %Y%m%d.%H.%M
+
+# PCP archive logging configuration/control - for qa/430
+#
+$version=1.1
+$PMLOGGER_CHECK_SKIP_JANITOR=yes
+#
+# 3. Test directory names which are subnames 
+#
+LOCALHOSTNAME	y   n   TMP.subname  -c TMP/config
+LOCALHOSTNAME	n   n   TMP -c TMP/config
+# 
+
+Start [check]: DATESTAMP
+Restarting primary pmlogger for host "LOCALHOST" [dots] [process PID]  done
+Restarting pmlogger for host "LOCALHOST" [dots] [process PID]  done
+End [check]: DATESTAMP status=0
+Warning: _get_pids_by_name: pid=605960: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       605960       1  0 19:34 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -N -P -d "/tmp/430-604651.subname" -c /tmp/430-604651/config -m pmlogger_check %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=606004: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606004       1  0 19:34 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -h local: -d "/tmp/430-604651" -c /tmp/430-604651/config -m pmlogger_check %Y%m%d.%H.%M
+
+# PCP archive logging configuration/control - for qa/430
+#
+$version=1.1
+$PMLOGGER_CHECK_SKIP_JANITOR=yes
+#
+# 4. Test when have hosts which are subnames
+#
+LOCALHOST	y   n   TMP/LOCALHOST  -c TMP/config
+LOCALHOSTsuper	n   n   TMP/LOCALHOSTsuper -c TMP/config
+#
+
+Start [check]: DATESTAMP
+PMLOGGER.CHECK: [TMP/control:LINE]
+Warning: creating directory (TMP/LOCALHOST) for PCP archive files
+Restarting primary pmlogger for host "LOCALHOST" [dots] [process PID]  done
+PMLOGGER.CHECK: [TMP/control:LINE]
+Warning: creating directory (TMP/LOCALHOSTsuper) for PCP archive files
+Restarting pmlogger for host "LOCALHOSTsuper" [dots] [process PID]  done
+End [check]: DATESTAMP status=0
+Warning: _get_pids_by_name: pid=606455: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606455       1  0 19:34 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -N -P -d "/tmp/430-604651/fe2704e8ad5a" -c /tmp/430-604651/config -m pmlogger_check %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=606500: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606500       1  0 19:34 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -h fe2704e8ad5asuper -d "/tmp/430-604651/fe2704e8ad5asuper" -c /tmp/430-604651/config -m pmlogger_check %Y%m%d.%H.%M
+
+# PCP archive logging configuration/control - for qa/430
+#
+$version=1.1
+$PMLOGGER_CHECK_SKIP_JANITOR=yes
+#
+# 5. Putting all the cases together
+#
+LOCALHOSTNAME	y   n   TMP.1 -c TMP/config
+LOCALHOSTNAME	n   n   TMP.2 -c TMP/config
+LOCALHOST	        n   n   TMP.3 -c TMP/config
+LOCALHOST	        n   n   TMP.4 -c TMP/config
+LOCALHOSTsuper	        n   n   TMP.5 -c TMP/config
+LOCALHOSTsuper	        n   n   TMP.6 -c TMP/config
+
+Start [check]: DATESTAMP
+PMLOGGER.CHECK: [TMP/control:LINE]
+Warning: creating directory (TMP.1) for PCP archive files
+Restarting primary pmlogger for host "LOCALHOST" [dots] [process PID]  done
+PMLOGGER.CHECK: [TMP/control:LINE]
+Warning: creating directory (TMP.2) for PCP archive files
+Restarting pmlogger for host "LOCALHOST" [dots] [process PID]  done
+PMLOGGER.CHECK: [TMP/control:LINE]
+Warning: creating directory (TMP.3) for PCP archive files
+Restarting pmlogger for host "LOCALHOST" [dots] [process PID]  done
+PMLOGGER.CHECK: [TMP/control:LINE]
+Warning: creating directory (TMP.4) for PCP archive files
+Restarting pmlogger for host "LOCALHOST" [dots] [process PID]  done
+PMLOGGER.CHECK: [TMP/control:LINE]
+Warning: creating directory (TMP.5) for PCP archive files
+Restarting pmlogger for host "LOCALHOSTsuper" [dots] [process PID]  done
+PMLOGGER.CHECK: [TMP/control:LINE]
+Warning: creating directory (TMP.6) for PCP archive files
+Restarting pmlogger for host "LOCALHOSTsuper" [dots] [process PID]  done
+End [check]: DATESTAMP status=0
+
+Restart tests while other pmloggers are running ...
+
+Kill off one pmlogger ...
+Check ...
+Start [check]: DATESTAMP
+[TMP/control:LINE] host="$version=1.1" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="$PMLOGGER_CHECK_SKIP_JANITOR=yes" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="y" socks="n" dir="TMP.1" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -P -h LOCALHOST [dots] in TMP.1 ...
+PCP_TMP_DIR/pmlogger/primary: missing?
+Contents of PCP_TMP_DIR/pmlogger
+...
+Command: PMLOGGER_INTERVAL=10 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Restarting primary pmlogger for host "LOCALHOST" [dots] [process PID] Warning: _get_pids_by_name: pid=606996: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606996       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607044: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+ done
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="n" socks="n" dir="TMP.2" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.2 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606996       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607044: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.3" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.3 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606996       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607044: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.4" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.4 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606996       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607044: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.5" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.5 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606996       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607044: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.6" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.6 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       606996       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607044: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+Doing compression [dots]
+End [check]: DATESTAMP status=0
+
+Kill off one pmlogger ...
+Check ...
+Start [check]: DATESTAMP
+[TMP/control:LINE] host="$version=1.1" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="$PMLOGGER_CHECK_SKIP_JANITOR=yes" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="y" socks="n" dir="TMP.1" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -P -h LOCALHOST [dots] in TMP.1 ...
+Warning: _get_pids_by_name: pid=607044: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+primary pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="n" socks="n" dir="TMP.2" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.2 ...
+Command:  PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Restarting pmlogger for host "LOCALHOST" [dots] [process PID] Warning: _get_pids_by_name: pid=607044: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+ done
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.3" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.3 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.4" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.4 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.5" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.5 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.6" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.6 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607044       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+Doing compression [dots]
+End [check]: DATESTAMP status=0
+
+Kill off one pmlogger ...
+Check ...
+Start [check]: DATESTAMP
+[TMP/control:LINE] host="$version=1.1" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="$PMLOGGER_CHECK_SKIP_JANITOR=yes" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="y" socks="n" dir="TMP.1" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -P -h LOCALHOST [dots] in TMP.1 ...
+Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+primary pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="n" socks="n" dir="TMP.2" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.2 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.3" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.3 ...
+Command:  PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Restarting pmlogger for host "LOCALHOST" [dots] [process PID] Warning: _get_pids_by_name: pid=607095: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+ done
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.4" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.4 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.5" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.5 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.6" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.6 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607095       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+Doing compression [dots]
+End [check]: DATESTAMP status=0
+
+Kill off one pmlogger ...
+Check ...
+Start [check]: DATESTAMP
+[TMP/control:LINE] host="$version=1.1" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="$PMLOGGER_CHECK_SKIP_JANITOR=yes" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="y" socks="n" dir="TMP.1" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -P -h LOCALHOST [dots] in TMP.1 ...
+Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+primary pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="n" socks="n" dir="TMP.2" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.2 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.3" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.3 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.4" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.4 ...
+Command:  PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Restarting pmlogger for host "LOCALHOST" [dots] [process PID] Warning: _get_pids_by_name: pid=607149: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+ done
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.5" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.5 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.6" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.6 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607149       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+Doing compression [dots]
+End [check]: DATESTAMP status=0
+
+Kill off one pmlogger ...
+Check ...
+Start [check]: DATESTAMP
+[TMP/control:LINE] host="$version=1.1" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="$PMLOGGER_CHECK_SKIP_JANITOR=yes" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="y" socks="n" dir="TMP.1" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -P -h LOCALHOST [dots] in TMP.1 ...
+Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+primary pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="n" socks="n" dir="TMP.2" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.2 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.3" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.3 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.4" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.4 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.5" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.5 ...
+Command:  PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Restarting pmlogger for host "LOCALHOSTsuper" [dots] [process PID] Warning: _get_pids_by_name: pid=607206: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=614509: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       614509       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+ done
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.6" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.6 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       607206       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=614509: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       614509       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+Doing compression [dots]
+End [check]: DATESTAMP status=0
+
+Kill off one pmlogger ...
+Check ...
+Start [check]: DATESTAMP
+[TMP/control:LINE] host="$version=1.1" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="$PMLOGGER_CHECK_SKIP_JANITOR=yes" primary="" socks="" dir="" args=""
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="y" socks="n" dir="TMP.1" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -P -h LOCALHOST [dots] in TMP.1 ...
+Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=614509: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       614509       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+primary pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTNAME" primary="n" socks="n" dir="TMP.2" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.2 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=614509: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       614509       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.3" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.3 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=614509: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       614509       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOST" primary="n" socks="n" dir="TMP.4" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOST [dots] in TMP.4 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=614509: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       614509       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.5" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.5 ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=614509: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       614509       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pmlogger process PID identified, OK
+[TMP/control:LINE] host="LOCALHOSTsuper" primary="n" socks="n" dir="TMP.6" args="-c TMP/config"
+Acquired lock:
+...
+PID PMLOGGER.CHECK
+Checking for: pmlogger -h LOCALHOSTsuper [dots] in TMP.6 ...
+Command:  PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Restarting pmlogger for host "LOCALHOSTsuper" [dots] [process PID] Warning: _get_pids_by_name: pid=608073: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       608073       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -N -P -d "TMP.1" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=609610: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       609610       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.2" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=611195: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       611195       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.3" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=612828: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       612828       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOST -d "TMP.4" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=614509: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       614509       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.5" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+Warning: _get_pids_by_name: pid=616238: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       616238       1  0 19:34 ?        00:00:00 PCP_BINADM_DIR/pmlogger -h LOCALHOSTsuper -d "TMP.6" -c TMP/config -m PMLOGGER.CHECK %Y%m%d.%H.%M
+ done
+Doing compression [dots]
+End [check]: DATESTAMP status=0
+
+Cleaning up

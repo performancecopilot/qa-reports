@@ -1,0 +1,159 @@
+longname=fe2704e8ad5a
+shortname=fe2704e8ad5a
+_open_primary_logger checking config file: /var/lib/pcp/config/pmlogger/config.default
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host fe2704e8ad5a
+PMCD host        fe2704e8ad5a
+log started      Sat Feb  7 19:13:28.054993382 2026 (times in local time)
+last log entry   Sat Feb  7 19:13:28.591947005 2026
+current time     Sat Feb  7 19:13:29.597386298 2026
+log volume       0
+log size         70804
+=== Hang on Connection Cases ===
+
+Expect hang ...
+_check 453509
+pidlist=453509
+
+=== /tmp/230-451445.out ===
+
+Expect hang and warning ...
+_check 453570
+pidlist=453570
+
+=== /tmp/230-451445.out ===
+[Sat Feb  7 19:13:40] pmlc(453570) Warning: ignored bad PMLOGGER_REQUEST_TIMEOUT = '1.5'
+
+Expect no hang and unable to connect to pmlogger ...
+_check 453622
+pidlist=
+
+=== /tmp/230-451445.out ===
+Unable to connect to primary pmlogger at localhost: Timeout, closed connection to the pmlogger instance
+
+=== Timeout on pmlc commands cases ===
+
+Check QA code cleared when pmlc exits ...
+_check 453622
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+qa 1
+QA Test Case #1 activated
+quit
+Goodbye
+_check 453622
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+status
+pmlogger [primary] on host local: is logging metrics from host fe2704e8ad5a
+PMCD host        fe2704e8ad5a
+log started      Sat Feb  7 19:13:28.054993382 2026 (times in local time)
+last log entry   Sat Feb  7 19:13:48.069087060 2026
+current time     Sat Feb  7 19:13:53.185131913 2026
+log volume       0
+log size         144412
+quit
+Goodbye
+
+Expect no hang and log command to timeout connecting to pmcd ...
+_check 453622
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+qa 1
+QA Test Case #1 activated
+log mandatory on once Error receiving response from pmlogger: Timeout, closed connection to the pmlogger instance
+Error [<stdin>, line 2]
+sample.long.million
+quit
+Goodbye
+
+Expect no hang and 2nd log command to timeout changing logging status ...
+_check 453622
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+log mandatory on once sample.long.million
+qa 1
+QA Test Case #1 activated
+log mandatory on once sample.long.million
+Error receiving response from pmlogger: Timeout, closed connection to the pmlogger instance
+quit
+Goodbye
+
+Expect no hang and status command to timeout ...
+_check 453622
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+qa 1
+QA Test Case #1 activated
+status
+Error receiving response from pmlogger: Timeout, closed connection to the pmlogger instance
+quit
+Goodbye
+
+Expect hang and flush command to timeout  ...
+_check 453622
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+qa 1
+QA Test Case #1 activated
+flush
+Error receiving response from pmlogger: Timeout, closed connection to the pmlogger instance
+quit
+Goodbye
+
+Expect hang and new volume command to timeout ...
+_check 453850
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+qa 1
+QA Test Case #1 activated
+new volume
+Error receiving response from pmlogger: Timeout, closed connection to the pmlogger instance
+quit
+Goodbye
+
+Expect no hang and query command to timeout connecting to pmcd ...
+_check 453850
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+qa 1
+QA Test Case #1 activated
+query Error receiving response from pmlogger: Timeout, closed connection to the pmlogger instance
+Error [<stdin>, line 2]
+sample.long.million
+quit
+Goodbye
+
+Expect no hang and 2nd query command to timeout fetching logging status ...
+_check 453850
+pidlist=
+
+=== /tmp/230-451445.out ===
+Connected to primary pmlogger at local:
+query sample.long.million
+sample.long.million
+    mand on             once
+
+qa 1
+QA Test Case #1 activated
+query sample.long.million
+Error receiving response from pmlogger: Timeout, closed connection to the pmlogger instance
+quit
+Goodbye
