@@ -1,0 +1,2166 @@
+time_stamp: step 2 delta 0.015496 secs tag key server start
+time_stamp: step 3 delta 0.014369 secs tag key server active
+time_stamp: step 4 delta 0.005268 secs tag pmlogger start
+time_stamp: step 5 delta 0.004910 secs tag pmlogger active
+time_stamp: step 6 delta 0.024991 secs tag pmproxy start
+=== valgrind output
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== std out ===
+=== std err ===
+=== valgrind report ===
+==1630101== Memcheck, a memory error detector
+==1630101== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==1630101== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==1630101== Command: /usr/libexec/pcp/bin/pmproxy -f -t -A -c /var/tmp/1662-1629953.conf -U pcpqa -T 10sec -l /var/tmp/1662-1629953.pmproxy -r 54322 -p 54323 -s /var/tmp/1662-1629953.pmproxy.sock
+==1630101== Parent PID: 1630087
+==1630101== 
+==1630101== 
+==1630101== HEAP SUMMARY:
+==1630101==     in use at exit: 1,839,393 bytes in 44,982 blocks
+==1630101==   total heap usage: 1,215,847 allocs, 1,170,865 frees, 82,446,658 bytes allocated
+==1630101== 
+==1630101== 9 bytes in 1 blocks are possibly lost in loss record 20 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x5085A2A: pmwebapi_add_instance (util.c:1025)
+==1630101==    by 0x5085C54: pmwebapi_add_indom_instances (util.c:1076)
+==1630101==    by 0x5080857: get_instance_metadata (load.c:130)
+==1630101==    by 0x5080857: series_cache_update (load.c:499)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_add_instance
+   fun:pmwebapi_add_indom_instances
+   fun:get_instance_metadata
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+}
+==1630101== 28 bytes in 2 blocks are possibly lost in loss record 49 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50A5EB2: pmDiscoverNewSource (discover.c:1168)
+==1630101==    by 0x50A9897: pmDiscoverInvokeCallBacks (discover.c:1607)
+==1630101==    by 0x50A9897: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A9897: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A9897: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmDiscoverNewSource
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 28 bytes in 2 blocks are possibly lost in loss record 50 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50815C2: pmSeriesDiscoverSource (load.c:1240)
+==1630101==    by 0x50A5D4B: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+==1630101==    by 0x50A7A04: process_metadata (discover.c:1374)
+==1630101==    by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+==1630101==    by 0x50A98E5: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A98E5: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 28 bytes in 2 blocks are possibly lost in loss record 51 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x507F9DC: set_source_origin (load.c:872)
+==1630101==    by 0x50815F5: pmSeriesDiscoverSource (load.c:1245)
+==1630101==    by 0x50A5D4B: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+==1630101==    by 0x50A7A04: process_metadata (discover.c:1374)
+==1630101==    by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+==1630101==    by 0x50A98E5: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A98E5: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:set_source_origin
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+}
+==1630101== 30 bytes in 1 blocks are possibly lost in loss record 54 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50A60F8: pmDiscoverLookupAdd (discover.c:80)
+==1630101==    by 0x50A88A8: pmDiscoverArchives (discover.c:273)
+==1630101==    by 0x50A9F35: pmDiscoverRegister (discover.c:1844)
+==1630101==    by 0x507EC81: pmDiscoverSetup (schema.c:2018)
+==1630101==    by 0x118EEB: on_key_server_connected (keys.c:174)
+==1630101==    by 0x507859D: keys_slots_finished (schema.c:57)
+==1630101==    by 0x5086E1A: keySlotsReplyCallback (slots.c:524)
+==1630101==    by 0x509EECF: redisClusterAsyncCallback (hircluster.c:3837)
+==1630101==    by 0x5091974: __redisRunCallback (async.c:287)
+==1630101==    by 0x5091974: redisProcessCallbacks (async.c:572)
+==1630101==    by 0x5086BE8: redisLibuvPoll (libuv.h:21)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmDiscoverLookupAdd
+   fun:pmDiscoverArchives
+   fun:pmDiscoverRegister
+   fun:pmDiscoverSetup
+   fun:on_key_server_connected
+   fun:keys_slots_finished
+   fun:keySlotsReplyCallback
+   fun:redisClusterAsyncCallback
+   fun:__redisRunCallback
+   fun:redisProcessCallbacks
+   fun:redisLibuvPoll
+}
+==1630101== 37 bytes in 1 blocks are possibly lost in loss record 59 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50A60F8: pmDiscoverLookupAdd (discover.c:80)
+==1630101==    by 0x50A8A49: pmDiscoverArchives (discover.c:306)
+==1630101==    by 0x50A9F35: pmDiscoverRegister (discover.c:1844)
+==1630101==    by 0x507EC81: pmDiscoverSetup (schema.c:2018)
+==1630101==    by 0x118EEB: on_key_server_connected (keys.c:174)
+==1630101==    by 0x507859D: keys_slots_finished (schema.c:57)
+==1630101==    by 0x5086E1A: keySlotsReplyCallback (slots.c:524)
+==1630101==    by 0x509EECF: redisClusterAsyncCallback (hircluster.c:3837)
+==1630101==    by 0x5091974: __redisRunCallback (async.c:287)
+==1630101==    by 0x5091974: redisProcessCallbacks (async.c:572)
+==1630101==    by 0x5086BE8: redisLibuvPoll (libuv.h:21)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmDiscoverLookupAdd
+   fun:pmDiscoverArchives
+   fun:pmDiscoverRegister
+   fun:pmDiscoverSetup
+   fun:on_key_server_connected
+   fun:keys_slots_finished
+   fun:keySlotsReplyCallback
+   fun:redisClusterAsyncCallback
+   fun:__redisRunCallback
+   fun:redisProcessCallbacks
+   fun:redisLibuvPoll
+}
+==1630101== 38 bytes in 1 blocks are possibly lost in loss record 60 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50A60F8: pmDiscoverLookupAdd (discover.c:80)
+==1630101==    by 0x50A8A49: pmDiscoverArchives (discover.c:306)
+==1630101==    by 0x50A914F: changed_callback (discover.c:1765)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmDiscoverLookupAdd
+   fun:pmDiscoverArchives
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 75 bytes in 2 blocks are possibly lost in loss record 93 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50815B2: pmSeriesDiscoverSource (load.c:1239)
+==1630101==    by 0x50A5D4B: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+==1630101==    by 0x50A7A04: process_metadata (discover.c:1374)
+==1630101==    by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+==1630101==    by 0x50A98E5: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A98E5: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 88 bytes in 2 blocks are possibly lost in loss record 101 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50840C3: pmwebapi_hash_sds (util.c:401)
+==1630101==    by 0x50A77D9: process_metadata (discover.c:1365)
+==1630101==    by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+==1630101==    by 0x50A98E5: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A98E5: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_hash_sds
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 120 bytes in 1 blocks are possibly lost in loss record 113 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50848DA: pmwebapi_instance_hash (util.c:531)
+==1630101==    by 0x50858E9: pmwebapi_new_instance (util.c:1000)
+==1630101==    by 0x5085A39: pmwebapi_add_instance (util.c:1025)
+==1630101==    by 0x5085C54: pmwebapi_add_indom_instances (util.c:1076)
+==1630101==    by 0x5080857: get_instance_metadata (load.c:130)
+==1630101==    by 0x5080857: series_cache_update (load.c:499)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_instance_hash
+   fun:pmwebapi_new_instance
+   fun:pmwebapi_add_instance
+   fun:pmwebapi_add_indom_instances
+   fun:get_instance_metadata
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+}
+==1630101== 172 bytes in 10 blocks are possibly lost in loss record 131 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50862CC: pmwebapi_new_metric (util.c:1163)
+==1630101==    by 0x50862CC: pmwebapi_new_metric (util.c:1134)
+==1630101==    by 0x50807F1: new_metric (load.c:193)
+==1630101==    by 0x50807F1: series_cache_update (load.c:480)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_new_metric
+   fun:pmwebapi_new_metric
+   fun:new_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 172 bytes in 10 blocks are possibly lost in loss record 132 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x508976D: dictAddRaw (dict.c:310)
+==1630101==    by 0x5089804: dictAdd (dict.c:261)
+==1630101==    by 0x5086396: pmwebapi_new_metric (util.c:1179)
+==1630101==    by 0x5086396: pmwebapi_new_metric (util.c:1134)
+==1630101==    by 0x50807F1: new_metric (load.c:193)
+==1630101==    by 0x50807F1: series_cache_update (load.c:480)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:dictAddRaw
+   fun:dictAdd
+   fun:pmwebapi_new_metric
+   fun:pmwebapi_new_metric
+   fun:new_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+}
+==1630101== 176 bytes in 1 blocks are possibly lost in loss record 133 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5086C6F: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5086C6F: redisLibuvAttach (libuv.h:101)
+==1630101==    by 0x5086C6F: redisLibuvAttach_link (libuv.h:38)
+==1630101==    by 0x50A4255: actx_get_by_node (hircluster.c:3695)
+==1630101==    by 0x50A4255: actx_get_by_node (hircluster.c:3619)
+==1630101==    by 0x50A4F38: redisClusterAsyncFormattedCommandToNode (hircluster.c:4168)
+==1630101==    by 0x5087F56: keySlotsRequestFirstNode (slots.c:620)
+==1630101==    by 0x5078F99: keys_load_version (schema.c:1313)
+==1630101==    by 0x5087D57: keySlotsConnect (slots.c:394)
+==1630101==    by 0x119398: setup_keys_module (keys.c:229)
+==1630101==    by 0x112637: setup_proxy (server.c:843)
+==1630101==    by 0x5C83317: uv__run_timers (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C879E4: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:redisLibuvAttach
+   fun:redisLibuvAttach_link
+   fun:actx_get_by_node
+   fun:actx_get_by_node
+   fun:redisClusterAsyncFormattedCommandToNode
+   fun:keySlotsRequestFirstNode
+   fun:keys_load_version
+   fun:keySlotsConnect
+   fun:setup_keys_module
+   fun:setup_proxy
+   fun:uv__run_timers
+   fun:uv_run
+   fun:main_loop
+}
+==1630101== 310 bytes in 11 blocks are possibly lost in loss record 172 of 253
+==1630101==    at 0x4C40B77: realloc (vg_replace_malloc.c:1690)
+==1630101==    by 0x5096B70: UnknownInlinedFun (alloc.h:66)
+==1630101==    by 0x5096B70: sdsMakeRoomFor (sds.c:223)
+==1630101==    by 0x509742B: sdscatlen (sds.c:381)
+==1630101==    by 0x50979CC: sdscatvprintf (sds.c:535)
+==1630101==    by 0x5097A87: sdscatprintf (sds.c:560)
+==1630101==    by 0x508B423: unicode_encode (encoding.c:106)
+==1630101==    by 0x507EF72: pmwebapi_extract_value (load.c:362)
+==1630101==    by 0x5080048: pmwebapi_add_valueset (load.c:430)
+==1630101==    by 0x508050E: series_cache_update (load.c:491)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:realloc
+   fun:UnknownInlinedFun
+   fun:sdsMakeRoomFor
+   fun:sdscatlen
+   fun:sdscatvprintf
+   fun:sdscatprintf
+   fun:unicode_encode
+   fun:pmwebapi_extract_value
+   fun:pmwebapi_add_valueset
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+}
+==1630101== 1,164 bytes in 3 blocks are possibly lost in loss record 197 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096A82: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096A82: sdsMakeRoomFor (sds.c:229)
+==1630101==    by 0x509742B: sdscatlen (sds.c:381)
+==1630101==    by 0x50979CC: sdscatvprintf (sds.c:535)
+==1630101==    by 0x5097A87: sdscatprintf (sds.c:560)
+==1630101==    by 0x508B423: unicode_encode (encoding.c:106)
+==1630101==    by 0x507EF72: pmwebapi_extract_value (load.c:362)
+==1630101==    by 0x5080048: pmwebapi_add_valueset (load.c:430)
+==1630101==    by 0x508050E: series_cache_update (load.c:491)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsMakeRoomFor
+   fun:sdscatlen
+   fun:sdscatvprintf
+   fun:sdscatprintf
+   fun:unicode_encode
+   fun:pmwebapi_extract_value
+   fun:pmwebapi_add_valueset
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+}
+==1630101== 1,200 bytes in 10 blocks are possibly lost in loss record 198 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x508469D: pmwebapi_metric_hash (util.c:482)
+==1630101==    by 0x508081F: new_metric (load.c:198)
+==1630101==    by 0x508081F: series_cache_update (load.c:480)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_metric_hash
+   fun:new_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 6,099 bytes in 713 blocks are possibly lost in loss record 219 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x5085A2A: pmwebapi_add_instance (util.c:1025)
+==1630101==    by 0x50820DD: pmSeriesDiscoverInDom (load.c:1501)
+==1630101==    by 0x50A74E9: pmDiscoverInvokeInDomCallBacks (discover.c:1026)
+==1630101==    by 0x50A74E9: process_metadata (discover.c:1337)
+==1630101==    by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+==1630101==    by 0x50A98E5: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A98E5: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_add_instance
+   fun:pmSeriesDiscoverInDom
+   fun:pmDiscoverInvokeInDomCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 7,305 bytes in 721 blocks are possibly lost in loss record 223 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x507AB9A: annotate_metric (schema.c:468)
+==1630101==    by 0x62ED1BB: stash_label (labels.c:444)
+==1630101==    by 0x62ED561: __pmMergeLabelSets (labels.c:899)
+==1630101==    by 0x62EEDEF: pmMergeLabelSets (labels.c:1011)
+==1630101==    by 0x5083D05: instance_labelsets (util.c:252)
+==1630101==    by 0x507C236: series_instance_label_mapping (schema.c:682)
+==1630101==    by 0x507C436: keys_series_metric (schema.c:744)
+==1630101==    by 0x5080554: server_cache_metric (load.c:45)
+==1630101==    by 0x5080554: series_cache_update (load.c:502)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:annotate_metric
+   fun:stash_label
+   fun:__pmMergeLabelSets
+   fun:pmMergeLabelSets
+   fun:instance_labelsets
+   fun:series_instance_label_mapping
+   fun:keys_series_metric
+   fun:server_cache_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+}
+==1630101== 8,095 (1,664 direct, 6,431 indirect) bytes in 2 blocks are definitely lost in loss record 224 of 253
+==1630101==    at 0x4C40963: calloc (vg_replace_malloc.c:1595)
+==1630101==    by 0x508151E: pmSeriesDiscoverSource (load.c:1212)
+==1630101==    by 0x50A5D4B: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+==1630101==    by 0x50A5EE3: pmDiscoverNewSource (discover.c:1186)
+==1630101==    by 0x50A9897: pmDiscoverInvokeCallBacks (discover.c:1607)
+==1630101==    by 0x50A9897: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A9897: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A9897: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:pmDiscoverNewSource
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 10,618 bytes in 721 blocks are possibly lost in loss record 228 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x507ABAE: annotate_metric (schema.c:469)
+==1630101==    by 0x62ED1BB: stash_label (labels.c:444)
+==1630101==    by 0x62ED561: __pmMergeLabelSets (labels.c:899)
+==1630101==    by 0x62EEDEF: pmMergeLabelSets (labels.c:1011)
+==1630101==    by 0x5083D05: instance_labelsets (util.c:252)
+==1630101==    by 0x507C236: series_instance_label_mapping (schema.c:682)
+==1630101==    by 0x507C436: keys_series_metric (schema.c:744)
+==1630101==    by 0x5080554: server_cache_metric (load.c:45)
+==1630101==    by 0x5080554: series_cache_update (load.c:502)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:annotate_metric
+   fun:stash_label
+   fun:__pmMergeLabelSets
+   fun:pmMergeLabelSets
+   fun:instance_labelsets
+   fun:series_instance_label_mapping
+   fun:keys_series_metric
+   fun:server_cache_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+}
+==1630101== 35,127 bytes in 1,414 blocks are possibly lost in loss record 238 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50862CC: pmwebapi_new_metric (util.c:1163)
+==1630101==    by 0x50862CC: pmwebapi_new_metric (util.c:1134)
+==1630101==    by 0x5081EBA: pmSeriesDiscoverMetric (load.c:1432)
+==1630101==    by 0x50A7650: pmDiscoverInvokeMetricCallBacks (discover.c:774)
+==1630101==    by 0x50A7650: process_metadata (discover.c:1323)
+==1630101==    by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+==1630101==    by 0x50A98E5: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A98E5: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_new_metric
+   fun:pmwebapi_new_metric
+   fun:pmSeriesDiscoverMetric
+   fun:pmDiscoverInvokeMetricCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== 35,127 bytes in 1,414 blocks are possibly lost in loss record 239 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x508976D: dictAddRaw (dict.c:310)
+==1630101==    by 0x5089804: dictAdd (dict.c:261)
+==1630101==    by 0x5086396: pmwebapi_new_metric (util.c:1179)
+==1630101==    by 0x5086396: pmwebapi_new_metric (util.c:1134)
+==1630101==    by 0x5081EBA: pmSeriesDiscoverMetric (load.c:1432)
+==1630101==    by 0x50A7650: pmDiscoverInvokeMetricCallBacks (discover.c:774)
+==1630101==    by 0x50A7650: process_metadata (discover.c:1323)
+==1630101==    by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+==1630101==    by 0x50A98E5: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A98E5: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:dictAddRaw
+   fun:dictAdd
+   fun:pmwebapi_new_metric
+   fun:pmwebapi_new_metric
+   fun:pmSeriesDiscoverMetric
+   fun:pmDiscoverInvokeMetricCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+}
+==1630101== 39,864 bytes in 4,190 blocks are possibly lost in loss record 242 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x507AB9A: annotate_metric (schema.c:468)
+==1630101==    by 0x62ED1BB: stash_label (labels.c:444)
+==1630101==    by 0x62ED561: __pmMergeLabelSets (labels.c:899)
+==1630101==    by 0x62EEDEF: pmMergeLabelSets (labels.c:1011)
+==1630101==    by 0x5083C63: metric_labelsets (util.c:231)
+==1630101==    by 0x507C186: series_metric_label_mapping (schema.c:669)
+==1630101==    by 0x507C506: keys_series_metric (schema.c:726)
+==1630101==    by 0x5080554: server_cache_metric (load.c:45)
+==1630101==    by 0x5080554: series_cache_update (load.c:502)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:annotate_metric
+   fun:stash_label
+   fun:__pmMergeLabelSets
+   fun:pmMergeLabelSets
+   fun:metric_labelsets
+   fun:series_metric_label_mapping
+   fun:keys_series_metric
+   fun:server_cache_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+}
+==1630101== 61,361 bytes in 4,190 blocks are possibly lost in loss record 244 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x507ABAE: annotate_metric (schema.c:469)
+==1630101==    by 0x62ED1BB: stash_label (labels.c:444)
+==1630101==    by 0x62ED561: __pmMergeLabelSets (labels.c:899)
+==1630101==    by 0x62EEDEF: pmMergeLabelSets (labels.c:1011)
+==1630101==    by 0x5083C63: metric_labelsets (util.c:231)
+==1630101==    by 0x507C186: series_metric_label_mapping (schema.c:669)
+==1630101==    by 0x507C506: keys_series_metric (schema.c:726)
+==1630101==    by 0x5080554: server_cache_metric (load.c:45)
+==1630101==    by 0x5080554: series_cache_update (load.c:502)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:annotate_metric
+   fun:stash_label
+   fun:__pmMergeLabelSets
+   fun:pmMergeLabelSets
+   fun:metric_labelsets
+   fun:series_metric_label_mapping
+   fun:keys_series_metric
+   fun:server_cache_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+}
+==1630101== 99,869 bytes in 713 blocks are possibly lost in loss record 249 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x50848DA: pmwebapi_instance_hash (util.c:531)
+==1630101==    by 0x50858E9: pmwebapi_new_instance (util.c:1000)
+==1630101==    by 0x5085A39: pmwebapi_add_instance (util.c:1025)
+==1630101==    by 0x50820DD: pmSeriesDiscoverInDom (load.c:1501)
+==1630101==    by 0x50A74E9: pmDiscoverInvokeInDomCallBacks (discover.c:1026)
+==1630101==    by 0x50A74E9: process_metadata (discover.c:1337)
+==1630101==    by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+==1630101==    by 0x50A98E5: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A98E5: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_instance_hash
+   fun:pmwebapi_new_instance
+   fun:pmwebapi_add_instance
+   fun:pmSeriesDiscoverInDom
+   fun:pmDiscoverInvokeInDomCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+}
+==1630101== 118,755 bytes in 891 blocks are possibly lost in loss record 250 of 253
+==1630101==    at 0x4C39185: malloc (vg_replace_malloc.c:442)
+==1630101==    by 0x5096695: UnknownInlinedFun (alloc.h:58)
+==1630101==    by 0x5096695: sdsnewlen (sds.c:93)
+==1630101==    by 0x508469D: pmwebapi_metric_hash (util.c:482)
+==1630101==    by 0x5080602: series_cache_update (load.c:485)
+==1630101==    by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+==1630101==    by 0x50A99EC: process_logvol (discover.c:1527)
+==1630101==    by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+==1630101==    by 0x50A99EC: directory_changed_cb (discover.c:1711)
+==1630101==    by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+==1630101==    by 0x50A99EC: changed_callback (discover.c:1772)
+==1630101==    by 0x50A8D05: fs_change_callBack (discover.c:459)
+==1630101==    by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1630101==    by 0x1125D4: main_loop (server.c:903)
+==1630101==    by 0x1119A9: main (pmproxy.c:465)
+==1630101== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_metric_hash
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1630101== LEAK SUMMARY:
+==1630101==    definitely lost: 1,664 bytes in 2 blocks
+==1630101==    indirectly lost: 6,431 bytes in 174 blocks
+==1630101==      possibly lost: 417,800 bytes in 15,027 blocks
+==1630101==    still reachable: 1,413,498 bytes in 29,779 blocks
+==1630101==         suppressed: 0 bytes in 0 blocks
+==1630101== Reachable blocks (those to which a pointer was found) are not shown.
+==1630101== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1630101== 
+==1630101== For lists of detected and suppressed errors, rerun with: -s
+==1630101== ERROR SUMMARY: 26 errors from 26 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: /usr/libexec/pcp/bin/pmproxy -f -t -A -c /var/tmp/1662-1629953.conf -U pcpqa -T 10sec -l /var/tmp/1662-1629953.pmproxy -r 54322 -p 54323 -s /var/tmp/1662-1629953.pmproxy.sock
+9 bytes in 1 blocks are possibly lost in loss record 20 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x5085A2A: pmwebapi_add_instance (util.c:1025)
+by 0x5085C54: pmwebapi_add_indom_instances (util.c:1076)
+by 0x5080857: get_instance_metadata (load.c:130)
+by 0x5080857: series_cache_update (load.c:499)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_add_instance
+   fun:pmwebapi_add_indom_instances
+   fun:get_instance_metadata
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+}
+28 bytes in 2 blocks are possibly lost in loss record 49 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50A5EB2: pmDiscoverNewSource (discover.c:1168)
+by 0x50A9897: pmDiscoverInvokeCallBacks (discover.c:1607)
+by 0x50A9897: directory_changed_cb (discover.c:1711)
+by 0x50A9897: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A9897: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmDiscoverNewSource
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+28 bytes in 2 blocks are possibly lost in loss record 50 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50815C2: pmSeriesDiscoverSource (load.c:1240)
+by 0x50A5D4B: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+by 0x50A7A04: process_metadata (discover.c:1374)
+by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+by 0x50A98E5: directory_changed_cb (discover.c:1711)
+by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A98E5: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+28 bytes in 2 blocks are possibly lost in loss record 51 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x507F9DC: set_source_origin (load.c:872)
+by 0x50815F5: pmSeriesDiscoverSource (load.c:1245)
+by 0x50A5D4B: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+by 0x50A7A04: process_metadata (discover.c:1374)
+by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+by 0x50A98E5: directory_changed_cb (discover.c:1711)
+by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A98E5: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:set_source_origin
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+}
+30 bytes in 1 blocks are possibly lost in loss record 54 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50A60F8: pmDiscoverLookupAdd (discover.c:80)
+by 0x50A88A8: pmDiscoverArchives (discover.c:273)
+by 0x50A9F35: pmDiscoverRegister (discover.c:1844)
+by 0x507EC81: pmDiscoverSetup (schema.c:2018)
+by 0x118EEB: on_key_server_connected (keys.c:174)
+by 0x507859D: keys_slots_finished (schema.c:57)
+by 0x5086E1A: keySlotsReplyCallback (slots.c:524)
+by 0x509EECF: redisClusterAsyncCallback (hircluster.c:3837)
+by 0x5091974: __redisRunCallback (async.c:287)
+by 0x5091974: redisProcessCallbacks (async.c:572)
+by 0x5086BE8: redisLibuvPoll (libuv.h:21)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmDiscoverLookupAdd
+   fun:pmDiscoverArchives
+   fun:pmDiscoverRegister
+   fun:pmDiscoverSetup
+   fun:on_key_server_connected
+   fun:keys_slots_finished
+   fun:keySlotsReplyCallback
+   fun:redisClusterAsyncCallback
+   fun:__redisRunCallback
+   fun:redisProcessCallbacks
+   fun:redisLibuvPoll
+}
+37 bytes in 1 blocks are possibly lost in loss record 59 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50A60F8: pmDiscoverLookupAdd (discover.c:80)
+by 0x50A8A49: pmDiscoverArchives (discover.c:306)
+by 0x50A9F35: pmDiscoverRegister (discover.c:1844)
+by 0x507EC81: pmDiscoverSetup (schema.c:2018)
+by 0x118EEB: on_key_server_connected (keys.c:174)
+by 0x507859D: keys_slots_finished (schema.c:57)
+by 0x5086E1A: keySlotsReplyCallback (slots.c:524)
+by 0x509EECF: redisClusterAsyncCallback (hircluster.c:3837)
+by 0x5091974: __redisRunCallback (async.c:287)
+by 0x5091974: redisProcessCallbacks (async.c:572)
+by 0x5086BE8: redisLibuvPoll (libuv.h:21)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmDiscoverLookupAdd
+   fun:pmDiscoverArchives
+   fun:pmDiscoverRegister
+   fun:pmDiscoverSetup
+   fun:on_key_server_connected
+   fun:keys_slots_finished
+   fun:keySlotsReplyCallback
+   fun:redisClusterAsyncCallback
+   fun:__redisRunCallback
+   fun:redisProcessCallbacks
+   fun:redisLibuvPoll
+}
+38 bytes in 1 blocks are possibly lost in loss record 60 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50A60F8: pmDiscoverLookupAdd (discover.c:80)
+by 0x50A8A49: pmDiscoverArchives (discover.c:306)
+by 0x50A914F: changed_callback (discover.c:1765)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmDiscoverLookupAdd
+   fun:pmDiscoverArchives
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+75 bytes in 2 blocks are possibly lost in loss record 93 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50815B2: pmSeriesDiscoverSource (load.c:1239)
+by 0x50A5D4B: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+by 0x50A7A04: process_metadata (discover.c:1374)
+by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+by 0x50A98E5: directory_changed_cb (discover.c:1711)
+by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A98E5: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+88 bytes in 2 blocks are possibly lost in loss record 101 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50840C3: pmwebapi_hash_sds (util.c:401)
+by 0x50A77D9: process_metadata (discover.c:1365)
+by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+by 0x50A98E5: directory_changed_cb (discover.c:1711)
+by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A98E5: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_hash_sds
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+120 bytes in 1 blocks are possibly lost in loss record 113 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50848DA: pmwebapi_instance_hash (util.c:531)
+by 0x50858E9: pmwebapi_new_instance (util.c:1000)
+by 0x5085A39: pmwebapi_add_instance (util.c:1025)
+by 0x5085C54: pmwebapi_add_indom_instances (util.c:1076)
+by 0x5080857: get_instance_metadata (load.c:130)
+by 0x5080857: series_cache_update (load.c:499)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_instance_hash
+   fun:pmwebapi_new_instance
+   fun:pmwebapi_add_instance
+   fun:pmwebapi_add_indom_instances
+   fun:get_instance_metadata
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+}
+172 bytes in 10 blocks are possibly lost in loss record 131 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50862CC: pmwebapi_new_metric (util.c:1163)
+by 0x50862CC: pmwebapi_new_metric (util.c:1134)
+by 0x50807F1: new_metric (load.c:193)
+by 0x50807F1: series_cache_update (load.c:480)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_new_metric
+   fun:pmwebapi_new_metric
+   fun:new_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+172 bytes in 10 blocks are possibly lost in loss record 132 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x508976D: dictAddRaw (dict.c:310)
+by 0x5089804: dictAdd (dict.c:261)
+by 0x5086396: pmwebapi_new_metric (util.c:1179)
+by 0x5086396: pmwebapi_new_metric (util.c:1134)
+by 0x50807F1: new_metric (load.c:193)
+by 0x50807F1: series_cache_update (load.c:480)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:dictAddRaw
+   fun:dictAdd
+   fun:pmwebapi_new_metric
+   fun:pmwebapi_new_metric
+   fun:new_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+}
+176 bytes in 1 blocks are possibly lost in loss record 133 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5086C6F: UnknownInlinedFun (alloc.h:58)
+by 0x5086C6F: redisLibuvAttach (libuv.h:101)
+by 0x5086C6F: redisLibuvAttach_link (libuv.h:38)
+by 0x50A4255: actx_get_by_node (hircluster.c:3695)
+by 0x50A4255: actx_get_by_node (hircluster.c:3619)
+by 0x50A4F38: redisClusterAsyncFormattedCommandToNode (hircluster.c:4168)
+by 0x5087F56: keySlotsRequestFirstNode (slots.c:620)
+by 0x5078F99: keys_load_version (schema.c:1313)
+by 0x5087D57: keySlotsConnect (slots.c:394)
+by 0x119398: setup_keys_module (keys.c:229)
+by 0x112637: setup_proxy (server.c:843)
+by 0x5C83317: uv__run_timers (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C879E4: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:redisLibuvAttach
+   fun:redisLibuvAttach_link
+   fun:actx_get_by_node
+   fun:actx_get_by_node
+   fun:redisClusterAsyncFormattedCommandToNode
+   fun:keySlotsRequestFirstNode
+   fun:keys_load_version
+   fun:keySlotsConnect
+   fun:setup_keys_module
+   fun:setup_proxy
+   fun:uv__run_timers
+   fun:uv_run
+   fun:main_loop
+}
+310 bytes in 11 blocks are possibly lost in loss record 172 of 253
+at 0x4C40B77: realloc (vg_replace_malloc.c:1690)
+by 0x5096B70: UnknownInlinedFun (alloc.h:66)
+by 0x5096B70: sdsMakeRoomFor (sds.c:223)
+by 0x509742B: sdscatlen (sds.c:381)
+by 0x50979CC: sdscatvprintf (sds.c:535)
+by 0x5097A87: sdscatprintf (sds.c:560)
+by 0x508B423: unicode_encode (encoding.c:106)
+by 0x507EF72: pmwebapi_extract_value (load.c:362)
+by 0x5080048: pmwebapi_add_valueset (load.c:430)
+by 0x508050E: series_cache_update (load.c:491)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:realloc
+   fun:UnknownInlinedFun
+   fun:sdsMakeRoomFor
+   fun:sdscatlen
+   fun:sdscatvprintf
+   fun:sdscatprintf
+   fun:unicode_encode
+   fun:pmwebapi_extract_value
+   fun:pmwebapi_add_valueset
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+}
+1,164 bytes in 3 blocks are possibly lost in loss record 197 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096A82: UnknownInlinedFun (alloc.h:58)
+by 0x5096A82: sdsMakeRoomFor (sds.c:229)
+by 0x509742B: sdscatlen (sds.c:381)
+by 0x50979CC: sdscatvprintf (sds.c:535)
+by 0x5097A87: sdscatprintf (sds.c:560)
+by 0x508B423: unicode_encode (encoding.c:106)
+by 0x507EF72: pmwebapi_extract_value (load.c:362)
+by 0x5080048: pmwebapi_add_valueset (load.c:430)
+by 0x508050E: series_cache_update (load.c:491)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsMakeRoomFor
+   fun:sdscatlen
+   fun:sdscatvprintf
+   fun:sdscatprintf
+   fun:unicode_encode
+   fun:pmwebapi_extract_value
+   fun:pmwebapi_add_valueset
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+}
+1,200 bytes in 10 blocks are possibly lost in loss record 198 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x508469D: pmwebapi_metric_hash (util.c:482)
+by 0x508081F: new_metric (load.c:198)
+by 0x508081F: series_cache_update (load.c:480)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_metric_hash
+   fun:new_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+6,099 bytes in 713 blocks are possibly lost in loss record 219 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x5085A2A: pmwebapi_add_instance (util.c:1025)
+by 0x50820DD: pmSeriesDiscoverInDom (load.c:1501)
+by 0x50A74E9: pmDiscoverInvokeInDomCallBacks (discover.c:1026)
+by 0x50A74E9: process_metadata (discover.c:1337)
+by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+by 0x50A98E5: directory_changed_cb (discover.c:1711)
+by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A98E5: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_add_instance
+   fun:pmSeriesDiscoverInDom
+   fun:pmDiscoverInvokeInDomCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+7,305 bytes in 721 blocks are possibly lost in loss record 223 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x507AB9A: annotate_metric (schema.c:468)
+by 0x62ED1BB: stash_label (labels.c:444)
+by 0x62ED561: __pmMergeLabelSets (labels.c:899)
+by 0x62EEDEF: pmMergeLabelSets (labels.c:1011)
+by 0x5083D05: instance_labelsets (util.c:252)
+by 0x507C236: series_instance_label_mapping (schema.c:682)
+by 0x507C436: keys_series_metric (schema.c:744)
+by 0x5080554: server_cache_metric (load.c:45)
+by 0x5080554: series_cache_update (load.c:502)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:annotate_metric
+   fun:stash_label
+   fun:__pmMergeLabelSets
+   fun:pmMergeLabelSets
+   fun:instance_labelsets
+   fun:series_instance_label_mapping
+   fun:keys_series_metric
+   fun:server_cache_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+}
+8,095 (1,664 direct, 6,431 indirect) bytes in 2 blocks are definitely lost in loss record 224 of 253
+at 0x4C40963: calloc (vg_replace_malloc.c:1595)
+by 0x508151E: pmSeriesDiscoverSource (load.c:1212)
+by 0x50A5D4B: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+by 0x50A5EE3: pmDiscoverNewSource (discover.c:1186)
+by 0x50A9897: pmDiscoverInvokeCallBacks (discover.c:1607)
+by 0x50A9897: directory_changed_cb (discover.c:1711)
+by 0x50A9897: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A9897: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:pmDiscoverNewSource
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+10,618 bytes in 721 blocks are possibly lost in loss record 228 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x507ABAE: annotate_metric (schema.c:469)
+by 0x62ED1BB: stash_label (labels.c:444)
+by 0x62ED561: __pmMergeLabelSets (labels.c:899)
+by 0x62EEDEF: pmMergeLabelSets (labels.c:1011)
+by 0x5083D05: instance_labelsets (util.c:252)
+by 0x507C236: series_instance_label_mapping (schema.c:682)
+by 0x507C436: keys_series_metric (schema.c:744)
+by 0x5080554: server_cache_metric (load.c:45)
+by 0x5080554: series_cache_update (load.c:502)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:annotate_metric
+   fun:stash_label
+   fun:__pmMergeLabelSets
+   fun:pmMergeLabelSets
+   fun:instance_labelsets
+   fun:series_instance_label_mapping
+   fun:keys_series_metric
+   fun:server_cache_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+}
+35,127 bytes in 1,414 blocks are possibly lost in loss record 238 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50862CC: pmwebapi_new_metric (util.c:1163)
+by 0x50862CC: pmwebapi_new_metric (util.c:1134)
+by 0x5081EBA: pmSeriesDiscoverMetric (load.c:1432)
+by 0x50A7650: pmDiscoverInvokeMetricCallBacks (discover.c:774)
+by 0x50A7650: process_metadata (discover.c:1323)
+by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+by 0x50A98E5: directory_changed_cb (discover.c:1711)
+by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A98E5: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_new_metric
+   fun:pmwebapi_new_metric
+   fun:pmSeriesDiscoverMetric
+   fun:pmDiscoverInvokeMetricCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+35,127 bytes in 1,414 blocks are possibly lost in loss record 239 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x508976D: dictAddRaw (dict.c:310)
+by 0x5089804: dictAdd (dict.c:261)
+by 0x5086396: pmwebapi_new_metric (util.c:1179)
+by 0x5086396: pmwebapi_new_metric (util.c:1134)
+by 0x5081EBA: pmSeriesDiscoverMetric (load.c:1432)
+by 0x50A7650: pmDiscoverInvokeMetricCallBacks (discover.c:774)
+by 0x50A7650: process_metadata (discover.c:1323)
+by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+by 0x50A98E5: directory_changed_cb (discover.c:1711)
+by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A98E5: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:dictAddRaw
+   fun:dictAdd
+   fun:pmwebapi_new_metric
+   fun:pmwebapi_new_metric
+   fun:pmSeriesDiscoverMetric
+   fun:pmDiscoverInvokeMetricCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+}
+39,864 bytes in 4,190 blocks are possibly lost in loss record 242 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x507AB9A: annotate_metric (schema.c:468)
+by 0x62ED1BB: stash_label (labels.c:444)
+by 0x62ED561: __pmMergeLabelSets (labels.c:899)
+by 0x62EEDEF: pmMergeLabelSets (labels.c:1011)
+by 0x5083C63: metric_labelsets (util.c:231)
+by 0x507C186: series_metric_label_mapping (schema.c:669)
+by 0x507C506: keys_series_metric (schema.c:726)
+by 0x5080554: server_cache_metric (load.c:45)
+by 0x5080554: series_cache_update (load.c:502)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:annotate_metric
+   fun:stash_label
+   fun:__pmMergeLabelSets
+   fun:pmMergeLabelSets
+   fun:metric_labelsets
+   fun:series_metric_label_mapping
+   fun:keys_series_metric
+   fun:server_cache_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+}
+61,361 bytes in 4,190 blocks are possibly lost in loss record 244 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x507ABAE: annotate_metric (schema.c:469)
+by 0x62ED1BB: stash_label (labels.c:444)
+by 0x62ED561: __pmMergeLabelSets (labels.c:899)
+by 0x62EEDEF: pmMergeLabelSets (labels.c:1011)
+by 0x5083C63: metric_labelsets (util.c:231)
+by 0x507C186: series_metric_label_mapping (schema.c:669)
+by 0x507C506: keys_series_metric (schema.c:726)
+by 0x5080554: server_cache_metric (load.c:45)
+by 0x5080554: series_cache_update (load.c:502)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:annotate_metric
+   fun:stash_label
+   fun:__pmMergeLabelSets
+   fun:pmMergeLabelSets
+   fun:metric_labelsets
+   fun:series_metric_label_mapping
+   fun:keys_series_metric
+   fun:server_cache_metric
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+}
+99,869 bytes in 713 blocks are possibly lost in loss record 249 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x50848DA: pmwebapi_instance_hash (util.c:531)
+by 0x50858E9: pmwebapi_new_instance (util.c:1000)
+by 0x5085A39: pmwebapi_add_instance (util.c:1025)
+by 0x50820DD: pmSeriesDiscoverInDom (load.c:1501)
+by 0x50A74E9: pmDiscoverInvokeInDomCallBacks (discover.c:1026)
+by 0x50A74E9: process_metadata (discover.c:1337)
+by 0x50A98E5: pmDiscoverInvokeCallBacks (discover.c:1633)
+by 0x50A98E5: directory_changed_cb (discover.c:1711)
+by 0x50A98E5: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A98E5: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_instance_hash
+   fun:pmwebapi_new_instance
+   fun:pmwebapi_add_instance
+   fun:pmSeriesDiscoverInDom
+   fun:pmDiscoverInvokeInDomCallBacks
+   fun:process_metadata
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+}
+118,755 bytes in 891 blocks are possibly lost in loss record 250 of 253
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096695: UnknownInlinedFun (alloc.h:58)
+by 0x5096695: sdsnewlen (sds.c:93)
+by 0x508469D: pmwebapi_metric_hash (util.c:482)
+by 0x5080602: series_cache_update (load.c:485)
+by 0x50A6017: pmDiscoverInvokeValuesCallBack (discover.c:699)
+by 0x50A99EC: process_logvol (discover.c:1527)
+by 0x50A99EC: pmDiscoverInvokeCallBacks (discover.c:1664)
+by 0x50A99EC: directory_changed_cb (discover.c:1711)
+by 0x50A99EC: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A99EC: changed_callback (discover.c:1772)
+by 0x50A8D05: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1125D4: main_loop (server.c:903)
+by 0x1119A9: main (pmproxy.c:465)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:UnknownInlinedFun
+   fun:sdsnewlen
+   fun:pmwebapi_metric_hash
+   fun:series_cache_update
+   fun:pmDiscoverInvokeValuesCallBack
+   fun:process_logvol
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+LEAK SUMMARY:
+definitely lost: 1,664 bytes in 2 blocks
+indirectly lost: 6,431 bytes in 174 blocks
+ERROR SUMMARY: 26 errors from 26 contexts ...
+time_stamp: step 7 delta 10.791157 secs tag pmproxy exited
+=== key server log ===
+1630058:C 22 Jan 2025 20:39:48.875 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1630058:C 22 Jan 2025 20:39:48.875 # Redis version=5.0.3, bits=64, commit=00000000, modified=0, pid=1630058, just started
+1630058:C 22 Jan 2025 20:39:48.875 # Configuration loaded
+1630058:M 22 Jan 2025 20:39:48.876 * Running mode=standalone, port=54322.
+1630058:M 22 Jan 2025 20:39:48.876 # Server initialized
+1630058:M 22 Jan 2025 20:39:48.876 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1630058:M 22 Jan 2025 20:39:48.876 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+1630058:M 22 Jan 2025 20:39:48.876 * Ready to accept connections
+=== pmlogger log ===
+Log for pmlogger on 7509fc87a500 started Wed Jan 22 20:39:48 2025
+
+[Wed Jan 22 20:39:48] pmlogger(1630072) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "7509fc87a500" via "local:"
+Archive basename: /var/tmp/1662-1629953.qa1662/test
+New log volume 1, via sample byte size at Wed Jan 22 20:39:49 2025
+New log volume 2, via sample byte size at Wed Jan 22 20:39:49 2025
+New log volume 3, via sample byte size at Wed Jan 22 20:39:49 2025
+New log volume 4, via sample byte size at Wed Jan 22 20:39:51 2025
+New log volume 5, via sample byte size at Wed Jan 22 20:39:54 2025
+New log volume 6, via sample byte size at Wed Jan 22 20:39:56 2025
+[Wed Jan 22 20:39:58] pmlogger(1630072) Info: pmlogger: End of run time, exiting
+
+Log finished Wed Jan 22 20:39:58 2025
+=== pmlogger2 log ===
+Log for pmlogger on 7509fc87a500 started Wed Jan 22 20:39:51 2025
+
+[Wed Jan 22 20:39:51] pmlogger(1630104) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/tmp/1662-1629953.sample
+Warning [/var/tmp/1662-1629953.sample, line 1]
+Description unavailable for metric "sample.bad.unknown" ... not logged
+Reason: Unknown or illegal metric identifier
+Config parsed
+Starting logger for host "7509fc87a500" via "local:"
+Archive basename: /var/tmp/1662-1629953.qa1662/test2
+New log volume 1, via sample byte size at Wed Jan 22 20:39:51 2025
+New log volume 2, via sample byte size at Wed Jan 22 20:39:53 2025
+New log volume 3, via sample byte size at Wed Jan 22 20:39:54 2025
+[Wed Jan 22 20:39:55] pmlogger(1630104) Info: pmlogger: End of run time, exiting
+
+Log finished Wed Jan 22 20:39:55 2025
+=== pmproxy log ===
+Log for pmproxy on 7509fc87a500 started Wed Jan 22 20:39:49 2025
+
+[Wed Jan 22 20:39:49] pmproxy(1630101) Error: pmWebTimerSetMetricRegistry: server instrumentation disabled
+pmproxy: PID = 1630101, PDU version = 2, user = pcpqa (989)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /var/tmp/1662-1629953.pmproxy.sock
+  ok    12 54323 inet   INADDR_ANY
+  ok    13 54323 ipv6   INADDR_ANY
+[Wed Jan 22 20:39:49] pmproxy(1630101) Info: Key server slots, schema version setup
+[Wed Jan 22 20:39:58] pmproxy(1630101) Error: stream eea3401723f76cb8c5e7784497375e5584103036 status mismatch at time 1737578398109-948
+RESP reply error: ERR wrong number of arguments for XADD
+[Wed Jan 22 20:39:58] pmproxy(1630101) Error: stream 04ce9d634d5d775ae5848235418be4e2de28e176 status mismatch at time 1737578398109-948
+RESP reply error: ERR wrong number of arguments for XADD
+[Wed Jan 22 20:39:58] pmproxy(1630101) Error: stream 0dd0734d5fec385baca99acfcb2baead103aac2d status mismatch at time 1737578398109-948
+RESP reply error: ERR wrong number of arguments for XADD
+
+Log finished Wed Jan 22 20:39:59 2025

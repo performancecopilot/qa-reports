@@ -1,0 +1,57 @@
++++ before pcp start ...
++++
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 4564914dde89
+PMCD host        4564914dde89
+log started      Wed Jan 29 19:03:18.700984821 2025 (times in local time)
+last log entry   Wed Jan 29 19:03:18.700984821 2025
+current time     Wed Jan 29 19:03:18.745089019 2025
+log volume       0
+log size         1028
++++ after pcp start ...
++++
++++ before pmlogger_check ...
++++
+
+=== pmlogger_check ===
++++ after pmlogger_check ...
++++
+Restarting pmlogger for host "no.such.host.pcp.io" ... process exited!
+pmlogger_check: Error: failed to restart pmlogger
+Current pmlogger processes:
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       459663       1  0 19:03 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -N -P -d "/var/log/pcp/pmlogger_qa/LOCALHOSTNAME-one" -c /dev/null -m pmlogger_check %Y%m%d.%H.%M
+pcp       459839       1  0 19:03 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -h local: -d "/var/log/pcp/pmlogger_qa/LOCALHOSTNAME-two" -c /dev/null -L -m pmlogger_check %Y%m%d.%H.%M
+
+Contents of pmlogger output file "pmlogger.log" ...
+Log for pmlogger on 4564914dde89 started Wed Jan 29 19:03:19 2025
+
+[Wed Jan 29 19:03:19] pmlogger(460596) Info: Start
+pmlogger: Cannot connect to PMCD on host "no.such.host.pcp.io": No route to host
+
+Log finished Wed Jan 29 19:03:19 2025
+
+=== pmlogger_check -T ===
+Restarting pmlogger for host "no.such.host.pcp.io" ... process exited!
+Contents of pmlogger output file "pmlogger.log" ...
+Log for pmlogger on 4564914dde89 started Wed Jan 29 19:03:19 2025
+
+[Wed Jan 29 19:03:19] pmlogger(461519) Info: Start
+pmlogger: Cannot connect to PMCD on host "no.such.host.pcp.io": No route to host
+
+Log finished Wed Jan 29 19:03:19 2025
+_service pcp restart: expecting pmlogger state "active", found state "failed"
+× pmlogger.service - Performance Metrics Archive Logger
+     Loaded: loaded (/usr/lib/systemd/system/pmlogger.service; enabled; preset: enabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             └─10-timeout-abort.conf
+     Active: failed (Result: protocol) since Wed 2025-01-29 19:04:05 UTC; 33ms ago
+   Duration: 2.739s
+       Docs: man:pmlogger(1)
+    Process: 462618 ExecStart=/etc/pcp/pmlogger/rc start-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 462618 (code=exited, status=0/SUCCESS)
+
+Jan 29 19:03:21 4564914dde89 systemd[1]: Starting pmlogger.service - Performance Metrics Archive Logger...
+Jan 29 19:04:05 4564914dde89 systemd[1]: pmlogger.service: Failed with result 'protocol'.
+Jan 29 19:04:05 4564914dde89 systemd[1]: Failed to start pmlogger.service - Performance Metrics Archive Logger.

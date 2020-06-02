@@ -1,0 +1,162 @@
+QA output created by 1290
+[Thu Jan 30 20:25:05] pmcd_wait(1547199) Warning: __pmConnectPMCD: bad version string from pmproxy: ""
+
++++ pminfo -h MY_HOSTNAME -d pmcd.agent +++
+pminfo: Cannot connect to PMCD on host "MY_HOSTNAME": Connection refused
+N connects
+N-0 disconnects
+
++++ pminfo -h MY_HOSTNAME -f sample.hordes +++
+pminfo: Cannot connect to PMCD on host "MY_HOSTNAME": Connection refused
+N connects
+N-0 disconnects
+
++++ pmprobe -v -h MY_HOSTNAME hinv.ncpu +++
+pmprobe: Cannot connect to PMCD on host "MY_HOSTNAME": Connection refused
+N connects
+N-0 disconnects
+
++++ pmval -h MY_HOSTNAME -t 0.5 -s 3 sample.bin +++
+pmval: Cannot connect to PMCD on host "MY_HOSTNAME": Connection refused
+N connects
+N-0 disconnects
+
++++ pmie -h MY_HOSTNAME -c TMP.in -v -t 0.5 -T 1.75 +++
+[DATE] pmie(PID) Info: Cannot connect to pmcd MY_HOSTNAME
+pmie: warning - pmcd via MY_HOSTNAME does not respond
+expr_1: ?
+
+expr_1: ?
+
+expr_1: ?
+
+expr_1: ?
+
+[DATE] pmie(PID) Info: evaluator exiting
+N connects
+N-0 disconnects
+
++++ pmie -h MY_HOSTNAME -c TMP.in -v -t 0.5 -T 1.75 +++
+[DATE] pmie(PID) Info: Cannot connect to pmcd MY_HOSTNAME
+pmie: warning - pmcd via MY_HOSTNAME does not respond
+expr_1: ?
+
+expr_1: ?
+
+expr_1: ?
+
+expr_1: ?
+
+[DATE] pmie(PID) Info: evaluator exiting
+N connects
+N-0 disconnects
+
++++ pmdumptext -h MY_HOSTNAME -t 0.5 -s 2 sample.string.hullo +++
+pmdumptext: Error: MY_HOSTNAME: Connection refused
+N connects
+N-0 disconnects
+
++++ pmdumptext -t 0.5 -s 2 MY_HOSTNAME:sample.string.hullo +++
+pmdumptext: Error: MY_HOSTNAME: Connection refused
+pmdumptext: no valid metrics, exiting.
+N connects
+N-0 disconnects
+
++++ pmdumptext -t 0.5 -s 2 MY_HOSTNAME:kernel.all.load +++
+pmdumptext: Error: MY_HOSTNAME: Connection refused
+pmdumptext: no valid metrics, exiting.
+N connects
+N-0 disconnects
+
++++ pmstat -h MY_HOSTNAME -t 0.5 -s 2 +++
+pmstat: Cannot create fetchgroup: Connection refused
+pmstat: No place to get data from!
+N connects
+N-0 disconnects
+
++++ pmlogger -h MY_HOSTNAME -c TMP.logger.config -t 0.5sec -s 8 -l TMP.logger.log TMP.arch +++
+N connects
+N-0 disconnects
+
++++ pmstat -t 0.5sec -a TMP.arch -z +++
+pmstat: Cannot create fetchgroup: No such file or directory
+pmstat: No place to get data from!
+N connects
+N-0 disconnects
+
+=== pmproxy std out ===
+=== pmproxy std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -Dcontext -U USERNAME -l TMP.log
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+Invalid read of size 1
+at 0x489E273: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48BBBEC: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48BC742: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x4C77EFA: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4C76B8F: uv__io_poll (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4C6685B: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x112954: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x111D09: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x4DAF082: (below main) (libc-start.c:308)
+Address 0x3 is not stack'd, malloc'd or (recently) free'd
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   obj:PCP_BINADM_DIR/pmproxy
+   obj:PCP_BINADM_DIR/pmproxy
+   fun:(below main)
+}
+Process terminating with default action of signal 11 (SIGSEGV)
+Access not within mapped region at address 0x3
+at 0x489E273: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48BBBEC: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48BC742: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x4C77EFA: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4C76B8F: uv__io_poll (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4C6685B: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x112954: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x111D09: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x4DAF082: (below main) (libc-start.c:308)
+If you believe this happened as a result of a stack
+overflow in your program's main thread (unlikely but
+possible), you can try to increase the size of the
+main thread stack using the --main-stacksize= flag.
+The main thread stack size used in this run was 16777216.
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+1 errors in context 1 of 137:
+Invalid read of size 1
+at 0x489E273: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48BBBEC: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48BC742: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x4C77EFA: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4C76B8F: uv__io_poll (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4C6685B: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x112954: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x111D09: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x4DAF082: (below main) (libc-start.c:308)
+Address 0x3 is not stack'd, malloc'd or (recently) free'd
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   obj:PCP_BINADM_DIR/pmproxy
+   obj:PCP_BINADM_DIR/pmproxy
+   fun:(below main)
+}
