@@ -1,0 +1,6099 @@
+hostname=9cb9924f8c77
+pmproxy_was_running=false
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+== pmproxy not running ==
+== simplest default case ==
+startup delay i=1
+sample.long.hundred 1 100
+sts=1
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       805048       1  3 20:01 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       807307       1  0 20:01 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -l /tmp/651-807190.log -Dcontext -U pcp
+pcpqa     807314  807190  0 20:01 ?        00:00:00 grep -E PID|pmproxy|pmcd
+== simple explicit host case ==
+== non-standard PMPROXY_PORT, expect failure ==
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+1st pmproxy log ...
+Log for pmproxy on 9cb9924f8c77 started Fri Mar  6 20:01:44 2026
+
+Warning: nports=1 from PMPROXY_PORT=44322 in environment
+pmproxy: PID = 807307, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   INADDR_ANY
+  ok    11 44322 ipv6   INADDR_ANY
+[Fri Mar  6 20:01:44] pmproxy(807307) Info: Key server slots, schema version setup
+on_client_connection: accept new client 0x557bd2b003a0
+pcp_client_connect_pmcd: connecting to pmcd on host 9cb9924f8c77, port 44321
+on_client_close: client 0x557bd2b003a0 connection closed
+on_client_connection: accept new client 0x557bd2b00cc0
+pcp_client_connect_pmcd: connecting to pmcd on host 9cb9924f8c77, port 44321
+on_client_close: client 0x557bd2b00cc0 connection closed
+on_client_connection: accept new client 0x557bd2b00fd0
+pcp_client_connect_pmcd: connecting to pmcd on host localhost, port 44321
+on_client_close: client 0x557bd2b00fd0 connection closed
+[Fri Mar  6 20:01:44] pmproxy(807307) Info: pmproxy caught SIGTERM
+[Fri Mar  6 20:01:44] pmproxy(807307) Info: pmproxy Shutdown
+
+Log finished Fri Mar  6 20:01:44 2026
+== non-standard PMPROXY_PORT, expect success ==
+startup delay i=1
+sample.long.hundred 1 100
+sts=1
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       805048       1  3 20:01 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       807377       1  0 20:01 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -l /tmp/651-807190.log -Dcontext -U pcp
+pcpqa     807384  807190  0 20:01 ?        00:00:00 grep -E PID|pmproxy|pmcd
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+2nd pmproxy log ...
+Log for pmproxy on 9cb9924f8c77 started Fri Mar  6 20:01:44 2026
+
+Warning: nports=1 from PMPROXY_PORT=94322 in environment
+pmproxy: PID = 807377, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 28786 inet   INADDR_ANY
+  ok    11 28786 ipv6   INADDR_ANY
+[Fri Mar  6 20:01:44] pmproxy(807377) Info: Key server slots, schema version setup
+on_client_connection: accept new client 0x55d1dec273a0
+pcp_client_connect_pmcd: connecting to pmcd on host 9cb9924f8c77, port 44321
+on_client_close: client 0x55d1dec273a0 connection closed
+on_client_connection: accept new client 0x55d1dec27cc0
+pcp_client_connect_pmcd: connecting to pmcd on host 9cb9924f8c77, port 44321
+on_client_close: client 0x55d1dec27cc0 connection closed
+[Fri Mar  6 20:01:44] pmproxy(807377) Info: pmproxy caught SIGTERM
+[Fri Mar  6 20:01:44] pmproxy(807377) Info: pmproxy Shutdown
+
+Log finished Fri Mar  6 20:01:44 2026
+== restricted interface for connections, expect failure ==
+startup delay i=1
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+startup delay i=2
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+startup delay i=3
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+startup delay i=4
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+startup delay i=5
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+startup delay i=6
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+startup delay i=7
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+startup delay i=8
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+startup delay i=9
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+Failed to probe pmproxy
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       805048       1  1 20:01 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       807435       1  5 20:01 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -i 127.0.0.1 -l /tmp/651-807190.log -Dcontext -U pcp
+pcpqa     807473  807190  0 20:01 ?        00:00:00 grep -E PID|pmproxy|pmcd
+Log for pmproxy on 9cb9924f8c77 started Fri Mar  6 20:01:44 2026
+
+pmproxy: PID = 807435, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   127.0.0.1
+  ok    11 44323 inet   127.0.0.1
+[Fri Mar  6 20:01:44] pmproxy(807435) Info: Key server slots, schema version setup
+__pmSetVersionIPC: fd=14 version=2
+IPC table fd(PDU version): 14(2,0)
+__pmSetVersionIPC: fd=16 version=2
+IPC table fd(PDU version): 14(2,0) 16(2,0)
+__pmSetVersionIPC: fd=15 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00-01) -> 0
+Dump Contexts: current -> contexts[0] handle 0
+contexts[0] handle 0: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00-01: mode=FORW profile=NOT_SENT tifd=16 mdfd=15 mfd=14
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827259.800537649 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+__pmSetVersionIPC: fd=18 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0)
+__pmSetVersionIPC: fd=19 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0)
+__pmSetVersionIPC: fd=20 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54) -> 1
+Dump Contexts: current -> contexts[1] handle 1
+contexts[1] handle 1: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54: mode=FORW profile=NOT_SENT tifd=19 mdfd=20 mfd=18
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772826875.565678962 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+__pmSetVersionIPC: fd=22 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0)
+__pmSetVersionIPC: fd=24 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 24(2,0)
+__pmSetVersionIPC: fd=23 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54-00) -> 2
+Dump Contexts: current -> contexts[2] handle 2
+contexts[2] handle 2: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54-00: mode=FORW profile=NOT_SENT tifd=24 mdfd=23 mfd=22
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772826878.509613456 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+__pmSetVersionIPC: fd=26 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0)
+__pmSetVersionIPC: fd=28 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 28(2,0)
+__pmSetVersionIPC: fd=27 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.01) -> 3
+Dump Contexts: current -> contexts[3] handle 3
+contexts[3] handle 3: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.01: mode=FORW profile=NOT_SENT tifd=28 mdfd=27 mfd=26
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827276.227418940 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+__pmSetVersionIPC: fd=30 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0)
+__pmSetVersionIPC: fd=31 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0)
+__pmSetVersionIPC: fd=32 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.58-00) -> 4
+Dump Contexts: current -> contexts[4] handle 4
+contexts[4] handle 4: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.58-00: mode=FORW profile=NOT_SENT tifd=31 mdfd=32 mfd=30
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827129.047508932 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+__pmSetVersionIPC: fd=34 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0)
+__pmSetVersionIPC: fd=35 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0)
+__pmSetVersionIPC: fd=36 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.01-00) -> 5
+Dump Contexts: current -> contexts[5] handle 5
+contexts[5] handle 5: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.01-00: mode=FORW profile=NOT_SENT tifd=35 mdfd=36 mfd=34
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827294.912089816 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+__pmSetVersionIPC: fd=38 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0)
+__pmSetVersionIPC: fd=39 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0)
+__pmSetVersionIPC: fd=40 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00-00) -> 6
+Dump Contexts: current -> contexts[6] handle 6
+contexts[6] handle 6: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00-00: mode=FORW profile=NOT_SENT tifd=39 mdfd=40 mfd=38
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827223.255121438 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+__pmSetVersionIPC: fd=42 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0)
+__pmSetVersionIPC: fd=44 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 44(2,0)
+__pmSetVersionIPC: fd=43 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00) -> 7
+Dump Contexts: current -> contexts[7] handle 7
+contexts[7] handle 7: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00: mode=FORW profile=NOT_SENT tifd=44 mdfd=43 mfd=42
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827203.072056000 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+__pmSetVersionIPC: fd=46 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0)
+__pmSetVersionIPC: fd=48 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 48(2,0)
+__pmSetVersionIPC: fd=47 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 47(2,0) 48(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.58) -> 8
+Dump Contexts: current -> contexts[8] handle 8
+contexts[8] handle 8: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.58: mode=FORW profile=NOT_SENT tifd=48 mdfd=47 mfd=46
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827115.342283648 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+__pmSetVersionIPC: fd=50 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 47(2,0) 48(2,0) 50(2,0)
+__pmSetVersionIPC: fd=51 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 47(2,0) 48(2,0) 50(2,0) 51(2,0)
+__pmSetVersionIPC: fd=52 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 47(2,0) 48(2,0) 50(2,0) 51(2,0) 52(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54-01) -> 9
+Dump Contexts: current -> contexts[9] handle 9
+contexts[9] handle 9: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54-01: mode=FORW profile=NOT_SENT tifd=51 mdfd=52 mfd=50
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772826899.128397710 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+== restricted interface for connections, expect success ==
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "9cb9924f8c77": Connection refused
+final pmproxy log ...
+Log for pmproxy on 9cb9924f8c77 started Fri Mar  6 20:01:44 2026
+
+pmproxy: PID = 807435, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   127.0.0.1
+  ok    11 44323 inet   127.0.0.1
+[Fri Mar  6 20:01:44] pmproxy(807435) Info: Key server slots, schema version setup
+__pmSetVersionIPC: fd=14 version=2
+IPC table fd(PDU version): 14(2,0)
+__pmSetVersionIPC: fd=16 version=2
+IPC table fd(PDU version): 14(2,0) 16(2,0)
+__pmSetVersionIPC: fd=15 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00-01) -> 0
+Dump Contexts: current -> contexts[0] handle 0
+contexts[0] handle 0: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00-01: mode=FORW profile=NOT_SENT tifd=16 mdfd=15 mfd=14
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827259.800537649 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+__pmSetVersionIPC: fd=18 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0)
+__pmSetVersionIPC: fd=19 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0)
+__pmSetVersionIPC: fd=20 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54) -> 1
+Dump Contexts: current -> contexts[1] handle 1
+contexts[1] handle 1: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54: mode=FORW profile=NOT_SENT tifd=19 mdfd=20 mfd=18
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772826875.565678962 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+__pmSetVersionIPC: fd=22 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0)
+__pmSetVersionIPC: fd=24 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 24(2,0)
+__pmSetVersionIPC: fd=23 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54-00) -> 2
+Dump Contexts: current -> contexts[2] handle 2
+contexts[2] handle 2: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54-00: mode=FORW profile=NOT_SENT tifd=24 mdfd=23 mfd=22
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772826878.509613456 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+__pmSetVersionIPC: fd=26 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0)
+__pmSetVersionIPC: fd=28 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 28(2,0)
+__pmSetVersionIPC: fd=27 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.01) -> 3
+Dump Contexts: current -> contexts[3] handle 3
+contexts[3] handle 3: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.01: mode=FORW profile=NOT_SENT tifd=28 mdfd=27 mfd=26
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827276.227418940 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+__pmSetVersionIPC: fd=30 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0)
+__pmSetVersionIPC: fd=31 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0)
+__pmSetVersionIPC: fd=32 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.58-00) -> 4
+Dump Contexts: current -> contexts[4] handle 4
+contexts[4] handle 4: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.58-00: mode=FORW profile=NOT_SENT tifd=31 mdfd=32 mfd=30
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827129.047508932 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+__pmSetVersionIPC: fd=34 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0)
+__pmSetVersionIPC: fd=35 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0)
+__pmSetVersionIPC: fd=36 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.01-00) -> 5
+Dump Contexts: current -> contexts[5] handle 5
+contexts[5] handle 5: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.01-00: mode=FORW profile=NOT_SENT tifd=35 mdfd=36 mfd=34
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827294.912089816 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+__pmSetVersionIPC: fd=38 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0)
+__pmSetVersionIPC: fd=39 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0)
+__pmSetVersionIPC: fd=40 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00-00) -> 6
+Dump Contexts: current -> contexts[6] handle 6
+contexts[6] handle 6: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00-00: mode=FORW profile=NOT_SENT tifd=39 mdfd=40 mfd=38
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827223.255121438 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmWhichContext() -> 6, cur=6
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+__pmSetVersionIPC: fd=42 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0)
+__pmSetVersionIPC: fd=44 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 44(2,0)
+__pmSetVersionIPC: fd=43 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00) -> 7
+Dump Contexts: current -> contexts[7] handle 7
+contexts[7] handle 7: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.20.00: mode=FORW profile=NOT_SENT tifd=44 mdfd=43 mfd=42
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827203.072056000 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmWhichContext() -> 7, cur=7
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+__pmSetVersionIPC: fd=46 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0)
+__pmSetVersionIPC: fd=48 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 48(2,0)
+__pmSetVersionIPC: fd=47 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 47(2,0) 48(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.58) -> 8
+Dump Contexts: current -> contexts[8] handle 8
+contexts[8] handle 8: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.58: mode=FORW profile=NOT_SENT tifd=48 mdfd=47 mfd=46
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772827115.342283648 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmWhichContext() -> 8, cur=8
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+__pmSetVersionIPC: fd=50 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 47(2,0) 48(2,0) 50(2,0)
+__pmSetVersionIPC: fd=51 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 47(2,0) 48(2,0) 50(2,0) 51(2,0)
+__pmSetVersionIPC: fd=52 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0) 38(2,0) 39(2,0) 40(2,0) 42(2,0) 43(2,0) 44(2,0) 46(2,0) 47(2,0) 48(2,0) 50(2,0) 51(2,0) 52(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54-01) -> 9
+Dump Contexts: current -> contexts[9] handle 9
+contexts[9] handle 9: log /var/log/pcp/pmlogger/9cb9924f8c77/20260306.19.54-01: mode=FORW profile=NOT_SENT tifd=51 mdfd=52 mfd=50
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1772826899.128397710 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmWhichContext() -> 9, cur=9
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmUseContext(6) -> contexts[6]
+pmWhichContext() -> 6, cur=6
+pmUseContext(7) -> contexts[7]
+pmWhichContext() -> 7, cur=7
+pmUseContext(8) -> contexts[8]
+pmWhichContext() -> 8, cur=8
+pmUseContext(9) -> contexts[9]
+pmWhichContext() -> 9, cur=9
+on_client_connection: accept new client 0x56102bd782f0
+pcp_client_connect_pmcd: connecting to pmcd on host 9cb9924f8c77, port 44321
+on_client_close: client 0x56102bd782f0 connection closed
+[Fri Mar  6 20:01:53] pmproxy(807435) Info: pmproxy caught SIGTERM
+[Fri Mar  6 20:01:53] pmproxy(807435) Info: pmproxy Shutdown
+
+Log finished Fri Mar  6 20:01:53 2026

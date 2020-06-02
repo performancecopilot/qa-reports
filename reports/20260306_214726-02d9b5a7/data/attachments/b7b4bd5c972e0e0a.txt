@@ -1,0 +1,312 @@
+QA output created by 1424
+Fri Mar  6 20:58:47 UTC 2026
+Arrgh ... pmlogger (pid=1490527) failed to start after 20 seconds
+at Fri Mar  6 20:58:47 UTC 2026.
+++ pmlogger log (/dev/null) ...
+crw-rw-rw- 1 root root 1, 3 Mar  6 18:38 /dev/null
+
+++ /var/log/pcp/pmlogger/pmlogger_check.log
+-rw-r--r-- 1 pcp pcp 147 Mar  6 20:58 /var/log/pcp/pmlogger/pmlogger_check.log
+pmlogger_check: [control.d/1424:13]
+Warning: creating directory (/var/log/pcp/pmlogger/1424/2026/03/2753e7d46b72/2026-03-06) for PCP archive files
+++ /var/log/pcp/pmlogger/pmlogger_check.log.prev
+-rw-r--r-- 1 pcp pcp 717 Mar  6 20:57 /var/log/pcp/pmlogger/pmlogger_check.log.prev
+=== pmlogconf changes @ Fri Mar  6 20:57:00 UTC 2026 ===
+
+Differences ...
+*** /var/lib/pcp/config/pmlogger/config.default.tmp	Fri Mar  6 20:57:00 2026
+--- /var/lib/pcp/config/pmlogger/config.default.tmp.new	Fri Mar  6 20:57:00 2026
+***************
+*** 601,607 ****
+  #+ openmetrics/kepler:n:60 seconds:
+  ## Kepler power stats
+  #----
+! #+ openmetrics/summary:x::
+  #----
+  #+ openmetrics/vllm:n:60 seconds:
+  ## vLLM stats
+--- 601,611 ----
+  #+ openmetrics/kepler:n:60 seconds:
+  ## Kepler power stats
+  #----
+! #+ openmetrics/summary:y:default:
+! ## OpenMetrics instrumented applications summary information
+! log advisory on default {
+! 	openmetrics
+! }
+  #----
+  #+ openmetrics/vllm:n:60 seconds:
+  ## vLLM stats
+++ /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+-rw-r--r-- 1 pcp pcp 765 Mar  6 20:42 /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+Start [janitor]: 2026-03-06 20:42:44.374378014
+Pass 1: pmloggers from /var/lib/pcp/tmp/pmlogger
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1219536       1 43 20:42 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -N -P -d "/var/log/pcp/pmlogger/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m pmlogger_check %Y%m%d.%H.%M
+Pass 2: add pmloggers from ps -efww
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1219536       1 41 20:42 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -N -P -d "/var/log/pcp/pmlogger/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m pmlogger_check %Y%m%d.%H.%M
+Pass 3: PID 1219536 matches control [control.d/local:36], nothing to be done
+End [janitor]: 2026-03-06 20:42:44.612460712 status=0
+
+++ systemctl status for pmcd.service ...
+● pmcd.service - Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmcd.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-03-06 20:56:52 UTC; 1min 55s ago
+       Docs: man:pmcd(1)
+   Main PID: 1474636 (pmcd)
+      Tasks: 12 (limit: 307)
+     Memory: 65.5M (peak: 67.2M)
+        CPU: 5.833s
+     CGroup: /system.slice/pmcd.service
+             ├─1474636 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+             ├─1474639 /var/lib/pcp/pmdas/root/pmdaroot
+             ├─1474640 /var/lib/pcp/pmdas/proc/pmdaproc -d 3
+             ├─1474641 /var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+             ├─1474642 /var/lib/pcp/pmdas/sample/pmdasample -d 29
+             ├─1474643 /var/lib/pcp/pmdas/linux/pmdalinux
+             ├─1474644 /usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+             ├─1474648 /var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+             ├─1474649 /var/lib/pcp/pmdas/dm/pmdadm -d 129
+             ├─1474654 /usr/bin/python3 /var/lib/pcp/pmdas/opentelemetry/pmdaopentelemetry.python
+             ├─1474663 /var/lib/pcp/pmdas/simple/pmdasimple -d 253
+             └─1477192 /usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+
+++ last 4 journal entries for pmcd.service
+Mar 06 20:56:52 2753e7d46b72 systemd[1]: Stopped pmcd.service - Performance Metrics Collector Daemon.
+░░ Subject: A stop job for unit pmcd.service has finished
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A stop job for unit pmcd.service has finished.
+░░ 
+░░ The job identifier is 51090 and the job result is done.
+Mar 06 20:56:52 2753e7d46b72 systemd[1]: pmcd.service: Consumed 3.365s CPU time, 70.3M memory peak, 0B memory swap peak.
+░░ Subject: Resources consumed by unit runtime
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ The unit pmcd.service completed and consumed the indicated resources.
+Mar 06 20:56:52 2753e7d46b72 systemd[1]: Starting pmcd.service - Performance Metrics Collector Daemon...
+░░ Subject: A start job for unit pmcd.service has begun execution
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A start job for unit pmcd.service has begun execution.
+░░ 
+░░ The job identifier is 51090.
+Mar 06 20:56:52 2753e7d46b72 systemd[1]: Started pmcd.service - Performance Metrics Collector Daemon.
+░░ Subject: A start job for unit pmcd.service has finished successfully
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A start job for unit pmcd.service has finished successfully.
+░░ 
+░░ The job identifier is 51090.
+
+++ systemctl status for pmlogger.service ...
+● pmlogger.service - PCP primary archive logger
+     Loaded: loaded (/usr/lib/systemd/system/pmlogger.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-03-06 20:58:26 UTC; 21s ago
+       Docs: man:pmlogger(1)
+   Main PID: 1489970 (pmlogger)
+      Tasks: 1 (limit: 307)
+     Memory: 2.7M (peak: 9.6M)
+        CPU: 1.207s
+     CGroup: /system.slice/pmlogger.service
+             └─1489970 /usr/lib/pcp/bin/pmlogger -N -P -d "\"/var/log/pcp/pmlogger/LOCALHOSTNAME\"" -r -T24h10m -c config.default -v 100mb -m pmlogger_check %Y%m%d.%H.%M
+
+++ last 4 journal entries for pmlogger.service
+Mar 06 20:58:25 2753e7d46b72 systemd[1]: Stopped pmlogger.service - PCP primary archive logger.
+░░ Subject: A stop job for unit pmlogger.service has finished
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A stop job for unit pmlogger.service has finished.
+░░ 
+░░ The job identifier is 51856 and the job result is done.
+Mar 06 20:58:25 2753e7d46b72 systemd[1]: pmlogger.service: Consumed 1.201s CPU time, 8.0M memory peak, 0B memory swap peak.
+░░ Subject: Resources consumed by unit runtime
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ The unit pmlogger.service completed and consumed the indicated resources.
+Mar 06 20:58:25 2753e7d46b72 systemd[1]: Starting pmlogger.service - PCP primary archive logger...
+░░ Subject: A start job for unit pmlogger.service has begun execution
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A start job for unit pmlogger.service has begun execution.
+░░ 
+░░ The job identifier is 51856.
+Mar 06 20:58:26 2753e7d46b72 systemd[1]: Started pmlogger.service - PCP primary archive logger.
+░░ Subject: A start job for unit pmlogger.service has finished successfully
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A start job for unit pmlogger.service has finished successfully.
+░░ 
+░░ The job identifier is 51856.
+
+++ systemctl status for pmlogger_farm.service ...
+● pmlogger_farm.service - pmlogger farm service
+     Loaded: loaded (/usr/lib/systemd/system/pmlogger_farm.service; disabled; preset: enabled)
+     Active: active (running) since Fri 2026-03-06 20:58:26 UTC; 21s ago
+       Docs: man:pmlogger_check(1)
+   Main PID: 1490028 (pmpause)
+      Tasks: 2 (limit: 307)
+     Memory: 3.3M (peak: 8.5M)
+        CPU: 1.422s
+     CGroup: /system.slice/pmlogger_farm.service
+             ├─1490028 /usr/lib/pcp/bin/pmpause
+             └─1490527 /usr/lib/pcp/bin/pmlogger -h local: -d "\"/var/log/pcp/pmlogger/1424/\$(date\001+%Y)/\$(date\001+%m)/LOCALHOSTNAME/\$(date\001+%Y)-\$(date\001+%m)-\$(date\001+%d)\"" -r -c config.default -m pmlogger_check %Y%m%d.%H.%M
+
+++ last 4 journal entries for pmlogger_farm.service
+Mar 06 20:58:25 2753e7d46b72 systemd[1]: pmlogger_farm.service: Deactivated successfully.
+░░ Subject: Unit succeeded
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ The unit pmlogger_farm.service has successfully entered the 'dead' state.
+Mar 06 20:58:25 2753e7d46b72 systemd[1]: Stopped pmlogger_farm.service - pmlogger farm service.
+░░ Subject: A stop job for unit pmlogger_farm.service has finished
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A stop job for unit pmlogger_farm.service has finished.
+░░ 
+░░ The job identifier is 51935 and the job result is done.
+Mar 06 20:58:26 2753e7d46b72 systemd[1]: Starting pmlogger_farm.service - pmlogger farm service...
+░░ Subject: A start job for unit pmlogger_farm.service has begun execution
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A start job for unit pmlogger_farm.service has begun execution.
+░░ 
+░░ The job identifier is 51935.
+Mar 06 20:58:26 2753e7d46b72 systemd[1]: Started pmlogger_farm.service - pmlogger farm service.
+░░ Subject: A start job for unit pmlogger_farm.service has finished successfully
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A start job for unit pmlogger_farm.service has finished successfully.
+░░ 
+░░ The job identifier is 51935.
+++ pmlc output ...
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+pmlc 1490527
+Unable to connect to pmlogger on port 4330 at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+
+++ archive not created
+
+++ local pmlogger map ...
+-rw-r--r-- 1 pcp pcp 83 Mar  6 20:58 /var/lib/pcp/tmp/pmlogger/1489970
+4330
+2753e7d46b72
+/var/log/pcp/pmlogger/2753e7d46b72/20260306.20.58
+pmlogger_check
+-rw-r--r-- 1 pcp pcp 107 Mar  6 20:58 /var/lib/pcp/tmp/pmlogger/1490527
+4330
+2753e7d46b72
+/var/log/pcp/pmlogger/1424/2026/03/2753e7d46b72/2026-03-06/20260306.20.58
+pmlogger_check
+lrwxrwxrwx 1 pcp pcp 33 Mar  6 20:58 /var/lib/pcp/tmp/pmlogger/primary -> /var/lib/pcp/tmp/pmlogger/1489970
+4330
+2753e7d46b72
+/var/log/pcp/pmlogger/2753e7d46b72/20260306.20.58
+pmlogger_check
+
+++ Likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1489970       1  1 20:58 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -N -P -d "/var/log/pcp/pmlogger/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m pmlogger_check %Y%m%d.%H.%M
+pcp      1490527       1  1 20:58 ?        00:00:00 /usr/lib/pcp/bin/pmlogger -h local: -d "/var/log/pcp/pmlogger/1424/$(date?+%Y)/$(date?+%m)/LOCALHOSTNAME/$(date?+%Y)-$(date?+%m)-$(date?+%d)" -r -c config.default -m pmlogger_check %Y%m%d.%H.%M
+LOCALHOST YYYYMMDD.TIME default PID running 
+LOCALHOST YYYYMMDD.TIME primary PID running 
+pmcd Host Archive Class PID State 
+PCP_ARCHIVE_DIR/1424
+PCP_ARCHIVE_DIR/1424/YYYY
+PCP_ARCHIVE_DIR/1424/YYYY/MM
+PCP_ARCHIVE_DIR/1424/YYYY/MM/LOCALHOST
+PCP_ARCHIVE_DIR/1424/YYYY/MM/LOCALHOST/YYYY-MM-DD
+PCP_ARCHIVE_DIR/1424/YYYY/MM/LOCALHOST/YYYY-MM-DD/Latest
+PCP_ARCHIVE_DIR/1424/YYYY/MM/LOCALHOST/YYYY-MM-DD/YYYYMMDD.TIME.0
+PCP_ARCHIVE_DIR/1424/YYYY/MM/LOCALHOST/YYYY-MM-DD/YYYYMMDD.TIME.index
+PCP_ARCHIVE_DIR/1424/YYYY/MM/LOCALHOST/YYYY-MM-DD/YYYYMMDD.TIME.meta
+PCP_ARCHIVE_DIR/1424/YYYY/MM/LOCALHOST/YYYY-MM-DD/pmlogger.log
