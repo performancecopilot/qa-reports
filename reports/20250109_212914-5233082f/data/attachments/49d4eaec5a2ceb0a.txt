@@ -1,0 +1,156 @@
+pmcd.control.creds_timeout old value=3 new value=15
+_prepare_pmda(agent=bpftrace, names=bpftrace) __install_on_cleanup=false
+pmdabpftrace config:
+# Installed by PCP QA test 1705 on Thu Jan  9 20:46:23 UTC 2025
+[dynamic_scripts]
+enabled = true
+auth_enabled = false
+
+[bpftrace]
+# ridiculously small for test5 running on (potentially) slow VMs
+max_throughput = 4096
+_pmdabpftrace_wait_for_value bpftrace.scripts.test2.status "error" 10 @Thu Jan  9 20:46:27 UTC 2025
+_pmdabpftrace_wait_for_value: iteration 1
+
+bpftrace.scripts.test2.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 2
+
+bpftrace.scripts.test2.status
+    value "error"
+_pmdabpftrace_wait_for_value success @Thu Jan  9 20:46:28 UTC 2025
+
+bpftrace.scripts.test2.error
+    value "stdin:2:1-15: ERROR: Invalid provider: 'does_not_exist'
+does_not_exist { @c = count(); }
+~~~~~~~~~~~~~~"
+_pmdabpftrace_wait_for_value bpftrace.scripts.test3.status "error" 15 @Thu Jan  9 20:46:28 UTC 2025
+_pmdabpftrace_wait_for_value: iteration 1
+
+bpftrace.scripts.test3.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 2
+
+bpftrace.scripts.test3.status
+    value "error"
+_pmdabpftrace_wait_for_value success @Thu Jan  9 20:46:28 UTC 2025
+_pmdabpftrace_wait_for_value bpftrace.scripts.test4.status "error" 10 @Thu Jan  9 20:46:28 UTC 2025
+_pmdabpftrace_wait_for_value: iteration 1
+
+bpftrace.scripts.test4.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 2
+
+bpftrace.scripts.test4.status
+    value "error"
+_pmdabpftrace_wait_for_value success @Thu Jan  9 20:46:29 UTC 2025
+_pmdabpftrace_wait_for_value bpftrace.scripts.test5.status "error" 20 @Thu Jan  9 20:46:29 UTC 2025
+_pmdabpftrace_wait_for_value: iteration 1
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 2
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 3
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 4
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 5
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 6
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 7
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 8
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 9
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 10
+
+bpftrace.scripts.test5.status
+    value "started"
+_pmdabpftrace_wait_for_value: iteration 11
+
+bpftrace.scripts.test5.status
+    value "stopping"
+_pmdabpftrace_wait_for_value: iteration 12
+
+bpftrace.scripts.test5.status
+    value "error"
+_pmdabpftrace_wait_for_value success @Thu Jan  9 20:46:34 UTC 2025
+Log for pmdabpftrace on fv-az1143-372 started Thu Jan  9 20:46:24 2025
+
+[Thu Jan  9 20:46:24] pmdabpftrace(1743494) Info: Initializing, currently in 'notready' state.
+[Thu Jan  9 20:46:25] pmdabpftrace(1743504) Info: manager: started pmdabpftrace process manager
+[Thu Jan  9 20:46:25] pmdabpftrace(1743504) Info: manager: using bpftrace v0.9.4
+[Thu Jan  9 20:46:25] pmdabpftrace(1743494) Info: Ready to process requests.
+[Thu Jan  9 20:46:27] pmdabpftrace(1743504) Info: script: starting script s5829751b29ba4be5babb3b164f6b488f (name=test2, user=pcpqa)...
+[Thu Jan  9 20:46:27] pmdabpftrace(1743504) Info: script: started script s5829751b29ba4be5babb3b164f6b488f (name=test2, user=pcpqa, PID=1743539)
+[Thu Jan  9 20:46:27] pmdabpftrace(1743504) Info: script: stopped script s5829751b29ba4be5babb3b164f6b488f (name=test2, user=pcpqa, PID=1743539) due to error: stdin:2:1-15: ERROR: Invalid provider: 'does_not_exist'
+does_not_exist { @c = count(); }
+~~~~~~~~~~~~~~
+[Thu Jan  9 20:46:28] pmdabpftrace(1743504) Info: script: starting script se6663a3d9b9048da885b624e2813430e (name=test3, user=pcpqa)...
+[Thu Jan  9 20:46:28] pmdabpftrace(1743504) Info: script: started script se6663a3d9b9048da885b624e2813430e (name=test3, user=pcpqa, PID=1743558)
+[Thu Jan  9 20:46:28] pmdabpftrace(1743504) Info: script: stopped script se6663a3d9b9048da885b624e2813430e (name=test3, user=pcpqa, PID=1743558) due to error: stdin:2:42-49: ERROR: syntax error, unexpected ;
+tracepoint:raw_syscalls:sys_enter { @c = count(; }
+                                         ~~~~~~~
+[Thu Jan  9 20:46:28] pmdabpftrace(1743504) Info: script: starting script s5290b3f3cbd54992b21c0bd1f2be62d4 (name=test4, user=pcpqa)...
+[Thu Jan  9 20:46:28] pmdabpftrace(1743504) Info: script: started script s5290b3f3cbd54992b21c0bd1f2be62d4 (name=test4, user=pcpqa, PID=1743585)
+[Thu Jan  9 20:46:28] pmdabpftrace(1743504) Info: script: stopped script s5290b3f3cbd54992b21c0bd1f2be62d4 (name=test4, user=pcpqa, PID=1743585) due to error: stdin:29:1-44: ERROR: syntax error, unexpected integer, expecting {
+kprobe:detect_extended_topology_leaf.isra.0 { @c = count(); }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[Thu Jan  9 20:46:29] pmdabpftrace(1743504) Info: script: starting script sf3b14de364624156ba1ffd891e56f8cd (name=test5, user=pcpqa)...
+[Thu Jan  9 20:46:29] pmdabpftrace(1743504) Info: script: started script sf3b14de364624156ba1ffd891e56f8cd (name=test5, user=pcpqa, PID=1743603)
+[Thu Jan  9 20:46:34] pmdabpftrace(1743504) Info: script: stopping script sf3b14de364624156ba1ffd891e56f8cd (name=test5, user=pcpqa, PID=1743603)...
+[Thu Jan  9 20:46:34] pmdabpftrace(1743504) Info: script: stopped script sf3b14de364624156ba1ffd891e56f8cd (name=test5, user=pcpqa, PID=1743603) due to error: BPFtrace output exceeds limit of 4096 bytes per second
+[Thu Jan  9 20:46:34] pmdabpftrace(1743504) Info: script: starting script s13c0bda3412e46e3bcd2ea0e0429f8e6 (name=test6, user=pcpqa)...
+[Thu Jan  9 20:46:34] pmdabpftrace(1743504) Info: script: started script s13c0bda3412e46e3bcd2ea0e0429f8e6 (name=test6, user=pcpqa, PID=1743666)
+[Thu Jan  9 20:46:34] pmdabpftrace(1743504) Info: script: failed to start script sf2609b82c795472e80a7fb6c4a52327e (name=test6, user=pcpqa) due to error: Script name test6 is already in use by another script.
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: manager: shutting down pmdabpftrace process manager...
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: script: deregistered script s5829751b29ba4be5babb3b164f6b488f (name=test2, user=pcpqa, PID=1743539)
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: script: deregistered script se6663a3d9b9048da885b624e2813430e (name=test3, user=pcpqa, PID=1743558)
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: script: deregistered script s5290b3f3cbd54992b21c0bd1f2be62d4 (name=test4, user=pcpqa, PID=1743585)
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: script: deregistered script sf3b14de364624156ba1ffd891e56f8cd (name=test5, user=pcpqa, PID=1743603)
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: script: stopping script s13c0bda3412e46e3bcd2ea0e0429f8e6 (name=test6, user=pcpqa, PID=1743666)...
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: script: stopped script s13c0bda3412e46e3bcd2ea0e0429f8e6 (name=test6, user=pcpqa, PID=1743666)
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: script: deregistered script s13c0bda3412e46e3bcd2ea0e0429f8e6 (name=test6, user=pcpqa, PID=1743666)
+[Thu Jan  9 20:46:36] pmdabpftrace(1743504) Info: manager: waiting 10 secs for running tasks to stop...
+[Thu Jan  9 20:46:37] pmdabpftrace(1743504) Info: manager: shutdown pmdabpftrace process manager
+
+Log finished Thu Jan  9 20:46:37 2025
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host fv-az1143-372
+PMCD host        fv-az1143-372
+log started      Thu Jan  9 20:46:38.894417297 2025 (times in local time)
+last log entry   Thu Jan  9 20:46:39.438489648 2025
+current time     Thu Jan  9 20:46:40.434583475 2025
+log volume       0
+log size         164316
+_cleanup_pmda(bpftrace,) remove PMDA
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host fv-az1143-372
+PMCD host        fv-az1143-372
+log started      Thu Jan  9 20:46:38.894417297 2025 (times in local time)
+last log entry   Thu Jan  9 20:46:39.438489648 2025
+current time     Thu Jan  9 20:46:41.002130163 2025
+log volume       0
+log size         164316
+pmcd.control.creds_timeout old value=3 new value=3
