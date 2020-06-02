@@ -1,0 +1,122 @@
+pmproxy_was_running=true
+--- openssl.log after _setup_cert() ---
+Generating RSA private key, 4096 bit long modulus (2 primes)
+..........................++++
+.............++++
+e is 65537 (0x010001)
+Generating RSA private key, 2048 bit long modulus (2 primes)
+....................................+++++
+...........+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Server-only
+Getting CA Private Key
+--- end openssl.log ---
+--- openssl.log after _setup_cert() ---
+Generating RSA private key, 4096 bit long modulus (2 primes)
+..........................++++
+.............++++
+e is 65537 (0x010001)
+Generating RSA private key, 2048 bit long modulus (2 primes)
+....................................+++++
+...........+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Server-only
+Getting CA Private Key
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...............+++++
+.........................+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Client-only
+Getting CA Private Key
+--- end openssl.log ---
+--- openssl.log after _setup_cert() ---
+Generating RSA private key, 4096 bit long modulus (2 primes)
+..........................++++
+.............++++
+e is 65537 (0x010001)
+Generating RSA private key, 2048 bit long modulus (2 primes)
+....................................+++++
+...........+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Server-only
+Getting CA Private Key
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...............+++++
+.........................+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Client-only
+Getting CA Private Key
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...............+++++
+...........................................+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Generic-cert
+Getting CA Private Key
+--- end openssl.log ---
+--- new /etc/pcp/tls.conf ---
+
+# settings related to TLS certificates and keys
+# created by QA test 2112
+
+tls-key-file = /tmp/2112-1791378.tls/pcp.key
+tls-cert-file = /tmp/2112-1791378.tls/pcp.crt
+tls-ca-cert-file = /tmp/2112-1791378.tls/ca.crt
+--- end /etc/pcp/tls.conf ---
+--- openssl.log after _setup_tls() ---
+Generating RSA private key, 4096 bit long modulus (2 primes)
+..........................++++
+.............++++
+e is 65537 (0x010001)
+Generating RSA private key, 2048 bit long modulus (2 primes)
+....................................+++++
+...........+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Server-only
+Getting CA Private Key
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...............+++++
+.........................+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Client-only
+Getting CA Private Key
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...............+++++
+...........................................+++++
+e is 65537 (0x010001)
+Signature ok
+subject=O = PCP QA, CN = Generic-cert
+Getting CA Private Key
+--- end openssl.log ---
+
+exit: 0
+
+
+--- pmlogpush --secure error (IP not in SAN) ---
+pmlogpush: https://127.0.0.2:44322 /logger/label POST failed: TLS protocol failure
+
+
+exit: 0
+--- pmlogpush --secure error (non-TLS proxy) ---
+pmlogpush: https://localhost:44322 /logger/label POST failed: TLS protocol failure
+Log for pmproxy on 4c33dd66cea8 started Sun Oct 25 22:44:39 2026
+
+pmproxy: PID = 1791805, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    10       unix   /run/pcp/pmproxy.socket
+  ok    11 44322 inet   INADDR_ANY
+  ok    12 44322 ipv6   INADDR_ANY
+  ok    13 44323 inet   INADDR_ANY
+  ok    14 44323 ipv6   INADDR_ANY
+[Sun Oct 25 22:44:39] pmproxy(1791805) Error: - EPOCH - unsupported key server (got v4, expected v5 or above)
+Restarting pmproxy ...
+exit: 0
