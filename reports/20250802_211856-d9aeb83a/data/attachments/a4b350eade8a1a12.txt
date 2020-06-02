@@ -1,0 +1,104 @@
+QA output created by 1695
+Start test key server ...
+PING
+PONG
+=== checking metric scrape operation ===
+=== checking short-fuse scrape operation ===
+=== checking repeated scrape operation ===
+=== checking one client making multiple requests ===
+=== checking metric fetch operation ===
+=== checking url escaping operation ===
+=== check pmproxy is running ===
+pmproxy check passed
+=== valgrind stdout ===
+27 bytes in 2 blocks are definitely lost in loss record 35 of 282
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096795: sdsnewlen (alloc.h:58)
+by 0x50B0542: webgroup_scrape_batch (webgroup.c:1938)
+by 0x6301624: TraversePMNS (pmns.c:3183)
+by 0x50B02F0: webgroup_scrape_tree (webgroup.c:1965)
+by 0x50B33D7: pmWebGroupScrape (webgroup.c:2050)
+by 0x5C874ED: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x7EB21C9: start_thread (in /usr/lib64/libpthread-2.28.so)
+by 0x67EC8D2: clone (in /usr/lib64/libc-2.28.so)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:sdsnewlen
+   fun:webgroup_scrape_batch
+   fun:TraversePMNS
+   fun:webgroup_scrape_tree
+   fun:pmWebGroupScrape
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:start_thread
+   fun:clone
+}
+560 bytes in 7 blocks are definitely lost in loss record 162 of 282
+at 0x4C40B77: realloc (vg_replace_malloc.c:1690)
+by 0x5096C70: sdsMakeRoomFor (alloc.h:66)
+by 0x509752B: sdscatlen (sds.c:381)
+by 0x5097ACC: sdscatvprintf (sds.c:535)
+by 0x5097B87: sdscatprintf (sds.c:560)
+by 0x50AEC65: webgroup_use_context.isra.8 (webgroup.c:405)
+by 0x50B01EB: webgroup_scrape_names (webgroup.c:1913)
+by 0x50B04BE: webgroup_scrape_batch (webgroup.c:1943)
+by 0x6301684: TraversePMNS (pmns.c:3133)
+by 0x50B02F0: webgroup_scrape_tree (webgroup.c:1965)
+by 0x50B33D7: pmWebGroupScrape (webgroup.c:2050)
+by 0x5C874ED: ??? (in /usr/lib64/libuv.so.1.0.0)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:realloc
+   fun:sdsMakeRoomFor
+   fun:sdscatlen
+   fun:sdscatvprintf
+   fun:sdscatprintf
+   fun:webgroup_use_context.isra.8
+   fun:webgroup_scrape_names
+   fun:webgroup_scrape_batch
+   fun:TraversePMNS
+   fun:webgroup_scrape_tree
+   fun:pmWebGroupScrape
+   obj:/usr/lib64/libuv.so.1.0.0
+}
+4,894 bytes in 176 blocks are definitely lost in loss record 230 of 282
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x5096795: sdsnewlen (alloc.h:58)
+by 0x50B0542: webgroup_scrape_batch (webgroup.c:1938)
+by 0x6301684: TraversePMNS (pmns.c:3133)
+by 0x50B02F0: webgroup_scrape_tree (webgroup.c:1965)
+by 0x50B33D7: pmWebGroupScrape (webgroup.c:2050)
+by 0x5C874ED: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x7EB21C9: start_thread (in /usr/lib64/libpthread-2.28.so)
+by 0x67EC8D2: clone (in /usr/lib64/libc-2.28.so)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:sdsnewlen
+   fun:webgroup_scrape_batch
+   fun:TraversePMNS
+   fun:webgroup_scrape_tree
+   fun:pmWebGroupScrape
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:start_thread
+   fun:clone
+}
+=== valgrind stderr ===
+Log for pmproxy on HOST started DATE
+
+pmproxy: PID = PID
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+ok FD unix UNIX_DOMAIN_SOCKET
+ok FD PORT inet INADDR_ANY
+[DATE] pmproxy(PID) Info: pmproxy caught SIGTERM
+[DATE] pmproxy(PID) Info: pmproxy Shutdown
+
+Log finished DATE

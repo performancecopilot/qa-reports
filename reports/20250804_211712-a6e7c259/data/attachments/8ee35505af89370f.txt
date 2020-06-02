@@ -1,0 +1,72 @@
+pmproxy_was_running=true
+_service pcp stop: expecting pmcd state "inactive", found state "deactivating"
+--- start systemctl status for pmcd.service ---
+* pmcd.service - Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmcd.service; enabled; preset: enabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             `-10-timeout-abort.conf
+     Active: deactivating (stop) since Mon 2025-08-04 19:59:18 UTC; 825ms ago
+        Job: 30700
+ Invocation: d4e9f5710a644a39b78adac76c5eb2bc
+       Docs: man:pmcd(1)
+    Process: 971886 ExecStart=/usr/libexec/pcp/lib/pmcd start-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 971886 (code=exited, status=0/SUCCESS); Control PID: 974537 (pmcd)
+      Tasks: 2 (limit: 307)
+     Memory: 1.8M (peak: 50.7M)
+        CPU: 1.536s
+     CGroup: /system.slice/pmcd.service
+             |-974537 /usr/bin/sh /usr/libexec/pcp/lib/pmcd stop-systemd
+             |-974803 /usr/bin/sh /usr/libexec/pcp/lib/pmcd stop-systemd
+             `-974950 touch /var/tmp/pmcd_rc.rQV3rKaPS/pcp.env.path
+--- end systemctl status for pmcd.service ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Server-only
+--- end openssl.log ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Server-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Client-only
+--- end openssl.log ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Server-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Client-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Generic-cert
+--- end openssl.log ---
+--- new /etc/pcp/tls.conf ---
+
+# settings related to TLS certificates and keys
+# created by QA test 713
+
+tls-key-file = /var/tmp/713-974318.tls/pcp.key
+tls-cert-file = /var/tmp/713-974318.tls/pcp.crt
+tls-ca-cert-file = /var/tmp/713-974318.tls/ca.crt
+--- end /etc/pcp/tls.conf ---
+--- openssl.log after _setup_tls() ---
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Server-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Client-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Generic-cert
+--- end openssl.log ---
+exit: 0
+checking client, server certificate only.  should pass...
+pminfo: Cannot connect to PMCD on host "923eada2c1e6": Operation not supported
+pminfo: Cannot connect to PMCD on host "923eada2c1e6": Operation not supported
+pminfo: Cannot connect to PMCD on host "923eada2c1e6": Operation not supported
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 923eada2c1e6
+PMCD host        923eada2c1e6
+log started      Mon Aug  4 19:59:21.825945479 2025 (times in local time)
+last log entry   Mon Aug  4 19:59:22.492786810 2025
+current time     Mon Aug  4 19:59:22.689023771 2025
+log volume       0
+log size         79268
+Restart pmproxy ...
+exit: 0

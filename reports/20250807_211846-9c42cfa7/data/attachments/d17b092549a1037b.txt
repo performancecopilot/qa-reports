@@ -1,0 +1,143 @@
+Usage: pmiectl [options] command [host ...]
+
+Options:
+  -a, --all             apply action to all matching hosts
+  -c NAME, --class=NAME pmie instances belong to the NAME class
+                        [default: default]
+  -C ARGS, --checkargs=ARGS
+                        pass command line ARGS to pmie_check
+  -f, --force           force action if possible
+  -i IDENT, --ident=IDENT
+                        over-ride instance id (only for create and cond-create)
+  -m, --migrate         migrate matching processes to farm services (for create and check)
+  -N, --showme          perform a dry run, showing what would be done
+  -p POLICY, --policy=POLICY
+                        use POLICY as the class policy file
+                        [default: /etc/pcp/pmie/class.d/<class>]
+  -V, --verbose         increase verbosity
+  -?, --help            show this usage message and exit
+
+Available commands:
+   [-c classname] create  host ...
+   {-c classname|-i ident} cond-create host ...
+   [-c classname] {start|stop|restart|destroy|check|status} [host ...]
+
+   and host may be a valid hostname or an egrep(1) pattern that matches
+   the start of a hostname
+== -N -V create
+--- start control file ---
+# created by pmiectl on Thu Aug  7 20:26:41 UTC 2025
+$class=default
+#DO NOT REMOVE OR EDIT THE FOLLOWING LINE
+$version=1.1
+localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/localhost
++ cp /var/tmp/pmiectl.RAWJc98jM/control /etc/pcp/pmie/control.d/localhost
++ /usr/lib/pcp/bin/runaspcp /usr/lib/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/localhost"
+
+== create
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+855528c6c210            25          25 primary  1487370 running 
+localhost               24          24 default  1487813 running 
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               24          24 default  1487813 running 
+
+== stop
+Using default class
+Using default policy
+Running pmie processes: 1487370 1487813 
+Lock acquired 1488169 pmiectl -r--r--r-- 1 root root 16 Aug  7 20:26 /etc/pcp/pmie/lock
+Looking for host localhost in class default ...
+Candidate control files:
+/etc/pcp/pmie/control.d/localhost
+_get_matching_hosts results:
+# control class host dir args
+/etc/pcp/pmie/control.d/localhost - localhost /var/log/pcp/pmie/localhost/pmie.log 
+# end
+Looking for pmie using directory /var/log/pcp/pmie/localhost/pmie.log and args -c ./localhost.config ...
+Found PID 1487813 to stop using signal TERM
+Stopped? . yes
+Diffs for control file /etc/pcp/pmie/control.d/localhost after disabling host localhost and directory PCP_LOG_DIR/pmie/localhost/pmie.log ...
+5c5
+< localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+---
+> #!#localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+Lock released
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+855528c6c210            25          25 primary  1487370 running 
+localhost                ?           ? default        ? stopped by pmiectl
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost                ?           ? default        ? stopped by pmiectl
+
+== start
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+855528c6c210            25          25 primary  1487370 running 
+localhost               24          24 default  1488835 running 
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               24          24 default  1488835 running 
+
+== restart
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+855528c6c210            25          25 primary  1487370 running 
+localhost               24          24 default  1489431 running 
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               24          24 default  1489431 running 
+
+== destroy
+Using default class
+Using default policy
+Running pmie processes: 1487370 1489431 
+Lock acquired 1489780 pmiectl -r--r--r-- 1 root root 16 Aug  7 20:26 /etc/pcp/pmie/lock
+Looking for host localhost in class default ...
+Candidate control files:
+/etc/pcp/pmie/control.d/localhost
+_get_matching_hosts results:
+# control class host dir args
+/etc/pcp/pmie/control.d/localhost - localhost /var/log/pcp/pmie/localhost/pmie.log 
+# end
+Looking for pmie using directory /var/log/pcp/pmie/localhost/pmie.log and args -c ./localhost.config ...
+Found PID 1489431 to stop using signal TERM
+Stopped? . yes
+Diffs for control file /etc/pcp/pmie/control.d/localhost after removing host localhost and directory PCP_LOG_DIR/pmie/localhost/pmie.log ...
+5d4
+< localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+Remove control file /etc/pcp/pmie/control.d/localhost
+Lock released
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+855528c6c210            25          25 primary  1487370 running 
+== status localhost
+Warning: host localhost not defined in any pmie control file
+pmcd Host            Rules Evaluations Class        PID State   
+855528c6c210            25          25 primary  1487370 running 
+
+== cond-create
+Warning: /etc/pcp/pmie/class.d/pmfind: bad create clause(s) will be ignored
+
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+855528c6c210            25          25 primary  1487370 running 
+localhost               24          24 pmfind   1490387 running 
+
+== cond-create -i 1226-foo
+Warning: /etc/pcp/pmie/class.d/pmfind: bad create clause(s) will be ignored
+
+== status
+pmcd Host            Rules Evaluations Class        PID State    Instance Id
+855528c6c210            25          25 primary  1487370 running  855528c6c210
+localhost               24          24 pmfind   1490984 running  1226-foo
+_cleanup: ...
+Warning: host localhost not defined in class default for any pmie control file
+Error: no matching host(s) to destroy
+Warning: host localhost not defined in any pmie control file
+pmcd Host            Rules Evaluations Class        PID State   
+855528c6c210            25          25 primary  1487370 running 

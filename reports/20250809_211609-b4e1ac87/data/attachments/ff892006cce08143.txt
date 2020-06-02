@@ -1,0 +1,69 @@
+pmproxy_was_running=true
+_service pcp stop: expecting pmcd state "inactive", found state "activating"
+--- start systemctl status for pmcd.service ---
+* pmcd.service - Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmcd.service; enabled; preset: disabled)
+     Active: activating (start) since Sat 2025-08-09 19:53:10 UTC; 116ms ago
+       Docs: man:pmcd(1)
+   Main PID: 989833 (pmcd)
+      Tasks: 5 (limit: 1638)
+     Memory: 6.2M
+        CPU: 141ms
+     CGroup: /system.slice/pmcd.service
+             |-989833 /usr/bin/sh /usr/libexec/pcp/lib/pmcd start-systemd
+             |-989925 /usr/libexec/pcp/bin/pmcd -A -T 3 -C 512
+             |-989928 /usr/libexec/pcp/bin/pmcd_wait
+             |-989929 /var/lib/pcp/pmdas/root/pmdaroot
+             `-989931 /var/lib/pcp/pmdas/proc/pmdaproc -d 3
+--- end systemctl status for pmcd.service ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Server-only
+--- end openssl.log ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Server-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Client-only
+--- end openssl.log ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Server-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Client-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Generic-cert
+--- end openssl.log ---
+--- new /etc/pcp/tls.conf ---
+
+# settings related to TLS certificates and keys
+# created by QA test 713
+
+tls-key-file = /var/tmp/713-989264.tls/pcp.key
+tls-cert-file = /var/tmp/713-989264.tls/pcp.crt
+tls-ca-cert-file = /var/tmp/713-989264.tls/ca.crt
+--- end /etc/pcp/tls.conf ---
+--- openssl.log after _setup_tls() ---
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Server-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Client-only
+Certificate request self-signature ok
+subject=O=PCP QA, CN=Generic-cert
+--- end openssl.log ---
+exit: 0
+checking client, server certificate only.  should pass...
+pminfo: Cannot connect to PMCD on host "2ca56065b587": Operation not supported
+pminfo: Cannot connect to PMCD on host "2ca56065b587": Operation not supported
+pminfo: Cannot connect to PMCD on host "2ca56065b587": Operation not supported
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 2ca56065b587
+PMCD host        2ca56065b587
+log started      Sat Aug  9 19:53:13.212715741 2025 (times in local time)
+last log entry   Sat Aug  9 19:53:13.735247866 2025
+current time     Sat Aug  9 19:53:14.751822094 2025
+log volume       0
+log size         69656
+Restart pmproxy ...
+exit: 0

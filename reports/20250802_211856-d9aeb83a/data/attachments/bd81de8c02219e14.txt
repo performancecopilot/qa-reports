@@ -1,0 +1,67 @@
+pmproxy_was_running=true
+_service pcp stop: expecting pmcd state "inactive", found state "activating"
+--- start systemctl status for pmcd.service ---
+* pmcd.service - Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmcd.service; enabled; preset: enabled)
+     Active: activating (start) since Sat 2025-08-02 19:58:03 UTC; 86ms ago
+       Docs: man:pmcd(1)
+   Main PID: 1039101 (pmcd)
+      Tasks: 3 (limit: 19185)
+     Memory: 2.2M (peak: 3.7M)
+        CPU: 98ms
+     CGroup: /system.slice/pmcd.service
+             |-1039101 /bin/sh /etc/init.d/pmcd start-systemd
+             |-1039186 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+             `-1039189 /usr/lib/pcp/bin/pmcd_wait
+--- end systemctl status for pmcd.service ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Server-only
+--- end openssl.log ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Server-only
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Client-only
+--- end openssl.log ---
+--- openssl.log after _setup_cert() ---
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Server-only
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Client-only
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Generic-cert
+--- end openssl.log ---
+--- new /etc/pcp/tls.conf ---
+
+# settings related to TLS certificates and keys
+# created by QA test 713
+
+tls-key-file = /var/tmp/713-1038471.tls/pcp.key
+tls-cert-file = /var/tmp/713-1038471.tls/pcp.crt
+tls-ca-cert-file = /var/tmp/713-1038471.tls/ca.crt
+--- end /etc/pcp/tls.conf ---
+--- openssl.log after _setup_tls() ---
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Server-only
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Client-only
+Certificate request self-signature ok
+subject=O = PCP QA, CN = Generic-cert
+--- end openssl.log ---
+exit: 0
+checking client, server certificate only.  should pass...
+pminfo: Cannot connect to PMCD on host "pkrvmjbmru5nbw0": Operation not supported
+pminfo: Cannot connect to PMCD on host "pkrvmjbmru5nbw0": Operation not supported
+pminfo: Cannot connect to PMCD on host "pkrvmjbmru5nbw0": Operation not supported
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host pkrvmjbmru5nbw0
+PMCD host        pkrvmjbmru5nbw0
+log started      Sat Aug  2 19:58:06.817940690 2025 (times in local time)
+last log entry   Sat Aug  2 19:58:07.445740162 2025
+current time     Sat Aug  2 19:58:07.816957749 2025
+log volume       0
+log size         166388
+Restart pmproxy ...
+exit: 0

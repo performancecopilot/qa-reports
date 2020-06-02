@@ -1,0 +1,421 @@
+time_stamp: step 2 delta 0.004640 secs tag cleanup old archives
+pmproxy_was_running=false
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Sat Aug  9 20:58:08 UTC 2025
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1722153       1 16 20:58 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -F -A
+pmproxy_pid=1722153
+time_stamp: step 3 delta 0.498331 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.317835 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.023828 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.240265 secs tag compression
+=== restarting pmlogger
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 0182a82f52e2
+PMCD host        0182a82f52e2
+log started      Sat Aug  9 20:58:12.335455745 2025 (times in local time)
+last log entry   Sat Aug  9 20:58:12.954741645 2025
+current time     Sat Aug  9 20:58:13.963862232 2025
+log volume       0
+log size         74144
+time_stamp: step 7 delta 2.461295 secs tag restart pmcd & pmlogger
+=== wait for pmproxy to process filesystem events
+time_stamp: step 8 delta 2.007413 secs tag wait for pmproxy
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 9 delta 0.021399 secs tag check for deleted files
+=== checking pmproxy correctly switches logvol when pmlogger bumps to a new logvol
+primary pmlogger archive path: /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00
+contents of /proc/1722153/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 11 -> socket:[3013553]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 12 -> socket:[3013554]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 13 -> socket:[3013555]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 14 -> socket:[3013556]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 15 -> socket:[3013557]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 16 -> socket:[3015771]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 17 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 18 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 19 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.index
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 20 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 21 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 22 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 23 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 24 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 25 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 26 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 27 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 28 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 29 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 30 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 31 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 32 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 33 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 34 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 35 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 36 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 37 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 38 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 39 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 40 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 41 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 42 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 43 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 44 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 45 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 46 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 47 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 48 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 49 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 5 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 50 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 51 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 52 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 53 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 54 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 55 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 56 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 57 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 6 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 7 -> pipe:[3013552]
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 8 -> pipe:[3013552]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 9 -> anon_inode:[eventfd]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00
+contents of /proc/1722153/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 11 -> socket:[3013553]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 12 -> socket:[3013554]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 13 -> socket:[3013555]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 14 -> socket:[3013556]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 15 -> socket:[3013557]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 16 -> socket:[3015771]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 17 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 18 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 19 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.index
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 20 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 21 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 22 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 23 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 24 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 25 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 26 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 27 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 28 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 29 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 30 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 31 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 32 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 33 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 34 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 35 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 36 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 37 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 38 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 39 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 40 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 41 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 42 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 43 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 44 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 45 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 46 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 47 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 48 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 49 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 5 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 50 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 51 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 52 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 53 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 54 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 55 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 56 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 57 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 6 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 7 -> pipe:[3013552]
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 8 -> pipe:[3013552]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 9 -> anon_inode:[eventfd]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00
+contents of /proc/1722153/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 11 -> socket:[3013553]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 12 -> socket:[3013554]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 13 -> socket:[3013555]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 14 -> socket:[3013556]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 15 -> socket:[3013557]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 16 -> socket:[3015771]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 17 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 18 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 19 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.index
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 20 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 21 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 22 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 23 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 24 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 25 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 26 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 27 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 28 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 29 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 30 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 31 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 32 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 33 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 34 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 35 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 36 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 37 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 38 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 39 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 40 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 41 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 42 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 43 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 44 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 45 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 46 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 47 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 48 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 49 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 5 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 50 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 51 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 52 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 53 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 54 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 55 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 56 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 57 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 6 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 7 -> pipe:[3013552]
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 8 -> pipe:[3013552]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 9 -> anon_inode:[eventfd]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00
+contents of /proc/1722153/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 11 -> socket:[3013553]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 12 -> socket:[3013554]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 13 -> socket:[3013555]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 14 -> socket:[3013556]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 15 -> socket:[3013557]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 16 -> socket:[3015771]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 17 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 18 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 19 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.index
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 20 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 21 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 22 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 23 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 24 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 25 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 26 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 27 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 28 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 29 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 30 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 31 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 32 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 33 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 34 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 35 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 36 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 37 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 38 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 39 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 40 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 41 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 42 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 43 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 44 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 45 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 46 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 47 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 48 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 49 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 5 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 50 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 51 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 52 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 53 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 54 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 55 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 56 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 57 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 58 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 59 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00.index
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 6 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 60 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 61 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 7 -> pipe:[3013552]
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 8 -> pipe:[3013552]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 9 -> anon_inode:[eventfd]
+curlogvol=0
+time_stamp: step 10 delta 6.110566 secs tag found old volume #
+
+pmproxy.discover.logvol.change_vol
+    value 0
+Connected to primary pmlogger at local:
+New log volume 1
+
+pmproxy.discover.logvol.change_vol
+    value 0
+primary pmlogger archive path: /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00
+contents of /proc/1722153/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 11 -> socket:[3013553]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 12 -> socket:[3013554]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 13 -> socket:[3013555]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 14 -> socket:[3013556]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 15 -> socket:[3013557]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 16 -> socket:[3015771]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 17 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 18 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 19 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.index
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 20 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 21 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-01.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 22 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 23 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 24 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 25 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 26 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 27 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 28 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 29 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.20.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 30 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 31 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 32 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 33 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.33-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 34 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 35 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 36 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 37 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 38 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 39 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 40 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 41 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.18.54.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 42 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 43 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 44 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 45 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.56-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 46 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 47 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 48 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 49 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.11-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 5 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 50 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 51 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 52 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 53 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.57.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 54 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 55 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.index
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 56 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 57 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.19.16.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 58 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00.0
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 59 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00.index
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 6 -> pipe:[3013551]
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 60 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 61 -> /var/log/pcp/pmlogger/0182a82f52e2/20250809.20.58-00.meta
+lr-x------ 1 pcp pcp 64 Aug  9 20:58 7 -> pipe:[3013552]
+l-wx------ 1 pcp pcp 64 Aug  9 20:58 8 -> pipe:[3013552]
+lrwx------ 1 pcp pcp 64 Aug  9 20:58 9 -> anon_inode:[eventfd]
+newlogvol=0
+time_stamp: step 11 delta 2.056886 secs tag found new volume #
+=== checking pmproxy survives pmlogger restart
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 0182a82f52e2
+PMCD host        0182a82f52e2
+log started      Sat Aug  9 20:58:25.081914347 2025 (times in local time)
+last log entry   Sat Aug  9 20:58:25.623742485 2025
+current time     Sat Aug  9 20:58:26.596774271 2025
+log volume       0
+log size         73140
+time_stamp: step 12 delta 2.451727 secs tag check pmproxy survives
++++ pmproxy.log +++
+Log for pmproxy on 0182a82f52e2 started Sat Aug  9 20:58:08 2025
+
+pmproxy: PID = 1722153, PDU version = 2, user = pcp (990)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Sat Aug  9 20:58:08] pmproxy(1722153) Info: Key server slots, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on 0182a82f52e2 started Sat Aug  9 20:57:20 2025
+
+pmproxy: PID = 1712979, PDU version = 2, user = pcp (990)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    16 44322 ipv6   INADDR_ANY
+  ok    17 44323 inet   INADDR_ANY
+  ok    18 44323 ipv6   INADDR_ANY
+[Sat Aug  9 20:57:20] pmproxy(1712979) Info: Key server slots, schema version setup
+[Sat Aug  9 20:57:26] pmproxy(1712979) Info: pmproxy caught SIGTERM
+[Sat Aug  9 20:57:26] pmproxy(1712979) Info: pmproxy Shutdown
+
+Log finished Sat Aug  9 20:57:26 2025
++++ pmlogger.log +++
+Log for pmlogger on 0182a82f52e2 started Sat Aug  9 20:58:08 2025
+
+[Sat Aug  9 20:58:08] pmlogger(1722254) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "0182a82f52e2" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Sat Aug  9 20:58:11] pmlogger(1722254) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Sat Aug  9 20:58:11 2025
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 0182a82f52e2
+PMCD host        0182a82f52e2
+log started      Sat Aug  9 20:58:28.731885777 2025 (times in local time)
+last log entry   Sat Aug  9 20:58:29.261123136 2025
+current time     Sat Aug  9 20:58:30.236131350 2025
+log volume       0
+log size         73404
+Stopping pmproxy ...
