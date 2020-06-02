@@ -1,0 +1,78 @@
+time_stamp: step 2 delta 0.004422 secs tag cleanup old archives
+pmproxy_was_running=true
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Mon Oct 14 20:40:48 UTC 2024
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1667876       1  0 20:40 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -F -A
+pmproxy_pid=1667876
+time_stamp: step 3 delta 0.376079 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.306095 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.014339 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.166274 secs tag compression
+=== restarting pmlogger
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host ef106187ee1f
+PMCD host        ef106187ee1f
+log started      Mon Oct 14 20:40:52.349204652 2024 (times in local time)
+last log entry   Mon Oct 14 20:40:52.878645411 2024
+current time     Mon Oct 14 20:40:53.854641470 2024
+log volume       0
+log size         68608
+time_stamp: step 7 delta 2.326537 secs tag restart pmcd & pmlogger
+=== wait for pmproxy to process filesystem events
+time_stamp: step 8 delta 2.008572 secs tag wait for pmproxy
+=== checking pmproxy file descriptors for deleted files, should be none
++++ pmproxy.log +++
+Log for pmproxy on ef106187ee1f started Mon Oct 14 20:40:52 2024
+
+pmproxy: PID = 1668307, PDU version = 2, user = pcp (992)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    10       unix   /run/pcp/pmproxy.socket
+  ok    11 44322 inet   INADDR_ANY
+  ok    12 44322 ipv6   INADDR_ANY
+  ok    13 44323 inet   INADDR_ANY
+  ok    14 44323 ipv6   INADDR_ANY
+[Mon Oct 14 20:40:52] pmproxy(1668307) Info: Key server slots, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on ef106187ee1f started Mon Oct 14 20:40:48 2024
+
+pmproxy: PID = 1667876, PDU version = 2, user = pcp (992)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    10       unix   /run/pcp/pmproxy.socket
+  ok    11 44322 inet   INADDR_ANY
+  ok    12 44322 ipv6   INADDR_ANY
+  ok    13 44323 inet   INADDR_ANY
+  ok    14 44323 ipv6   INADDR_ANY
+[Mon Oct 14 20:40:48] pmproxy(1667876) Info: Key server slots, schema version setup
+free(): invalid pointer
++++ pmlogger.log +++
+Log for pmlogger on ef106187ee1f started Mon Oct 14 20:40:48 2024
+
+[Mon Oct 14 20:40:48] pmlogger(1667980) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "ef106187ee1f" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Mon Oct 14 20:40:51] pmlogger(1667980) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Mon Oct 14 20:40:51 2024
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host ef106187ee1f
+PMCD host        ef106187ee1f
+log started      Mon Oct 14 20:40:57.961456539 2024 (times in local time)
+last log entry   Mon Oct 14 20:40:58.482085671 2024
+current time     Mon Oct 14 20:40:59.459775481 2024
+log volume       0
+log size         70028
+Restart pmproxy ...
+exit: 0

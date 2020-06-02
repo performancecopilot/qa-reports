@@ -1,0 +1,79 @@
+sampledso	30	dso	sample_init	/var/lib/pcp/pmdas/sample/pmda_sample.so 
+
+[access]
+disallow ".*" : store;
+disallow ":*" : store;
+allow "local:*" : all;
+port=54322
+pmcd_pid=1607295
+0000000 10000000 00700000 00000000 eaffffff
+0000020
+Log for pmcd on eb98c175811f started Mon Oct 14 20:36:29 2024
+
+
+active agent dom   pid  in out ver protocol parameters
+============ === ===== === === === ======== ==========
+sampledso     30                 2 dso i:7  lib=/var/lib/pcp/pmdas/sample/pmda_sample.so entry=sample_init [0x6011850]
+
+Host access list:
+00 01 Cur/MaxCons host-spec                               host-mask                               lvl host-name
+== == =========== ======================================= ======================================= === ==============
+ y  y     0     0 10.88.0.2                               255.255.255.255                           0 localhost
+ y  y     0     0 /                                       /                                         1 unix:
+    n     0     0 0.0.0.0                                 0.0.0.0                                   4 .*
+    n     0     0 ::                                      ::                                        8 :*
+User access list empty: user-based access control turned off
+Group access list empty: group-based access control turned off
+
+
+pmcd: PID = 1607295, PDU version = 2
+pmcd request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     7       unix   ./pmcd.socket
+  err   -1 54322 inet   INADDR_ANY
+  ok     3 54322 ipv6   INADDR_ANY
+AcceptNewClient(3): client[0] (fd 8)
+[1607295]pmXmitPDU: ERROR fd=8 len=20
+000:       14     7000        0        0 440e0102 
+AcceptNewClient(3): client[1] (fd 9)
+[1607295]pmXmitPDU: ERROR fd=9 len=20
+000:       14     7000        0        0 440e0102 
+[1607295]pmGetPDU: CREDS fd=8 len=20 from=1607306
+000:       14     700c   18868a  1000000      201 
+     fd  client connection from                    ipc ver  operations denied
+     ==  ========================================  =======  =================
+      8  localhost                                       0
+      9  localhost                                       0
+
+DoCreds: version cred (2) flags=0 ()
+[1607295]pmGetPDU: CREDS fd=8 len=20 from=42
+000:       14     700c       2a  1000000 40000201 
+     fd  client connection from                    ipc ver  operations denied
+     ==  ========================================  =======  =================
+      8  localhost                                       2
+      9  localhost                                       0
+
+DoCreds: version cred (2) flags=40 (CONTAINER)
+[1607295]pmGetPDU: ATTR fd=8 len=52 from=42
+000:       34     7011       2a  f000000 6c697665 6e6f632d 6e696174 2c227265 
+008: 69766522 79656b6c 65223a22 766c6976 65756c61 
+__pmDecodeAttr [len=36]: attr=0xf value="evil-container","evilkey":"evilvalue"
+GetAttribute: client fd=8 __pmCheckAttribute(15,"evil-container","evilkey":"evilvalue") failed: Invalid argument
+DoCreds: failed GetAttribute container -22: Invalid argument
+[1607295]pmXmitPDU: ERROR fd=8 len=16
+000:       10     7000        0 eaffffff 
+[1607295]pmGetPDU: CREDS fd=9 len=20 from=1607306
+000:       14     700c   18868a  1000000      201 
+     fd  client connection from                    ipc ver  operations denied
+     ==  ========================================  =======  =================
+      8  localhost                                       2
+      9  localhost                                       0
+
+DoCreds: version cred (2) flags=0 ()
+endclient client[0]: (fd 8) No error (0)
+endclient client[1]: (fd 9) No error (0)
+[Mon Oct 14 20:36:32] pmcd(1607295) Info: pmcd caught SIGTERM from pid=1607222 uid=991
+[Mon Oct 14 20:36:32] pmcd(1607295) Info: pmcd Shutdown
+
+Log finished Mon Oct 14 20:36:32 2024
