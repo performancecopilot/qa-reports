@@ -1,0 +1,58 @@
+QA output created by 1483
+
+=== pmcd ===
+
+=== pmfind ===
+
+=== pmie ===
+
+=== pmie_check ===
+
+=== pmie_daily ===
+
+=== pmie_farm ===
+
+=== pmie_farm_check ===
+
+=== pmlogger ===
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]: Terminated                 $PCP_PS_PROG $PCP_PS_ALL_FLAGS | sed -n -f $__tmp.sed | sort -n -u | while read __pid; do
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:     if $__verbose; then
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:         $PCP_PS_PROG $PCP_PS_ALL_FLAGS 2>&1 | $PCP_AWK_PROG '
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]: $2 == "PID"                { print }
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]: $2 == '"$__pid"'        { print }' > $__tmp.ps;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:     fi; if [ -f /proc/$__pid/cgroup ]; then
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:         __cgroups=`tail -1 /proc/$__pid/cgroup 2>/dev/null`; case "$__cgroups" in
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:             '' | 0::/system.slice/* | 0::/user.slice/* | 0::/init.scope | 1:name=systemd:/* | 1:cpuset:/* | 1:blkio:/*)
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                 if $__verbose; then
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                     echo "Info: _get_pids_by_name: not in container" 1>&2; cat $__tmp.ps 1>&2;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                 fi; echo $__pid
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:             ;;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:             0::/machine.slice/*/container/*)
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                 if $__verbose; then
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                     echo "Info: _get_pids_by_name: in container, skipped" 1>&2; cat $__tmp.ps 1>&2;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                 fi
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:             ;;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:             *)
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                 if $__verbose; then
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                     echo "Warning: _get_pids_by_name: unknown cgroups: \"$__cgroups\"" 1>&2; $PCP_PS_PROG $PCP_PS_ALL_FLAGS 2>&1 | $PCP_AWK_PROG '
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]: $2 == "PID"        { print }
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]: $2 == '"$__pid"'        { print }' 1>&2;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:                 fi; echo $__pid
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:             ;;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:         esac;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:     else
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:         if $__verbose; then
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:             echo "Info: _get_pids_by_name: no /proc/$__pid/cgroup file, assumed not in container" 1>&2; cat $__tmp.ps 1>&2;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:         fi; echo $__pid;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]:     fi;
+Aug 24 21:14:59 1b867746491f pmlogger[1208910]: done
+
+=== pmlogger_check ===
+
+=== pmlogger_daily ===
+
+=== pmlogger_farm ===
+
+=== pmlogger_farm_check ===
+
+=== pmproxy ===
