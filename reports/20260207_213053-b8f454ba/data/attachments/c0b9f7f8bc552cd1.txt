@@ -1,0 +1,1145 @@
+== -NV expect pmfind class to be used
+/etc/pcp/pmie/class.d/pmfind: host localhost hostname(.*) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:47 UTC 2026
+# DO NOT REMOVE OR EDIT THE FOLLOWING LINE
+$version=1.1
+
+$class=pmfind
+
+#
+#Host P? S? pmie_log_pathname            pmie_args
+localhost    n  n  PCP_LOG_DIR/pmie/pmfind-localhost/pmie.log -c ./pmfind-localhost.config
+
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/pmfind-localhost
++ cp /var/tmp/pmiectl.mylyXCcG7/control /etc/pcp/pmie/control.d/pmfind-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/pmfind-localhost"
+
+== -NV -p, no [create] section, expect on instance to be created
+Warning: no instance created for host localhost
+
+== -NV -p -c, no [create] section, expect no instance to be created
+Warning: no instance created for host localhost
+
+== -NV -p -c exists() false, expect no instance to be created
+Warning: no instance created for host localhost
+
+== -NV -p -c exists() true (leaf in PMNS), expect instance to be created
+/tmp/1249-1460868.policy: host localhost exists(sample.bin) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:48 UTC 2026
+$class=1249
+$version=1.1
+# existing config file
+localhost n n PCP_LOG_DIR/pmie/1249-localhost/pmie.log -c /tmp/1249-1460868.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/1249-localhost
++ cp /var/tmp/pmiectl.SqiO8jLNw/control /etc/pcp/pmie/control.d/1249-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/1249-localhost"
+
+== -NV -p -c exists() true (non-leaf in PMNS), expect instance to be created
+/tmp/1249-1460868.policy: host localhost exists(sample) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:48 UTC 2026
+$class=1249
+$version=1.1
+# existing config file
+localhost n n PCP_LOG_DIR/pmie/1249-localhost/pmie.log -c /tmp/1249-1460868.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/1249-localhost
++ cp /var/tmp/pmiectl.JlLYL6mK9/control /etc/pcp/pmie/control.d/1249-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/1249-localhost"
+
+== -NV -p -c values() false (bad metric), expect no instance to be created
+Warning: no instance created for host localhost
+
+== -NV -p -c values() false (numval < 1), expect no instance to be created
+Warning: no instance created for host localhost
+
+== -NV -p -c values() true (leaf & singular), expect instance to be created
+/tmp/1249-1460868.policy: host localhost values(sample.long) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:48 UTC 2026
+$class=1249
+$version=1.1
+# existing config file
+localhost n n PCP_LOG_DIR/pmie/1249-localhost/pmie.log -c /tmp/1249-1460868.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/1249-localhost
++ cp /var/tmp/pmiectl.by9McsHCD/control /etc/pcp/pmie/control.d/1249-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/1249-localhost"
+
+== -NV -p -c values() true (leaf & indom), expect instance to be created
+/tmp/1249-1460868.policy: host localhost values(sample.bin) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:48 UTC 2026
+$class=1249
+$version=1.1
+# existing config file
+localhost n n PCP_LOG_DIR/pmie/1249-localhost/pmie.log -c /tmp/1249-1460868.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/1249-localhost
++ cp /var/tmp/pmiectl.XzRbjqSTS/control /etc/pcp/pmie/control.d/1249-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/1249-localhost"
+
+== -NV -p -c values() true (non-leaf & indom), expect instance to be created
+/tmp/1249-1460868.policy: host localhost values(disk.dev) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:49 UTC 2026
+$class=1249
+$version=1.1
+# existing config file
+localhost n n PCP_LOG_DIR/pmie/1249-localhost/pmie.log -c /tmp/1249-1460868.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/1249-localhost
++ cp /var/tmp/pmiectl.b2bydCFBJ/control /etc/pcp/pmie/control.d/1249-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/1249-localhost"
+
+== -NV -p -c condition() false (bad expr), expect no instance to be created
+[/var/tmp/pmiectl.8phXoQUBH/derived:1] Error: pmRegisterDerived(pm_ctl.check, ...) syntax error
+ hinv.ncpu >
+           ^
+Arithmetic expression expected to follow GT
+Warning: no instance created for host localhost
+
+== -NV -p -c condition() false (singular value == 0), expect no instance to be created
+Warning: no instance created for host localhost
+
+== -NV -p -c condition() false (indom value < 0), expect no instance to be created
+Warning: /tmp/1249-1460868.policy: condition(-sample.bin) has 9 values, not 1 as expected, using first value (-100)
+Warning: no instance created for host localhost
+
+== -NV -p -c condition() true (singular value > 0), expect instance to be created
+/tmp/1249-1460868.policy: host localhost values(hinv.ndisk > 0 ? hinv.ndisk : 1 + hinv.ncpu > 0 ? hinv.ndisk : 1) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:49 UTC 2026
+$class=1249
+$version=1.1
+# existing config file
+localhost n n PCP_LOG_DIR/pmie/1249-localhost/pmie.log -c /tmp/1249-1460868.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/1249-localhost
++ cp /var/tmp/pmiectl.dbphK0cUp/control /etc/pcp/pmie/control.d/1249-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/1249-localhost"
+
+== -NV -p -c hostname() false, expect no instance to be created
+Warning: no instance created for host localhost
+
+== -NV -p -c hostname() true, expect instance to be created
+/tmp/1249-1460868.policy: host localhost hostname((local|LOCAL)host) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:49 UTC 2026
+$class=1249
+$version=1.1
+# existing config file
+localhost n n PCP_LOG_DIR/pmie/1249-localhost/pmie.log -c /tmp/1249-1460868.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/1249-localhost
++ cp /var/tmp/pmiectl.ByuTQBSfU/control /etc/pcp/pmie/control.d/1249-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/1249-localhost"
+
+== -NV, expect simple instance to be created
+/etc/pcp/pmie/class.d/1249.1: host localhost hostname((local|LOCAL)host) true
+--- start control file ---
+# created by pmiectl on Sat Feb  7 20:40:49 UTC 2026
+$class=1249
+$version=1.1
+# existing config file
+localhost n n PCP_LOG_DIR/pmie/1249-localhost/pmie.log -c /tmp/1249-1460868.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/1249-localhost
++ cp /var/tmp/pmiectl.A03crFLq5/control /etc/pcp/pmie/control.d/1249-localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/1249-localhost"
+
+== -i, 2 explicit configs, expect concat config file for one pmfind instance
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+pmcd Host            Rules Evaluations Class        PID State    Instance Id
+c8e83635332f            25          76 primary  1431185 running  c8e83635332f
+localhost                2           6 pmfind   1463145 running  1249
+=== /var/log/pcp/pmie/1249/pmie.log ===
+Log for pmie on c8e83635332f started Sat Feb  7 20:40:50 2026
+
+pmie: PID = 1463145, via localhost
+
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:50 2026: The lights are on!
+Sat Feb  7 20:40:51 2026: The lights are on!
+Sat Feb  7 20:40:51 2026: The lights are on!
+--- start pmie config file ---
+delta = 0.1sec;
+some_inst sample.lights > 0 -> print "The lights are on!";
+delta = 0.1sec;
+some_inst sample.lights > 0 -> print "The lights are on!";
+--- end pmie config file ---
+
+== -i, + logconf config, expect concat config file for one pmfind instance
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1 18 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1 12 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+pmcd Host            Rules Evaluations Class        PID State    Instance Id
+c8e83635332f            25          76 primary  1431185 running  c8e83635332f
+localhost                2          34 pmfind   1463145 running  1249
+localhost               26          30 pmfind   1463757 running  1249-a
+=== /var/log/pcp/pmie/1249-a/pmie.log ===
+Log for pmie on c8e83635332f started Sat Feb  7 20:40:51 2026
+
+pmie: PID = 1463757, via localhost
+
+pmie: metric mssql.memory_manager.stolen_node_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+pmie: metric mssql.memory_manager.stolen_node_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+pmie: metric mssql.memory_manager.total_server_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+Sat Feb  7 20:40:51 2026: The lights are on!
+Sat Feb  7 20:40:51 2026: The lights are on!
+Sat Feb  7 20:40:51 2026: The lights are on!
+Sat Feb  7 20:40:51 2026: The lights are on!
+Sat Feb  7 20:40:51 2026: The lights are on!
+Sat Feb  7 20:40:51 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+Sat Feb  7 20:40:52 2026: The lights are on!
+--- start pmie config file ---
+// pmieconf-pmie 1 /var/lib/pcp/config/pmieconf
+// end
+//
+// --- START GENERATED SECTION (do not change this section) ---
+// Auto-generated by pmieconf on:  Sat Feb  7 20:40:51 2026
+//
+
+// 1 cpu.context_switch
+delta = 2 min;
+cpu.context_switch = 
+some_host (
+    kernel.all.pswitch 
+	> hinv.ncpu  * 4000 count/sec
+) -> syslog 10 min "High aggregate context switch rate" " %vctxsw/s@%h";
+
+// 1 cpu.load_average
+delta = 2 min;
+cpu.load_average = 
+some_host (
+    // threshold scales with the number of CPUs (works better for
+    // large systems) and there is an absolute lower bound,
+    // especially for small systems
+    kernel.all.load  #'1 minute' > hinv.ncpu  * 3
+    && kernel.all.load  #'1 minute' > 4
+) -> syslog 10 min "High 1-minute load average" " %vload@%h";
+
+// 1 cpu.system
+delta = 2 min;
+cpu.system = 
+some_host (
+    // first term is always true, but provides %v for actions ...
+    ( 100 * kernel.all.cpu.sys  / hinv.ncpu  ) > 0
+    && 100 * ( kernel.all.cpu.user  + kernel.all.cpu.sys  )
+	    > 70 * hinv.ncpu 
+    && 100 * kernel.all.cpu.sys  /
+	    ( kernel.all.cpu.user  + kernel.all.cpu.sys  )
+		> 75
+) -> syslog 10 min "Busy executing in system mode" " %v%sys@%h";
+
+// 1 cpu.util
+delta = 2 min;
+cpu.util = 
+some_host (
+    100 * ( kernel.all.cpu.user  +
+	    kernel.all.cpu.sys  +
+	    kernel.all.cpu.intr  ) / hinv.ncpu 
+	> 90
+) -> syslog 10 min "High average processor utilization" " %v%util@%h";
+
+// 1 dmthin.data_high_util
+delta = 10 mins;
+dmthin.data_high_util = 
+some_host (
+    some_inst (
+        ( 100 * dmthin.pool.data.used  /
+                dmthin.pool.data.total  )
+        > 95
+    )
+) -> syslog 10 min "dmthin pool data is filling up" " %v%used [%i]@%h";
+
+// 1 dmthin.metadata_high_util
+delta = 10 mins;
+dmthin.metadata_high_util = 
+some_host (
+    some_inst (
+        ( 100 * dmthin.pool.metadata.used  /
+                dmthin.pool.metadata.total  )
+        > 80
+    )
+) -> syslog 10 min "dmthin pool metadata is filling up" " %v%used [%i]@%h";
+
+// 1 entropy.available
+delta = 2 min;
+entropy.available = 
+some_host (
+	( 100 * kernel.all.entropy.avail  /
+          kernel.all.entropy.poolsize  ) <= 5 &&
+	( kernel.all.entropy.avail <= 150 )
+) -> syslog 10 min "Low random number entropy available" " %v%avail@%h";
+
+// 1 filesys.filling
+delta = 4 mins;
+filesys.filling = 
+some_host (
+    some_inst (
+	( 100 * filesys.used  / filesys.capacity  ) > 95
+	&& filesys.used  + 
+	    20 min * ( rate filesys.used  ) >
+		filesys.capacity 
+    )
+) -> syslog 10 min "File system is filling up" " %v%used[%i]@%h";
+
+// 1 filesys.vfs_files
+delta = 2 min;
+filesys.vfs_files = 
+some_host (
+    vfs.files.count  > 0 && vfs.files.max  > 0 &&
+    100 * ( vfs.files.count  / vfs.files.max  ) > 90
+) -> syslog 10 min "Approaching open file descriptor limit" " %vopen@%h";
+
+// 1 memory.exhausted
+delta = 2 min;
+memory.exhausted = 
+some_host (
+    ( avg_sample ( swap.pagesout  @0..9 ) ) > 0 &&
+    30 %_sample swap.pagesout  @0..9 >= 5
+) -> syslog 10 min "Severe demand for real memory" " %vpgsout/s@%h";
+
+// 1 memory.oom_kill
+delta = 2 min;
+memory.oom_kill = 
+some_host (
+        mem.vmstat.oom_kill  > 0
+) -> syslog 10 min "OOM kill" " %v/sec@%h";
+
+// 1 mssql.stolen_node_memory
+delta = 2 min;
+mssql.stolen_node_memory = 
+some_host (
+    ( avg_sample ( mssql.memory_manager.stolen_node_memory  @0..9 ) ) > 0
+    && 60 %_sample
+    ( 100 * ( mssql.memory_manager.stolen_node_memory @0..9  /
+              mssql.memory_manager.total_server_memory @0..9  ) )
+	> 70
+) -> syslog 10 min "High mssql stolen node memory" " %v%mem@%h";
+
+// 1 network.listenoverflows
+delta = 2 min;
+network.listenoverflows = 
+some_host (
+        network.tcp.listenoverflows  > 0
+) -> syslog 10 min "TCP listen overflows" " %v/sec@%h";
+
+// 1 network.tcpqfulldocookies
+delta = 2 min;
+network.tcpqfulldocookies = 
+some_host (
+        network.tcp.reqqfulldocookies  > 0
+) -> syslog 10 min "TCP request queue full SYN cookie replies" " %v/sec@%h";
+
+// 1 network.tcpqfulldrops
+delta = 2 min;
+network.tcpqfulldrops = 
+some_host (
+        network.tcp.reqqfulldrop  > 0
+) -> syslog 10 min "TCP request queue full drops" " %v/sec@%h";
+
+// 1 per_cpu.many_util
+delta = 2 min;
+per_cpu.many_util = 
+some_host (
+    hinv.ncpu  > 12 &&
+    80 %_inst (
+	100 * ( kernel.percpu.cpu.user  +
+		kernel.percpu.cpu.sys  +
+		kernel.percpu.cpu.intr  )
+	    > 95
+    )
+) -> syslog 10 min "High number of saturated processors" " >80%CPUs@%h";
+
+// 1 per_cpu.some_util
+delta = 2 min;
+per_cpu.some_util = 
+some_host (
+    some_inst (
+      ( 100 * ( kernel.percpu.cpu.user  +
+		kernel.percpu.cpu.sys  +
+		kernel.percpu.cpu.intr  ) )
+	    > 95
+    )
+    && hinv.ncpu  > 1
+    && hinv.ncpu  <= 12
+) -> syslog 10 min "High per CPU processor utilization" " %v%util[%i]@%h";
+
+// 1 per_cpu.system
+delta = 2 min;
+per_cpu.system = 
+some_host (
+    some_inst (
+	// first term is always true, but provides %v for actions ...
+	( 100 * kernel.percpu.cpu.sys  ) > 0
+	&& 100 * ( kernel.percpu.cpu.user  +
+		   kernel.percpu.cpu.sys  ) > 75
+	&& 100 * kernel.percpu.cpu.sys  /
+	    ( kernel.percpu.cpu.user  + kernel.percpu.cpu.sys  )
+		> 80
+    )
+    && hinv.ncpu  > 1
+) -> syslog 10 min "Some CPU busy executing in system mode" " %v%sys[%i]@%h";
+
+// 1 per_disk.average_queue_length
+delta = 2 min;
+per_disk.average_queue_length = 
+some_host (
+    some_inst (
+      ( disk.dev.aveq  @0 > disk.dev.aveq  @1 )
+        &&
+      ( disk.dev.avactive  * 100 > 95 )
+    )
+) -> syslog 10 min "High per disk average queue length" " %vaveq[%i]@%h";
+
+// 1 per_disk.average_wait_time
+delta = 2 min;
+per_disk.average_wait_time = 
+some_host (
+  some_inst (
+    ( disk.dev.total_rawactive  @0 / disk.dev.total  @0 ) * 100
+      >
+    ( disk.dev.total_rawactive  @1 / disk.dev.total  @1 ) * 100
+      &&
+    ( disk.dev.avactive  * 100 > 95 )
+  )
+) -> syslog 10 min "High per disk average queue length" " %v%await[%i]@%h";
+
+// 1 per_netif.collisions
+delta = 2 min;
+per_netif.collisions = 
+some_inst (
+    100 * network.interface.collisions 
+	    / ( network.interface.collisions 
+		+ network.interface.out.packets  )
+	> 40 &&
+    network.interface.out.packets 
+	> 10 count/second
+) -> syslog 10 min "High collision rate in packet sends" " %v%collisions[%i]@%h";
+
+// 1 per_netif.errors
+delta = 2 min;
+per_netif.errors = 
+some_inst (
+    network.interface.total.errors  
+	> 15
+) -> syslog 10 min "High network interface error rate" " %verr/s[%i]@%h";
+
+// 1 per_netif.util
+delta = 2 min;
+per_netif.util = 
+some_inst (
+    ( 100 * network.interface.total.bytes   /
+	    network.interface.baudrate   )
+	       > 85
+    && network.interface.baudrate   > 0
+) -> syslog 10 min "High network interface utilization" " %v%util[%i]@%h";
+
+// 1 power.thermal_throttle
+delta = 2 min;
+power.thermal_throttle = 
+some_host (
+	100 * hinv.cpu.thermal_throttle.package.time  > 50
+) -> syslog 10 min "CPU is experiencing thermal throttling" " %v%time[%i]@%h";
+
+// --- END GENERATED SECTION (changes below will be preserved) ---
+delta = 0.1sec;
+some_inst sample.lights > 0 -> print "The lights are on!";
+delta = 0.1sec;
+some_inst sample.lights > 0 -> print "The lights are on!";
+--- end pmie config file ---
+
+== -i, 2x logconf config, expect concat config file for one pmfind instance
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1  3 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1 11 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1  7 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config
+pmcd Host            Rules Evaluations Class        PID State    Instance Id
+c8e83635332f            25          76 primary  1431185 running  c8e83635332f
+localhost                2          64 pmfind   1463145 running  1249
+localhost               25          27 pmfind   1464456 running  1249-b
+localhost               26          60 pmfind   1463757 running  1249-a
+=== /var/log/pcp/pmie/1249-b/pmie.log ===
+Log for pmie on c8e83635332f started Sat Feb  7 20:40:53 2026
+
+pmie: PID = 1464456, via localhost
+
+pmie: metric mssql.memory_manager.stolen_node_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+pmie: metric mssql.memory_manager.stolen_node_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+pmie: metric mssql.memory_manager.total_server_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+Sat Feb  7 20:40:53 2026: The lights are on!
+Sat Feb  7 20:40:53 2026: The lights are on!
+Sat Feb  7 20:40:53 2026: The lights are on!
+Sat Feb  7 20:40:53 2026: The lights are on!
+Sat Feb  7 20:40:53 2026: The lights are on!
+Sat Feb  7 20:40:53 2026: The lights are on!
+Sat Feb  7 20:40:53 2026: The lights are on!
+Sat Feb  7 20:40:53 2026: The lights are on!
+Sat Feb  7 20:40:53 2026: The lights are on!
+--- start pmie config file ---
+// pmieconf-pmie 1 /var/lib/pcp/config/pmieconf
+// end
+//
+// --- START GENERATED SECTION (do not change this section) ---
+// Auto-generated by pmieconf on:  Sat Feb  7 20:40:52 2026
+//
+
+// 1 cpu.context_switch
+delta = 2 min;
+cpu.context_switch = 
+some_host (
+    kernel.all.pswitch 
+	> hinv.ncpu  * 4000 count/sec
+) -> syslog 10 min "High aggregate context switch rate" " %vctxsw/s@%h";
+
+// 1 cpu.load_average
+delta = 2 min;
+cpu.load_average = 
+some_host (
+    // threshold scales with the number of CPUs (works better for
+    // large systems) and there is an absolute lower bound,
+    // especially for small systems
+    kernel.all.load  #'1 minute' > hinv.ncpu  * 3
+    && kernel.all.load  #'1 minute' > 4
+) -> syslog 10 min "High 1-minute load average" " %vload@%h";
+
+// 1 cpu.system
+delta = 2 min;
+cpu.system = 
+some_host (
+    // first term is always true, but provides %v for actions ...
+    ( 100 * kernel.all.cpu.sys  / hinv.ncpu  ) > 0
+    && 100 * ( kernel.all.cpu.user  + kernel.all.cpu.sys  )
+	    > 70 * hinv.ncpu 
+    && 100 * kernel.all.cpu.sys  /
+	    ( kernel.all.cpu.user  + kernel.all.cpu.sys  )
+		> 75
+) -> syslog 10 min "Busy executing in system mode" " %v%sys@%h";
+
+// 1 cpu.util
+delta = 2 min;
+cpu.util = 
+some_host (
+    100 * ( kernel.all.cpu.user  +
+	    kernel.all.cpu.sys  +
+	    kernel.all.cpu.intr  ) / hinv.ncpu 
+	> 90
+) -> syslog 10 min "High average processor utilization" " %v%util@%h";
+
+// 1 dmthin.data_high_util
+delta = 10 mins;
+dmthin.data_high_util = 
+some_host (
+    some_inst (
+        ( 100 * dmthin.pool.data.used  /
+                dmthin.pool.data.total  )
+        > 95
+    )
+) -> syslog 10 min "dmthin pool data is filling up" " %v%used [%i]@%h";
+
+// 1 dmthin.metadata_high_util
+delta = 10 mins;
+dmthin.metadata_high_util = 
+some_host (
+    some_inst (
+        ( 100 * dmthin.pool.metadata.used  /
+                dmthin.pool.metadata.total  )
+        > 80
+    )
+) -> syslog 10 min "dmthin pool metadata is filling up" " %v%used [%i]@%h";
+
+// 1 entropy.available
+delta = 2 min;
+entropy.available = 
+some_host (
+	( 100 * kernel.all.entropy.avail  /
+          kernel.all.entropy.poolsize  ) <= 5 &&
+	( kernel.all.entropy.avail <= 150 )
+) -> syslog 10 min "Low random number entropy available" " %v%avail@%h";
+
+// 1 filesys.filling
+delta = 4 mins;
+filesys.filling = 
+some_host (
+    some_inst (
+	( 100 * filesys.used  / filesys.capacity  ) > 95
+	&& filesys.used  + 
+	    20 min * ( rate filesys.used  ) >
+		filesys.capacity 
+    )
+) -> syslog 10 min "File system is filling up" " %v%used[%i]@%h";
+
+// 1 filesys.vfs_files
+delta = 2 min;
+filesys.vfs_files = 
+some_host (
+    vfs.files.count  > 0 && vfs.files.max  > 0 &&
+    100 * ( vfs.files.count  / vfs.files.max  ) > 90
+) -> syslog 10 min "Approaching open file descriptor limit" " %vopen@%h";
+
+// 1 memory.exhausted
+delta = 2 min;
+memory.exhausted = 
+some_host (
+    ( avg_sample ( swap.pagesout  @0..9 ) ) > 0 &&
+    30 %_sample swap.pagesout  @0..9 >= 5
+) -> syslog 10 min "Severe demand for real memory" " %vpgsout/s@%h";
+
+// 1 memory.oom_kill
+delta = 2 min;
+memory.oom_kill = 
+some_host (
+        mem.vmstat.oom_kill  > 0
+) -> syslog 10 min "OOM kill" " %v/sec@%h";
+
+// 1 mssql.stolen_node_memory
+delta = 2 min;
+mssql.stolen_node_memory = 
+some_host (
+    ( avg_sample ( mssql.memory_manager.stolen_node_memory  @0..9 ) ) > 0
+    && 60 %_sample
+    ( 100 * ( mssql.memory_manager.stolen_node_memory @0..9  /
+              mssql.memory_manager.total_server_memory @0..9  ) )
+	> 70
+) -> syslog 10 min "High mssql stolen node memory" " %v%mem@%h";
+
+// 1 network.listenoverflows
+delta = 2 min;
+network.listenoverflows = 
+some_host (
+        network.tcp.listenoverflows  > 0
+) -> syslog 10 min "TCP listen overflows" " %v/sec@%h";
+
+// 1 network.tcpqfulldocookies
+delta = 2 min;
+network.tcpqfulldocookies = 
+some_host (
+        network.tcp.reqqfulldocookies  > 0
+) -> syslog 10 min "TCP request queue full SYN cookie replies" " %v/sec@%h";
+
+// 1 network.tcpqfulldrops
+delta = 2 min;
+network.tcpqfulldrops = 
+some_host (
+        network.tcp.reqqfulldrop  > 0
+) -> syslog 10 min "TCP request queue full drops" " %v/sec@%h";
+
+// 1 per_cpu.many_util
+delta = 2 min;
+per_cpu.many_util = 
+some_host (
+    hinv.ncpu  > 12 &&
+    80 %_inst (
+	100 * ( kernel.percpu.cpu.user  +
+		kernel.percpu.cpu.sys  +
+		kernel.percpu.cpu.intr  )
+	    > 95
+    )
+) -> syslog 10 min "High number of saturated processors" " >80%CPUs@%h";
+
+// 1 per_cpu.some_util
+delta = 2 min;
+per_cpu.some_util = 
+some_host (
+    some_inst (
+      ( 100 * ( kernel.percpu.cpu.user  +
+		kernel.percpu.cpu.sys  +
+		kernel.percpu.cpu.intr  ) )
+	    > 95
+    )
+    && hinv.ncpu  > 1
+    && hinv.ncpu  <= 12
+) -> syslog 10 min "High per CPU processor utilization" " %v%util[%i]@%h";
+
+// 1 per_cpu.system
+delta = 2 min;
+per_cpu.system = 
+some_host (
+    some_inst (
+	// first term is always true, but provides %v for actions ...
+	( 100 * kernel.percpu.cpu.sys  ) > 0
+	&& 100 * ( kernel.percpu.cpu.user  +
+		   kernel.percpu.cpu.sys  ) > 75
+	&& 100 * kernel.percpu.cpu.sys  /
+	    ( kernel.percpu.cpu.user  + kernel.percpu.cpu.sys  )
+		> 80
+    )
+    && hinv.ncpu  > 1
+) -> syslog 10 min "Some CPU busy executing in system mode" " %v%sys[%i]@%h";
+
+// 1 per_disk.average_queue_length
+delta = 2 min;
+per_disk.average_queue_length = 
+some_host (
+    some_inst (
+      ( disk.dev.aveq  @0 > disk.dev.aveq  @1 )
+        &&
+      ( disk.dev.avactive  * 100 > 95 )
+    )
+) -> syslog 10 min "High per disk average queue length" " %vaveq[%i]@%h";
+
+// 1 per_disk.average_wait_time
+delta = 2 min;
+per_disk.average_wait_time = 
+some_host (
+  some_inst (
+    ( disk.dev.total_rawactive  @0 / disk.dev.total  @0 ) * 100
+      >
+    ( disk.dev.total_rawactive  @1 / disk.dev.total  @1 ) * 100
+      &&
+    ( disk.dev.avactive  * 100 > 95 )
+  )
+) -> syslog 10 min "High per disk average queue length" " %v%await[%i]@%h";
+
+// 1 per_netif.collisions
+delta = 2 min;
+per_netif.collisions = 
+some_inst (
+    100 * network.interface.collisions 
+	    / ( network.interface.collisions 
+		+ network.interface.out.packets  )
+	> 40 &&
+    network.interface.out.packets 
+	> 10 count/second
+) -> syslog 10 min "High collision rate in packet sends" " %v%collisions[%i]@%h";
+
+// 1 per_netif.errors
+delta = 2 min;
+per_netif.errors = 
+some_inst (
+    network.interface.total.errors  
+	> 15
+) -> syslog 10 min "High network interface error rate" " %verr/s[%i]@%h";
+
+// 1 per_netif.util
+delta = 2 min;
+per_netif.util = 
+some_inst (
+    ( 100 * network.interface.total.bytes   /
+	    network.interface.baudrate   )
+	       > 85
+    && network.interface.baudrate   > 0
+) -> syslog 10 min "High network interface utilization" " %v%util[%i]@%h";
+
+// 1 power.thermal_throttle
+delta = 2 min;
+power.thermal_throttle = 
+some_host (
+	100 * hinv.cpu.thermal_throttle.package.time  > 50
+) -> syslog 10 min "CPU is experiencing thermal throttling" " %v%time[%i]@%h";
+
+// --- END GENERATED SECTION (changes below will be preserved) ---
+delta = 0.1sec;
+some_inst sample.lights > 0 -> print "The lights are on!";
+--- end pmie config file ---
+
+== -i, 3x logconf config, expect concat config file for one pmfind instance
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config
+Warning: _get_pids_by_name: pid=1465229: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1465229       1 16 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-c/pmie.log -c ./1249-c.config
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config
+Warning: _get_pids_by_name: pid=1465229: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1465229       1 10 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-c/pmie.log -c ./1249-c.config
+pmcd Host            Rules Evaluations Class        PID State    Instance Id
+c8e83635332f            25          76 primary  1431185 running  c8e83635332f
+localhost                2          96 pmfind   1463145 running  1249
+localhost               24          24 pmfind   1465229 running  1249-c
+localhost               25          43 pmfind   1464456 running  1249-b
+localhost               26          90 pmfind   1463757 running  1249-a
+=== /var/log/pcp/pmie/1249-c/pmie.log ===
+Log for pmie on c8e83635332f started Sat Feb  7 20:40:54 2026
+
+pmie: PID = 1465229, via localhost
+
+pmie: metric mssql.memory_manager.stolen_node_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+pmie: metric mssql.memory_manager.stolen_node_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+pmie: metric mssql.memory_manager.total_server_memory not in namespace for pmcd localhost (host c8e83635332f)
+pmLookupName failed: Unknown metric name
+--- start pmie config file ---
+// pmieconf-pmie 1 /var/lib/pcp/config/pmieconf
+// end
+//
+// --- START GENERATED SECTION (do not change this section) ---
+// Auto-generated by pmieconf on:  Sat Feb  7 20:40:54 2026
+//
+
+// 1 cpu.context_switch
+delta = 2 min;
+cpu.context_switch = 
+some_host (
+    kernel.all.pswitch 
+	> hinv.ncpu  * 4000 count/sec
+) -> syslog 10 min "High aggregate context switch rate" " %vctxsw/s@%h";
+
+// 1 cpu.load_average
+delta = 2 min;
+cpu.load_average = 
+some_host (
+    // threshold scales with the number of CPUs (works better for
+    // large systems) and there is an absolute lower bound,
+    // especially for small systems
+    kernel.all.load  #'1 minute' > hinv.ncpu  * 3
+    && kernel.all.load  #'1 minute' > 4
+) -> syslog 10 min "High 1-minute load average" " %vload@%h";
+
+// 1 cpu.system
+delta = 2 min;
+cpu.system = 
+some_host (
+    // first term is always true, but provides %v for actions ...
+    ( 100 * kernel.all.cpu.sys  / hinv.ncpu  ) > 0
+    && 100 * ( kernel.all.cpu.user  + kernel.all.cpu.sys  )
+	    > 70 * hinv.ncpu 
+    && 100 * kernel.all.cpu.sys  /
+	    ( kernel.all.cpu.user  + kernel.all.cpu.sys  )
+		> 75
+) -> syslog 10 min "Busy executing in system mode" " %v%sys@%h";
+
+// 1 cpu.util
+delta = 2 min;
+cpu.util = 
+some_host (
+    100 * ( kernel.all.cpu.user  +
+	    kernel.all.cpu.sys  +
+	    kernel.all.cpu.intr  ) / hinv.ncpu 
+	> 90
+) -> syslog 10 min "High average processor utilization" " %v%util@%h";
+
+// 1 dmthin.data_high_util
+delta = 10 mins;
+dmthin.data_high_util = 
+some_host (
+    some_inst (
+        ( 100 * dmthin.pool.data.used  /
+                dmthin.pool.data.total  )
+        > 95
+    )
+) -> syslog 10 min "dmthin pool data is filling up" " %v%used [%i]@%h";
+
+// 1 dmthin.metadata_high_util
+delta = 10 mins;
+dmthin.metadata_high_util = 
+some_host (
+    some_inst (
+        ( 100 * dmthin.pool.metadata.used  /
+                dmthin.pool.metadata.total  )
+        > 80
+    )
+) -> syslog 10 min "dmthin pool metadata is filling up" " %v%used [%i]@%h";
+
+// 1 entropy.available
+delta = 2 min;
+entropy.available = 
+some_host (
+	( 100 * kernel.all.entropy.avail  /
+          kernel.all.entropy.poolsize  ) <= 5 &&
+	( kernel.all.entropy.avail <= 150 )
+) -> syslog 10 min "Low random number entropy available" " %v%avail@%h";
+
+// 1 filesys.filling
+delta = 4 mins;
+filesys.filling = 
+some_host (
+    some_inst (
+	( 100 * filesys.used  / filesys.capacity  ) > 95
+	&& filesys.used  + 
+	    20 min * ( rate filesys.used  ) >
+		filesys.capacity 
+    )
+) -> syslog 10 min "File system is filling up" " %v%used[%i]@%h";
+
+// 1 filesys.vfs_files
+delta = 2 min;
+filesys.vfs_files = 
+some_host (
+    vfs.files.count  > 0 && vfs.files.max  > 0 &&
+    100 * ( vfs.files.count  / vfs.files.max  ) > 90
+) -> syslog 10 min "Approaching open file descriptor limit" " %vopen@%h";
+
+// 1 memory.exhausted
+delta = 2 min;
+memory.exhausted = 
+some_host (
+    ( avg_sample ( swap.pagesout  @0..9 ) ) > 0 &&
+    30 %_sample swap.pagesout  @0..9 >= 5
+) -> syslog 10 min "Severe demand for real memory" " %vpgsout/s@%h";
+
+// 1 memory.oom_kill
+delta = 2 min;
+memory.oom_kill = 
+some_host (
+        mem.vmstat.oom_kill  > 0
+) -> syslog 10 min "OOM kill" " %v/sec@%h";
+
+// 1 mssql.stolen_node_memory
+delta = 2 min;
+mssql.stolen_node_memory = 
+some_host (
+    ( avg_sample ( mssql.memory_manager.stolen_node_memory  @0..9 ) ) > 0
+    && 60 %_sample
+    ( 100 * ( mssql.memory_manager.stolen_node_memory @0..9  /
+              mssql.memory_manager.total_server_memory @0..9  ) )
+	> 70
+) -> syslog 10 min "High mssql stolen node memory" " %v%mem@%h";
+
+// 1 network.listenoverflows
+delta = 2 min;
+network.listenoverflows = 
+some_host (
+        network.tcp.listenoverflows  > 0
+) -> syslog 10 min "TCP listen overflows" " %v/sec@%h";
+
+// 1 network.tcpqfulldocookies
+delta = 2 min;
+network.tcpqfulldocookies = 
+some_host (
+        network.tcp.reqqfulldocookies  > 0
+) -> syslog 10 min "TCP request queue full SYN cookie replies" " %v/sec@%h";
+
+// 1 network.tcpqfulldrops
+delta = 2 min;
+network.tcpqfulldrops = 
+some_host (
+        network.tcp.reqqfulldrop  > 0
+) -> syslog 10 min "TCP request queue full drops" " %v/sec@%h";
+
+// 1 per_cpu.many_util
+delta = 2 min;
+per_cpu.many_util = 
+some_host (
+    hinv.ncpu  > 12 &&
+    80 %_inst (
+	100 * ( kernel.percpu.cpu.user  +
+		kernel.percpu.cpu.sys  +
+		kernel.percpu.cpu.intr  )
+	    > 95
+    )
+) -> syslog 10 min "High number of saturated processors" " >80%CPUs@%h";
+
+// 1 per_cpu.some_util
+delta = 2 min;
+per_cpu.some_util = 
+some_host (
+    some_inst (
+      ( 100 * ( kernel.percpu.cpu.user  +
+		kernel.percpu.cpu.sys  +
+		kernel.percpu.cpu.intr  ) )
+	    > 95
+    )
+    && hinv.ncpu  > 1
+    && hinv.ncpu  <= 12
+) -> syslog 10 min "High per CPU processor utilization" " %v%util[%i]@%h";
+
+// 1 per_cpu.system
+delta = 2 min;
+per_cpu.system = 
+some_host (
+    some_inst (
+	// first term is always true, but provides %v for actions ...
+	( 100 * kernel.percpu.cpu.sys  ) > 0
+	&& 100 * ( kernel.percpu.cpu.user  +
+		   kernel.percpu.cpu.sys  ) > 75
+	&& 100 * kernel.percpu.cpu.sys  /
+	    ( kernel.percpu.cpu.user  + kernel.percpu.cpu.sys  )
+		> 80
+    )
+    && hinv.ncpu  > 1
+) -> syslog 10 min "Some CPU busy executing in system mode" " %v%sys[%i]@%h";
+
+// 1 per_disk.average_queue_length
+delta = 2 min;
+per_disk.average_queue_length = 
+some_host (
+    some_inst (
+      ( disk.dev.aveq  @0 > disk.dev.aveq  @1 )
+        &&
+      ( disk.dev.avactive  * 100 > 95 )
+    )
+) -> syslog 10 min "High per disk average queue length" " %vaveq[%i]@%h";
+
+// 1 per_disk.average_wait_time
+delta = 2 min;
+per_disk.average_wait_time = 
+some_host (
+  some_inst (
+    ( disk.dev.total_rawactive  @0 / disk.dev.total  @0 ) * 100
+      >
+    ( disk.dev.total_rawactive  @1 / disk.dev.total  @1 ) * 100
+      &&
+    ( disk.dev.avactive  * 100 > 95 )
+  )
+) -> syslog 10 min "High per disk average queue length" " %v%await[%i]@%h";
+
+// 1 per_netif.collisions
+delta = 2 min;
+per_netif.collisions = 
+some_inst (
+    100 * network.interface.collisions 
+	    / ( network.interface.collisions 
+		+ network.interface.out.packets  )
+	> 40 &&
+    network.interface.out.packets 
+	> 10 count/second
+) -> syslog 10 min "High collision rate in packet sends" " %v%collisions[%i]@%h";
+
+// 1 per_netif.errors
+delta = 2 min;
+per_netif.errors = 
+some_inst (
+    network.interface.total.errors  
+	> 15
+) -> syslog 10 min "High network interface error rate" " %verr/s[%i]@%h";
+
+// 1 per_netif.util
+delta = 2 min;
+per_netif.util = 
+some_inst (
+    ( 100 * network.interface.total.bytes   /
+	    network.interface.baudrate   )
+	       > 85
+    && network.interface.baudrate   > 0
+) -> syslog 10 min "High network interface utilization" " %v%util[%i]@%h";
+
+// 1 power.thermal_throttle
+delta = 2 min;
+power.thermal_throttle = 
+some_host (
+	100 * hinv.cpu.thermal_throttle.package.time  > 50
+) -> syslog 10 min "CPU is experiencing thermal throttling" " %v%time[%i]@%h";
+
+// --- END GENERATED SECTION (changes below will be preserved) ---
+--- end pmie config file ---
+_cleanup: ...
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1463757: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463757       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-a/pmie.log -c ./1249-a.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config
+Warning: _get_pids_by_name: pid=1465229: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1465229       1  2 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-c/pmie.log -c ./1249-c.config
+Warning: _get_pids_by_name: pid=1463145: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1463145       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249/pmie.log -c ./1249.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config
+Warning: _get_pids_by_name: pid=1465229: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1465229       1  2 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-c/pmie.log -c ./1249-c.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1  1 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config
+Warning: _get_pids_by_name: pid=1465229: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1465229       1  2 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-c/pmie.log -c ./1249-c.config
+Warning: _get_pids_by_name: pid=1464456: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1464456       1  0 20:40 ?        00:00:00 /usr/bin/pmie -b -m pmie_check -h localhost -l /var/log/pcp/pmie/1249-b/pmie.log -c ./1249-b.config

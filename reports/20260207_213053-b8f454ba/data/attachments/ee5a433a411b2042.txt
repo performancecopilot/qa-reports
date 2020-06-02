@@ -1,0 +1,222 @@
+UID          PID    PPID  C STIME TTY          TIME CMD 
+pcp       363301       1  0 19:03 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512 
+root      363304  363301  0 19:03 ?        00:00:00 /tmp/169-362821.dumb_pmda -d 160 000000660066 
+root      363315       1  0 19:03 ?        00:00:00 /bin/sh /etc/init.d/pmcd restart 
+old_dumb_pid=363304
+old_pmcd_pid=363301
+
+*** pmcd agent timeout < app timeout ***
+*** pmcd will killoff agent ***
+
+
+Expect dummyproc to fail (IPC protocol failure):
+
+UID          PID    PPID  C STIME TTY          TIME CMD 
+pcp       363301       1  0 19:03 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512 
+new_dumb_pid=
+new_pmcd_pid=363301
+pmcd terminated dummy the dumb_pmda agent as desired
+
+Log for pmcd on 98872295d798 started Sat Feb  7 19:03:20 2026
+
+
+active agent dom   pid  in out ver protocol parameters
+============ === ===== === === === ======== ==========
+dummyproc    160 363304   6   7   2 bin pipe cmd=/tmp/169-362821.dumb_pmda -d 160 000000660066
+pmcd           2                 4 dso i:6  lib=/var/lib/pcp/pmdas/pmcd/pmda_pmcd.so entry=pmcd_init [0x7f699f341d10]
+
+Host access list empty: host-based access control turned off
+User access list empty: user-based access control turned off
+Group access list empty: group-based access control turned off
+
+
+pmcd: PID = 363301, PDU version = 2
+pmcd request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     4       unix   /run/pcp/pmcd.socket
+  ok     0 44321 inet   INADDR_ANY
+  ok     3 44321 ipv6   INADDR_ANY
+[Sat Feb  7 19:03:25] pmcd(363301) Warning: pduread: timeout (after 5.000000 sec) while attempting to read 12 bytes out of 12 in HDR on fd=7
+[Sat Feb  7 19:03:25] pmcd(363301) Info: CleanupAgent ...
+Cleanup "dummyproc" agent (dom 160): protocol failure for fd=7, exit(0)
+
+->PMCD event trace: starting at Sat Feb  7 19:03:20 2026
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...1
+->         Recv: PMNS_NAMES PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: PMNS_IDS PDU, fd=5, numpmid=1
+->         Recv: DESC_REQ PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: DESC PDU, fd=5, pmid=2.0.4
+->         Recv: PROFILE PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Recv: HIGHRES_FETCH PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: HIGHRES_FETCH PDU, fd=5, numpmid=1
+->         Recv: RESULT PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: ERROR PDU, fd=5, err=0: No error
+->         End client: [0] fd=5
+->         Xmit: ERROR PDU, fd=6, err=-12391: Not Connected
+->         New client: [0] addr=/run/pcp/pmcd.socket, fd=5, seq=5
+->         Xmit: ERROR PDU, fd=5, err=0: No error
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...1
+->         Recv: DESC_REQ PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: DESC_REQ PDU, fd=6, pmid=160.0.0
+->19:03:25 Wrong PDU type: expecting DESC PDU, fd=7, got err=-12353: Timeout waiting for a response from PMCD
+->         Drop PMDA: domain=160, infd=6, outfd=7
+
+Warning: restartAgents=0 from PMCD_RESTART_AGENTS=0 in environment
+
+Log for 169-362821.dumb_pmda on 98872295d798 started Sat Feb  7 19:03:20 2026
+
+
+Log finished Sat Feb  7 19:03:25 2026
+
+UID          PID    PPID  C STIME TTY          TIME CMD 
+pcp       363301       1  0 19:03 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512 
+pcp       363515  363301  0 19:03 ?        00:00:00 /tmp/169-362821.dumb_pmda -d 160 000000660066 
+new_dumb_pid=363515
+new_pmcd_pid=363301
+
+*** pmcd agent timeout > app timeout ***
+*** pmcd will not killoff agent until later ***
+
+
+Expect dummyproc to fail (timeout for pmcd failure):
+Before pminfo: Sat Feb  7 19:03:28 UTC 2026
+After pminfo: Sat Feb  7 19:03:33 UTC 2026
+
+UID          PID    PPID  C STIME TTY          TIME CMD 
+pcp       363301       1  0 19:03 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512 
+pcp       363515  363301  0 19:03 ?        00:00:00 /tmp/169-362821.dumb_pmda -d 160 000000660066 
+new_dumb_pid=363515
+new_pmcd_pid=363301
+pmcd did NOT terminate the dumb_pmda agent as desired
+
+Now wait for pmcd to timeout...
+
+UID          PID    PPID  C STIME TTY          TIME CMD 
+pcp       363301       1  0 19:03 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512 
+new_dumb_pid=
+new_pmcd_pid=363301
+pmcd terminated the dumb_pmda agent as desired
+
+_wait_pmcd_end: pid 363301 is defunct
+systemd,1
+  `-pmcd,363301,pcp -A -T 3 -C 512
+
+Log for pmcd on 98872295d798 started Sat Feb  7 19:03:20 2026
+
+
+active agent dom   pid  in out ver protocol parameters
+============ === ===== === === === ======== ==========
+dummyproc    160 363304   6   7   2 bin pipe cmd=/tmp/169-362821.dumb_pmda -d 160 000000660066
+pmcd           2                 4 dso i:6  lib=/var/lib/pcp/pmdas/pmcd/pmda_pmcd.so entry=pmcd_init [0x7f699f341d10]
+
+Host access list empty: host-based access control turned off
+User access list empty: user-based access control turned off
+Group access list empty: group-based access control turned off
+
+
+pmcd: PID = 363301, PDU version = 2
+pmcd request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     4       unix   /run/pcp/pmcd.socket
+  ok     0 44321 inet   INADDR_ANY
+  ok     3 44321 ipv6   INADDR_ANY
+[Sat Feb  7 19:03:25] pmcd(363301) Warning: pduread: timeout (after 5.000000 sec) while attempting to read 12 bytes out of 12 in HDR on fd=7
+[Sat Feb  7 19:03:25] pmcd(363301) Info: CleanupAgent ...
+Cleanup "dummyproc" agent (dom 160): protocol failure for fd=7, exit(0)
+
+->PMCD event trace: starting at Sat Feb  7 19:03:20 2026
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...1
+->         Recv: PMNS_NAMES PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: PMNS_IDS PDU, fd=5, numpmid=1
+->         Recv: DESC_REQ PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: DESC PDU, fd=5, pmid=2.0.4
+->         Recv: PROFILE PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Recv: HIGHRES_FETCH PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: HIGHRES_FETCH PDU, fd=5, numpmid=1
+->         Recv: RESULT PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: ERROR PDU, fd=5, err=0: No error
+->         End client: [0] fd=5
+->         Xmit: ERROR PDU, fd=6, err=-12391: Not Connected
+->         New client: [0] addr=/run/pcp/pmcd.socket, fd=5, seq=5
+->         Xmit: ERROR PDU, fd=5, err=0: No error
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...1
+->         Recv: DESC_REQ PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: DESC_REQ PDU, fd=6, pmid=160.0.0
+->19:03:25 Wrong PDU type: expecting DESC PDU, fd=7, got err=-12353: Timeout waiting for a response from PMCD
+->         Drop PMDA: domain=160, infd=6, outfd=7
+
+Warning: restartAgents=0 from PMCD_RESTART_AGENTS=0 in environment
+[Sat Feb  7 19:03:27] pmcd(363301) Info: 
+
+pmcd RESTARTED at Sat Feb  7 19:03:27 2026
+
+
+Current PMCD clients ...
+     fd  client connection from                    ipc ver  operations denied
+     ==  ========================================  =======  =================
+
+Configuration file '/etc/pcp/pmcd/pmcd.conf' unchanged
+Restarting any deceased agents:
+    "dummyproc" agent
+
+169-362821.dumb_pmda: cannot open log "dumb_pmda.log" for writing : Permission denied
+Log for 169-362821.dumb_pmda on 98872295d798 started Sat Feb  7 19:03:27 2026
+
+
+active agent dom   pid  in out ver protocol parameters
+============ === ===== === === === ======== ==========
+dummyproc    160 363515   6   7   2 bin pipe cmd=/tmp/169-362821.dumb_pmda -d 160 000000660066
+pmcd           2                 4 dso i:6  lib=/var/lib/pcp/pmdas/pmcd/pmda_pmcd.so entry=pmcd_init [0x7f699f341d10]
+
+Host access list empty: host-based access control turned off
+User access list empty: user-based access control turned off
+Group access list empty: group-based access control turned off
+
+[Sat Feb  7 19:03:27] pmcd(363301) Info: PMNS file "DEFAULT" is unchanged
+[Sat Feb  7 19:03:38] pmcd(363301) Warning: pduread: timeout (after 10.000000 sec) while attempting to read 12 bytes out of 12 in HDR on fd=7
+[Sat Feb  7 19:03:38] pmcd(363301) Info: CleanupAgent ...
+
+Log finished Sat Feb  7 19:03:38 2026
+Cleanup "dummyproc" agent (dom 160): protocol failure for fd=7, exit(0)
+
+->PMCD event trace: starting at Sat Feb  7 19:03:28 2026
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...1
+->         Recv: PMNS_NAMES PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: PMNS_IDS PDU, fd=5, numpmid=1
+->         Recv: DESC_REQ PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: DESC PDU, fd=5, pmid=2.0.4
+->         Recv: PROFILE PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Recv: HIGHRES_FETCH PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: HIGHRES_FETCH PDU, fd=5, numpmid=1
+->         Recv: RESULT PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: ERROR PDU, fd=5, err=0: No error
+->         End client: [0] fd=5
+->         Xmit: ERROR PDU, fd=6, err=-12391: Not Connected
+->         New client: [0] addr=/run/pcp/pmcd.socket, fd=5, seq=10
+->         Xmit: ERROR PDU, fd=5, err=0: No error
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Recv: CREDS PDU, fd=5, pdubuf=0x...1
+->         Recv: DESC_REQ PDU, fd=5, pdubuf=0x...3d8b89d0
+->         Xmit: DESC_REQ PDU, fd=6, pmid=160.0.0
+->19:03:38 Wrong PDU type: expecting DESC PDU, fd=7, got err=-12353: Timeout waiting for a response from PMCD
+->         Drop PMDA: domain=160, infd=6, outfd=7
+
+[Sat Feb  7 19:03:38] pmcd(363301) Error: HandleClientInput: error sending Error PDU to client[0] IPC protocol failure
+
+Log for 169-362821.dumb_pmda on 98872295d798 started Sat Feb  7 19:03:20 2026
+
+
+Log finished Sat Feb  7 19:03:25 2026
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 98872295d798
+PMCD host        98872295d798
+log started      Sat Feb  7 19:03:53.587731999 2026 (times in local time)
+last log entry   Sat Feb  7 19:03:54.038007248 2026
+current time     Sat Feb  7 19:03:55.042461506 2026
+log volume       0
+log size         75744

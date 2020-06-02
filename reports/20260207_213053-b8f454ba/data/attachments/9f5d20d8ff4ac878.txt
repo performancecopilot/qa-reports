@@ -1,0 +1,30 @@
+QA output created by 651
+== pmproxy not running ==
+pmprobe: Cannot connect to PMCD on host "MYHOST": Connection refused
+
+== simplest default case ==
+sample.long.hundred 1 100
+
+== simple explicit host case ==
+hinv.ncpu 1 <n>
+
+== non-standard PMPROXY_PORT, expect failure ==
+pmprobe: Cannot connect to PMCD on host "MYHOST": Connection refused
+Warning: _get_pids_by_name: pid=919207: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       919207       1  0 19:55 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -l /tmp/651-919068.log -Dcontext -U pcp
+
+== non-standard PMPROXY_PORT, expect success ==
+sample.long.hundred 1 100
+Warning: _get_pids_by_name: pid=919284: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       919284       1  0 19:55 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -l /tmp/651-919068.log -Dcontext -U pcp
+
+== restricted interface for connections, expect failure ==
+pmprobe: Cannot connect to PMCD on host "MYHOST": Connection refused
+
+== restricted interface for connections, expect success ==
+sample.long.hundred 1 100
+Warning: _get_pids_by_name: pid=919349: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       919349       1  3 19:55 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -i 127.0.0.1 -l /tmp/651-919068.log -Dcontext -U pcp

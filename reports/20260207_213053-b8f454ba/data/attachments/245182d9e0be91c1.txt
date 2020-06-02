@@ -1,0 +1,55 @@
+QA output created by 282
+
+=== expect error: no $PCP_PMCDCONF_PATH ===
+tail: cannot open '/proc/486708/cgroup' for reading: No such file or directory
+tail: cannot open '/proc/486708/cgroup' for reading: No such file or directory
+Warning: _get_pids_by_name: pid=486708: unknown cgroup pattern: 
+-- ps output line --
+$PCP_RC_DIR/pmcd:
+Warning: pmcd control file $PCP_PMCDCONF_PATH is missing, cannot identify PMDAs
+         to be terminated.
+$PCP_RC_DIR/pmcd:
+Error: pmcd control file $PCP_PMCD_CONF_PATH ("$PCP_PMCDCONF_PATH") is missing, cannot start pmcd.
+=== probe pmcd: pmprobe: Cannot connect to PMCD on host "HOST": Connection refused
+
+=== simple case, no frills, no errors ===
+=== probe pmcd: OK
+=== probe pmlogger: OK
+
+=== expected failure: a mere mortal ===
+$PCP_RC_DIR/pmcd:
+Error: You must be root (uid 0) to start or stop the Performance Co-Pilot pmcd.
+$PCP_RC_DIR/pmlogger: Error: You must be root (uid 0) to start or stop pmlogger via this script
+=== probe pmcd: OK
+=== start again ===
+=== probe pmcd: OK
+=== probe pmlogger: OK
+
+=== expect 2 x connect failure: pmcd is true(1), so hard for pmlogger ===
+=== probe pmcd: pmprobe: Cannot connect to PMCD on host "HOST": Connection refused
+=== probe pmlogger: Unable to connect to primary pmlogger at HOST: Connection refused
+=== start again ===
+=== probe pmcd: OK
+=== probe pmlogger: OK
+=== expect difficulty terminating pmcd ... it has been sent a SIGSTOP ===
+Process ...
+-- ps output line --
+$PCP_RC_DIR/pmcd: Warning: Forcing pmcd to terminate!
+=== probe pmcd: OK
+
+=== expect warning: PMLOGGER.CHECK moved, so no pmlogger ===
+$PCP_SERVICES_DIR/pmlogger:
+Warning: Performance Co-Pilot installation is incomplete (at least the
+         script "PMLOGGER.CHECK" is missing) and the PCP archive logger(s)
+	 cannot be started.
+=== probe pmcd: OK
+=== probe pmlogger: Unable to connect to primary pmlogger at HOST: Connection refused
+
+=== expect error: pmlogger/control moved, so no pmlogger ===
+$PCP_SERVICES_DIR/pmlogger:
+Error: PCP archive logger control file $PCP_PMLOGGERCONTROL_PATH ("$PCP_PMLOGGERCONTROL_PATH")
+       is missing!  Cannot start any Performance Co-Pilot archive logger(s).
+=== probe pmcd: OK
+=== probe pmlogger: Unable to connect to primary pmlogger at HOST: Connection refused
+
+Restore the state of the universe ...

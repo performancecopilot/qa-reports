@@ -1,0 +1,49 @@
+QA output created by 280
+
+Ping primary logger ...
+
+Expect this should do nothing ...
+Start [check]: DATESTAMP
+End [check]: DATESTAMP status=0
+
+Kill off primary logger ...
+Unable to connect to primary pmlogger at LOCALHOST: Connection refused
+
+Expect this to re-start the primary logger ...
+Start [check]: DATESTAMP
+Restarting primary pmlogger for host "LOCALHOST" [dots] [process PID] Warning: _get_pids_by_name: pid=553437: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       553437       1  0 19:19 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -N -P -d "$PCP_ARCHIVE_DIR/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pcp       553443  553437  0 19:19 ?        00:00:00 [pmcpp] <defunct>
+Warning: _get_pids_by_name: pid=553437: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       553437       1  0 19:19 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -N -P -d "$PCP_ARCHIVE_DIR/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m PMLOGGER.CHECK %Y%m%d.%H.%M
+. done
+End [check]: DATESTAMP status=0
+
+Kill off primary logger ...
+Unable to connect to primary pmlogger at LOCALHOST: Connection refused
+
+Expect this to quietly re-start the primary logger ...
+Warning: _get_pids_by_name: pid=555553: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       555553       1  0 19:19 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -N -P -d "$PCP_ARCHIVE_DIR/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m PMLOGGER.CHECK %Y%m%d.%H.%M
+pcp       555558  555553  0 19:19 ?        00:00:00 [pmcpp] <defunct>
+Warning: _get_pids_by_name: pid=555553: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       555553       1  0 19:19 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -N -P -d "$PCP_ARCHIVE_DIR/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m PMLOGGER.CHECK %Y%m%d.%H.%M
+
+Expect this to get a mutex failure ...
+PMLOGGER.CHECK: Warning: is another PCP cron job running concurrently?
+-rw-r--r-- 1 USER GROUP 0 Mmm D YYYY $PCP_ARCHIVE_DIR/LOCALHOST/lock
+PMLOGGER.CHECK: [control:LINE]
+Warning: failed to acquire exclusive lock ($PCP_ARCHIVE_DIR/LOCALHOST/lock) [dots]
+
+Expect this to cleanup an old lock file ...
+PMLOGGER.CHECK: [control:LINE]
+Warning: removing lock file older than 30 minutes
+-rw-r--r-- 1 USER GROUP 0 Jan 2 1997 $PCP_ARCHIVE_DIR/LOCALHOST/lock
+Warning: _get_pids_by_name: pid=555553: unknown cgroup pattern: 0::/init.scope
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       555553       1  0 19:19 ?        00:00:00 /usr/libexec/pcp/bin/pmlogger -N -P -d "$PCP_ARCHIVE_DIR/LOCALHOSTNAME" -r -T24h10m -c config.default -v 100mb -m PMLOGGER.CHECK %Y%m%d.%H.%M
+[triaged]

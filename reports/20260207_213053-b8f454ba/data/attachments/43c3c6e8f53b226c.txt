@@ -1,0 +1,2057 @@
+hostname=fe2704e8ad5a
+pmproxy_was_running=false
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+== pmproxy not running ==
+== simplest default case ==
+startup delay i=1
+sample.long.hundred 1 100
+sts=1
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       837331       1  2 19:52 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       839473       1  0 19:52 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -l /tmp/651-839360.log -Dcontext -U pcp
+pcpqa     839480  839360  0 19:52 ?        00:00:00 grep -E PID|pmproxy|pmcd
+== simple explicit host case ==
+== non-standard PMPROXY_PORT, expect failure ==
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+1st pmproxy log ...
+Log for pmproxy on fe2704e8ad5a started Sat Feb  7 19:52:36 2026
+
+Warning: nports=1 from PMPROXY_PORT=44322 in environment
+pmproxy: PID = 839473, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   INADDR_ANY
+  ok    11 44322 ipv6   INADDR_ANY
+[Sat Feb  7 19:52:36] pmproxy(839473) Info: Key server slots, schema version setup
+on_client_connection: accept new client 0x5568125559d0
+pcp_client_connect_pmcd: connecting to pmcd on host fe2704e8ad5a, port 44321
+on_client_close: client 0x5568125559d0 connection closed
+on_client_connection: accept new client 0x5568125562f0
+pcp_client_connect_pmcd: connecting to pmcd on host fe2704e8ad5a, port 44321
+on_client_close: client 0x5568125562f0 connection closed
+on_client_connection: accept new client 0x556812556600
+pcp_client_connect_pmcd: connecting to pmcd on host localhost, port 44321
+on_client_close: client 0x556812556600 connection closed
+[Sat Feb  7 19:52:36] pmproxy(839473) Info: pmproxy caught SIGTERM
+[Sat Feb  7 19:52:36] pmproxy(839473) Info: pmproxy Shutdown
+
+Log finished Sat Feb  7 19:52:36 2026
+== non-standard PMPROXY_PORT, expect success ==
+startup delay i=1
+sample.long.hundred 1 100
+sts=1
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       837331       1  2 19:52 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       839546       1  0 19:52 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -l /tmp/651-839360.log -Dcontext -U pcp
+pcpqa     839553  839360  0 19:52 ?        00:00:00 grep -E PID|pmproxy|pmcd
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+2nd pmproxy log ...
+Log for pmproxy on fe2704e8ad5a started Sat Feb  7 19:52:36 2026
+
+Warning: nports=1 from PMPROXY_PORT=94322 in environment
+pmproxy: PID = 839546, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 28786 inet   INADDR_ANY
+  ok    11 28786 ipv6   INADDR_ANY
+[Sat Feb  7 19:52:36] pmproxy(839546) Info: Key server slots, schema version setup
+on_client_connection: accept new client 0x558f9617e9d0
+pcp_client_connect_pmcd: connecting to pmcd on host fe2704e8ad5a, port 44321
+on_client_close: client 0x558f9617e9d0 connection closed
+on_client_connection: accept new client 0x558f9617f2f0
+pcp_client_connect_pmcd: connecting to pmcd on host fe2704e8ad5a, port 44321
+on_client_close: client 0x558f9617f2f0 connection closed
+[Sat Feb  7 19:52:36] pmproxy(839546) Info: pmproxy caught SIGTERM
+[Sat Feb  7 19:52:36] pmproxy(839546) Info: pmproxy Shutdown
+
+Log finished Sat Feb  7 19:52:36 2026
+== restricted interface for connections, expect failure ==
+startup delay i=1
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+startup delay i=2
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+startup delay i=3
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+startup delay i=4
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+startup delay i=5
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+startup delay i=6
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+startup delay i=7
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+startup delay i=8
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+startup delay i=9
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+Failed to probe pmproxy
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       837331       1  1 19:52 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       839607       1  2 19:52 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -i 127.0.0.1 -l /tmp/651-839360.log -Dcontext -U pcp
+pcpqa     839645  839360  0 19:52 ?        00:00:00 grep -E PID|pmproxy|pmcd
+Log for pmproxy on fe2704e8ad5a started Sat Feb  7 19:52:36 2026
+
+pmproxy: PID = 839607, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   127.0.0.1
+  ok    11 44323 inet   127.0.0.1
+[Sat Feb  7 19:52:36] pmproxy(839607) Info: Key server slots, schema version setup
+__pmSetVersionIPC: fd=14 version=2
+IPC table fd(PDU version): 14(2,0)
+__pmSetVersionIPC: fd=16 version=2
+IPC table fd(PDU version): 14(2,0) 16(2,0)
+__pmSetVersionIPC: fd=15 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.52-00) -> 0
+Dump Contexts: current -> contexts[0] handle 0
+contexts[0] handle 0: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.52-00: mode=FORW profile=NOT_SENT tifd=16 mdfd=15 mfd=14
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493947.337846025 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+__pmSetVersionIPC: fd=18 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0)
+__pmSetVersionIPC: fd=19 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0)
+__pmSetVersionIPC: fd=20 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.50) -> 1
+Dump Contexts: current -> contexts[1] handle 1
+contexts[1] handle 1: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.50: mode=FORW profile=NOT_SENT tifd=19 mdfd=20 mfd=18
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493858.141021867 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+__pmSetVersionIPC: fd=22 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0)
+__pmSetVersionIPC: fd=23 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0)
+__pmSetVersionIPC: fd=24 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.52) -> 2
+Dump Contexts: current -> contexts[2] handle 2
+contexts[2] handle 2: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.52: mode=FORW profile=NOT_SENT tifd=23 mdfd=24 mfd=22
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493929.042389252 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+__pmSetVersionIPC: fd=26 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0)
+__pmSetVersionIPC: fd=27 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0)
+__pmSetVersionIPC: fd=28 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.51-00) -> 3
+Dump Contexts: current -> contexts[3] handle 3
+contexts[3] handle 3: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.51-00: mode=FORW profile=NOT_SENT tifd=27 mdfd=28 mfd=26
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493912.856120659 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+__pmSetVersionIPC: fd=30 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0)
+__pmSetVersionIPC: fd=32 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 32(2,0)
+__pmSetVersionIPC: fd=31 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.49-00) -> 4
+Dump Contexts: current -> contexts[4] handle 4
+contexts[4] handle 4: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.49-00: mode=FORW profile=NOT_SENT tifd=32 mdfd=31 mfd=30
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493784.914068718 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+__pmSetVersionIPC: fd=34 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0)
+__pmSetVersionIPC: fd=35 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0)
+__pmSetVersionIPC: fd=36 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.51) -> 5
+Dump Contexts: current -> contexts[5] handle 5
+contexts[5] handle 5: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.51: mode=FORW profile=NOT_SENT tifd=35 mdfd=36 mfd=34
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493877.938552540 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+== restricted interface for connections, expect success ==
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "fe2704e8ad5a": Connection refused
+final pmproxy log ...
+Log for pmproxy on fe2704e8ad5a started Sat Feb  7 19:52:36 2026
+
+pmproxy: PID = 839607, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   127.0.0.1
+  ok    11 44323 inet   127.0.0.1
+[Sat Feb  7 19:52:36] pmproxy(839607) Info: Key server slots, schema version setup
+__pmSetVersionIPC: fd=14 version=2
+IPC table fd(PDU version): 14(2,0)
+__pmSetVersionIPC: fd=16 version=2
+IPC table fd(PDU version): 14(2,0) 16(2,0)
+__pmSetVersionIPC: fd=15 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.52-00) -> 0
+Dump Contexts: current -> contexts[0] handle 0
+contexts[0] handle 0: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.52-00: mode=FORW profile=NOT_SENT tifd=16 mdfd=15 mfd=14
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493947.337846025 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+pmUseContext(0) -> contexts[0]
+pmWhichContext() -> 0, cur=0
+__pmSetVersionIPC: fd=18 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0)
+__pmSetVersionIPC: fd=19 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0)
+__pmSetVersionIPC: fd=20 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.50) -> 1
+Dump Contexts: current -> contexts[1] handle 1
+contexts[1] handle 1: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.50: mode=FORW profile=NOT_SENT tifd=19 mdfd=20 mfd=18
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493858.141021867 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmWhichContext() -> 1, cur=1
+pmUseContext(1) -> contexts[1]
+pmWhichContext() -> 1, cur=1
+__pmSetVersionIPC: fd=22 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0)
+__pmSetVersionIPC: fd=23 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0)
+__pmSetVersionIPC: fd=24 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.52) -> 2
+Dump Contexts: current -> contexts[2] handle 2
+contexts[2] handle 2: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.52: mode=FORW profile=NOT_SENT tifd=23 mdfd=24 mfd=22
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493929.042389252 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmWhichContext() -> 2, cur=2
+pmUseContext(2) -> contexts[2]
+pmWhichContext() -> 2, cur=2
+__pmSetVersionIPC: fd=26 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0)
+__pmSetVersionIPC: fd=27 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0)
+__pmSetVersionIPC: fd=28 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.51-00) -> 3
+Dump Contexts: current -> contexts[3] handle 3
+contexts[3] handle 3: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.51-00: mode=FORW profile=NOT_SENT tifd=27 mdfd=28 mfd=26
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493912.856120659 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmWhichContext() -> 3, cur=3
+pmUseContext(3) -> contexts[3]
+pmWhichContext() -> 3, cur=3
+__pmSetVersionIPC: fd=30 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0)
+__pmSetVersionIPC: fd=32 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 32(2,0)
+__pmSetVersionIPC: fd=31 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.49-00) -> 4
+Dump Contexts: current -> contexts[4] handle 4
+contexts[4] handle 4: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.49-00: mode=FORW profile=NOT_SENT tifd=32 mdfd=31 mfd=30
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493784.914068718 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmWhichContext() -> 4, cur=4
+pmUseContext(4) -> contexts[4]
+pmWhichContext() -> 4, cur=4
+__pmSetVersionIPC: fd=34 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0)
+__pmSetVersionIPC: fd=35 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0)
+__pmSetVersionIPC: fd=36 version=2
+IPC table fd(PDU version): 14(2,0) 15(2,0) 16(2,0) 18(2,0) 19(2,0) 20(2,0) 22(2,0) 23(2,0) 24(2,0) 26(2,0) 27(2,0) 28(2,0) 30(2,0) 31(2,0) 32(2,0) 34(2,0) 35(2,0) 36(2,0)
+pmNewContext(2+last_volume, /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.51) -> 5
+Dump Contexts: current -> contexts[5] handle 5
+contexts[5] handle 5: log /var/log/pcp/pmlogger/fe2704e8ad5a/20260207.19.51: mode=FORW profile=NOT_SENT tifd=35 mdfd=36 mfd=34
+refcnt=1 vol=0 offset=808 (vol=0) serial=0 origin=1770493877.938552540 delta=0.000000000 flags: last_volume
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmWhichContext() -> 5, cur=5
+pmUseContext(5) -> contexts[5]
+pmWhichContext() -> 5, cur=5
+on_client_connection: accept new client 0x55a69de99350
+pcp_client_connect_pmcd: connecting to pmcd on host fe2704e8ad5a, port 44321
+on_client_close: client 0x55a69de99350 connection closed
+[Sat Feb  7 19:52:45] pmproxy(839607) Info: pmproxy caught SIGTERM
+[Sat Feb  7 19:52:45] pmproxy(839607) Info: pmproxy Shutdown
+
+Log finished Sat Feb  7 19:52:45 2026

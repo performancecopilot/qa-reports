@@ -1,0 +1,129 @@
+hostname=976efd93fc0b
+pmproxy_was_running=false
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+== pmproxy not running ==
+== simplest default case ==
+startup delay i=1
+sample.long.hundred 1 100
+sts=1
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       785009       1  2 19:49 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       787637       1  0 19:50 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -l /tmp/651-787203.log -Dcontext -U pcp
+pcpqa     787653  787203  0 19:50 ?        00:00:00 grep -E PID|pmproxy|pmcd
+== simple explicit host case ==
+== non-standard PMPROXY_PORT, expect failure ==
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+1st pmproxy log ...
+Log for pmproxy on 976efd93fc0b started Sat Feb  7 19:50:01 2026
+
+Warning: nports=1 from PMPROXY_PORT=44322 in environment
+pmproxy: PID = 787637, PDU version = 2, user = pcp (999)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   INADDR_ANY
+  ok    11 44322 ipv6   INADDR_ANY
+[Sat Feb  7 19:50:01] pmproxy(787637) Error: unsupported key server (got v4, expected v5 or above)
+on_client_connection: accept new client 0x635e5750
+pcp_client_connect_pmcd: connecting to pmcd on host 976efd93fc0b, port 44321
+on_client_close: client 0x635e5750 connection closed
+on_client_connection: accept new client 0x635e5900
+pcp_client_connect_pmcd: connecting to pmcd on host 976efd93fc0b, port 44321
+on_client_close: client 0x635e5900 connection closed
+on_client_connection: accept new client 0x635e5ab0
+pcp_client_connect_pmcd: connecting to pmcd on host localhost, port 44321
+on_client_close: client 0x635e5ab0 connection closed
+[Sat Feb  7 19:50:01] pmproxy(787637) Info: pmproxy caught SIGTERM
+[Sat Feb  7 19:50:01] pmproxy(787637) Info: pmproxy Shutdown
+
+Log finished Sat Feb  7 19:50:01 2026
+== non-standard PMPROXY_PORT, expect success ==
+startup delay i=1
+sample.long.hundred 1 100
+sts=1
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       785009       1  2 19:49 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       787755       1  0 19:50 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -l /tmp/651-787203.log -Dcontext -U pcp
+pcpqa     787763  787203  0 19:50 ?        00:00:00 grep -E PID|pmproxy|pmcd
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+2nd pmproxy log ...
+Log for pmproxy on 976efd93fc0b started Sat Feb  7 19:50:01 2026
+
+Warning: nports=1 from PMPROXY_PORT=94322 in environment
+pmproxy: PID = 787755, PDU version = 2, user = pcp (999)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 28786 inet   INADDR_ANY
+  ok    11 28786 ipv6   INADDR_ANY
+[Sat Feb  7 19:50:01] pmproxy(787755) Error: unsupported key server (got v4, expected v5 or above)
+on_client_connection: accept new client 0x58889750
+pcp_client_connect_pmcd: connecting to pmcd on host 976efd93fc0b, port 44321
+on_client_close: client 0x58889750 connection closed
+on_client_connection: accept new client 0x58889900
+pcp_client_connect_pmcd: connecting to pmcd on host 976efd93fc0b, port 44321
+on_client_close: client 0x58889900 connection closed
+[Sat Feb  7 19:50:01] pmproxy(787755) Info: pmproxy caught SIGTERM
+[Sat Feb  7 19:50:01] pmproxy(787755) Info: pmproxy Shutdown
+
+Log finished Sat Feb  7 19:50:01 2026
+== restricted interface for connections, expect failure ==
+startup delay i=1
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+startup delay i=2
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+startup delay i=3
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+startup delay i=4
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+startup delay i=5
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+startup delay i=6
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+startup delay i=7
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+startup delay i=8
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+startup delay i=9
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+Failed to probe pmproxy
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       785009       1  1 19:49 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       787843       1  0 19:50 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -i 127.0.0.1 -l /tmp/651-787203.log -Dcontext -U pcp
+pcpqa     788240  787203  0 19:50 ?        00:00:00 grep -E PID|pmproxy|pmcd
+Log for pmproxy on 976efd93fc0b started Sat Feb  7 19:50:01 2026
+
+pmproxy: PID = 787843, PDU version = 2, user = pcp (999)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   127.0.0.1
+  ok    11 44323 inet   127.0.0.1
+[Sat Feb  7 19:50:01] pmproxy(787843) Error: unsupported key server (got v4, expected v5 or above)
+== restricted interface for connections, expect success ==
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "976efd93fc0b": Connection refused
+final pmproxy log ...
+Log for pmproxy on 976efd93fc0b started Sat Feb  7 19:50:01 2026
+
+pmproxy: PID = 787843, PDU version = 2, user = pcp (999)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   127.0.0.1
+  ok    11 44323 inet   127.0.0.1
+[Sat Feb  7 19:50:01] pmproxy(787843) Error: unsupported key server (got v4, expected v5 or above)
+on_client_connection: accept new client 0x5be19770
+pcp_client_connect_pmcd: connecting to pmcd on host 976efd93fc0b, port 44321
+on_client_close: client 0x5be19770 connection closed
+[Sat Feb  7 19:50:10] pmproxy(787843) Info: pmproxy caught SIGTERM
+[Sat Feb  7 19:50:10] pmproxy(787843) Info: pmproxy Shutdown
+
+Log finished Sat Feb  7 19:50:10 2026
