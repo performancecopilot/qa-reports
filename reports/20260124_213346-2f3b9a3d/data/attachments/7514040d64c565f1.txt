@@ -1,0 +1,1378 @@
+key_server_node1_port=54321
+__key_server_node1_pid=1679597
+key_server_node2_port=54322
+__key_server_node2_pid=1679614
+key_server_node3_port=54323
+__key_server_node3_pid=1679641
+>>> Performing hash slots allocation on 3 node(s)...
+Primary[0] -> Slots 0 - 5460
+Primary[1] -> Slots 5461 - 10922
+Primary[2] -> Slots 10923 - 16383
+M: 76cb73df13c2c4cc55f6a4109268976cc96cf718 127.0.0.1:54321
+   slots:[0-5460] (5461 slots) master
+M: c0afdfba7d7f6767012c185e96111641199e4f4c 127.0.0.1:54322
+   slots:[5461-10922] (5462 slots) master
+M: 1bdf98f53a8e2960efc76ca9c6ee51710d183deb 127.0.0.1:54323
+   slots:[10923-16383] (5461 slots) master
+Can I set the above configuration? (type 'yes' to accept): >>> Nodes configuration updated
+>>> Assign a different config epoch to each node
+>>> Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+.
+>>> Performing Cluster Check (using node 127.0.0.1:54321)
+M: 76cb73df13c2c4cc55f6a4109268976cc96cf718 127.0.0.1:54321
+   slots:[0-5460] (5461 slots) master
+M: c0afdfba7d7f6767012c185e96111641199e4f4c 127.0.0.1:54322
+   slots:[5461-10922] (5462 slots) master
+M: 1bdf98f53a8e2960efc76ca9c6ee51710d183deb 127.0.0.1:54323
+   slots:[10923-16383] (5461 slots) master
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
+
+== Key server Node 1 keys:
+
+== Key server Node 1 log:
+1679597:M 24 Jan 2026 21:02:20.010 # WARNING: Changing databases number from 16 to 1 since we are in cluster mode
+1679597:M 24 Jan 2026 21:02:20.010 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1679597:M 24 Jan 2026 21:02:20.010 * oO0OoO0OoO0Oo Valkey is starting oO0OoO0OoO0Oo
+1679597:M 24 Jan 2026 21:02:20.010 * Valkey version=8.1.5, bits=64, commit=00000000, modified=0, pid=1679597, just started
+1679597:M 24 Jan 2026 21:02:20.010 * Configuration loaded
+1679597:M 24 Jan 2026 21:02:20.010 * monotonic clock: POSIX clock_gettime
+1679597:M 24 Jan 2026 21:02:20.010 * Running mode=cluster, port=54321.
+1679597:M 24 Jan 2026 21:02:20.010 * No cluster configuration found, I'm 76cb73df13c2c4cc55f6a4109268976cc96cf718
+1679597:M 24 Jan 2026 21:02:20.032 * Server initialized
+1679597:M 24 Jan 2026 21:02:20.032 * Ready to accept connections tcp
+1679597:M 24 Jan 2026 21:02:20.842 * configEpoch set to 1 via CLUSTER SET-CONFIG-EPOCH
+1679597:M 24 Jan 2026 21:02:20.894 * IP address for this node updated to 127.0.0.1
+1679597:M 24 Jan 2026 21:02:22.040 * Cluster state changed: ok
+
+
+=== VALKEY BUG REPORT START: Cut & paste starting from here ===
+1679597:M 24 Jan 2026 21:07:19.834 # valkey 8.1.5 crashed by signal: 6, si_code: 0
+1679597:M 24 Jan 2026 21:07:19.834 # Killed by PID: 1679511, UID: 989
+1679597:M 24 Jan 2026 21:07:19.834 # Crashed running the instruction at: 0x7fad3beab9a2
+
+------ STACK TRACE ------
+EIP:
+/lib64/libc.so.6(+0x7a9a2) [0x7fad3beab9a2]
+
+1679597 valkey-server *
+/lib64/libc.so.6(+0x1a290) [0x7fad3be4b290]
+/lib64/libc.so.6(+0x7a9a2) [0x7fad3beab9a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7fad3be9fc3c]
+/lib64/libc.so.6(+0x6ec84) [0x7fad3be9fc84]
+/lib64/libc.so.6(epoll_wait+0x25) [0x7fad3bf26895]
+valkey-server *:54321 [cluster](+0x1a0c3) [0x55ee9ea4f0c3]
+valkey-server *:54321 [cluster](aeProcessEvents+0x322) [0x55ee9ea4f532]
+valkey-server *:54321 [cluster](aeMain+0x2d) [0x55ee9ea4f73d]
+valkey-server *:54321 [cluster](main+0x408) [0x55ee9ea44c28]
+/lib64/libc.so.6(+0x35b5) [0x7fad3be345b5]
+/lib64/libc.so.6(__libc_start_main+0x88) [0x7fad3be34668]
+valkey-server *:54321 [cluster](_start+0x25) [0x55ee9ea466b5]
+
+1679602 bio_lazy_free
+/lib64/libc.so.6(+0x7a9a2) [0x7fad3beab9a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7fad3be9fc3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7fad3bea02ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7fad3bea297e]
+valkey-server *:54321 [cluster](bioProcessBackgroundJobs+0x1af) [0x55ee9eb1cd6f]
+/lib64/libc.so.6(+0x72464) [0x7fad3bea3464]
+/lib64/libc.so.6(+0xf55ac) [0x7fad3bf265ac]
+
+1679600 bio_close_file
+/lib64/libc.so.6(+0x7a9a2) [0x7fad3beab9a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7fad3be9fc3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7fad3bea02ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7fad3bea297e]
+valkey-server *:54321 [cluster](bioProcessBackgroundJobs+0x1af) [0x55ee9eb1cd6f]
+/lib64/libc.so.6(+0x72464) [0x7fad3bea3464]
+/lib64/libc.so.6(+0xf55ac) [0x7fad3bf265ac]
+
+1679601 bio_aof
+/lib64/libc.so.6(+0x7a9a2) [0x7fad3beab9a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7fad3be9fc3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7fad3bea02ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7fad3bea297e]
+valkey-server *:54321 [cluster](bioProcessBackgroundJobs+0x1af) [0x55ee9eb1cd6f]
+/lib64/libc.so.6(+0x72464) [0x7fad3bea3464]
+/lib64/libc.so.6(+0xf55ac) [0x7fad3bf265ac]
+
+4/4 expected stacktraces.
+
+------ STACK TRACE DONE ------
+
+------ REGISTERS ------
+1679597:M 24 Jan 2026 21:07:19.840 # 
+RAX:fffffffffffffffc RBX:00007fad3b8b33b0
+RCX:00007fad3beab9a2 RDX:0000000000002790
+RDI:0000000000000007 RSI:00007fad3b918000
+RBP:00007fffe9266710 RSP:00007fffe92666e8
+R8 :0000000000000000 R9 :0000000000000000
+R10:0000000000000064 R11:0000000000000246
+R12:00007fad3b840880 R13:00007fad3b846480
+R14:0000000000000000 R15:0000000000000001
+RIP:00007fad3beab9a2 EFL:0000000000000246
+CSGSFS:002b000000000033
+1679597:M 24 Jan 2026 21:07:19.840 * hide-user-data-from-log is on, skip logging stack content to avoid spilling user data.
+
+------ INFO OUTPUT ------
+# Server
+redis_version:7.2.4
+server_name:valkey
+valkey_version:8.1.5
+valkey_release_stage:ga
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:3d220603f78e220d
+server_mode:cluster
+os:Linux 6.8.0-1044-azure x86_64
+arch_bits:64
+monotonic_clock:POSIX clock_gettime
+multiplexing_api:epoll
+gcc_version:15.2.1
+process_id:1679597
+process_supervised:no
+run_id:07421c710e3b932633d3aa5fc3fabcc7c8337300
+tcp_port:54321
+server_time_usec:1769288839770677
+uptime_in_seconds:299
+uptime_in_days:0
+hz:10
+configured_hz:10
+clients_hz:10
+lru_clock:7681159
+executable:/var/lib/pcp/testsuite/valkey-server
+config_file:
+io_threads_active:0
+availability_zone:
+listener0:name=tcp,bind=*,bind=-::*,port=54321
+
+# Clients
+connected_clients:1
+cluster_connections:4
+maxclients:10000
+client_recent_max_input_buffer:0
+client_recent_max_output_buffer:0
+blocked_clients:0
+tracking_clients:0
+pubsub_clients:0
+watching_clients:0
+clients_in_timeout_table:0
+total_watched_keys:0
+total_blocking_keys:0
+total_blocking_keys_on_nokey:0
+paused_reason:none
+paused_actions:none
+paused_timeout_milliseconds:0
+
+# Memory
+used_memory:3396056
+used_memory_human:3.24M
+used_memory_rss:15622144
+used_memory_rss_human:14.90M
+used_memory_peak:3434880
+used_memory_peak_human:3.28M
+used_memory_peak_perc:98.87%
+used_memory_overhead:3015136
+used_memory_startup:2676376
+used_memory_dataset:380920
+used_memory_dataset_perc:52.93%
+allocator_allocated:3479312
+allocator_active:3751936
+allocator_resident:5517312
+allocator_muzzy:0
+total_system_memory:16767848448
+total_system_memory_human:15.62G
+used_memory_lua:32768
+used_memory_vm_eval:32768
+used_memory_lua_human:32.00K
+used_memory_scripts_eval:0
+number_of_cached_scripts:0
+number_of_functions:0
+number_of_libraries:0
+used_memory_vm_functions:35840
+used_memory_vm_total:68608
+used_memory_vm_total_human:67.00K
+used_memory_functions:240
+used_memory_scripts:240
+used_memory_scripts_human:240B
+maxmemory:0
+maxmemory_human:0B
+maxmemory_policy:noeviction
+allocator_frag_ratio:1.08
+allocator_frag_bytes:272624
+allocator_rss_ratio:1.47
+allocator_rss_bytes:1765376
+rss_overhead_ratio:2.83
+rss_overhead_bytes:10104832
+mem_fragmentation_ratio:4.60
+mem_fragmentation_bytes:12228248
+mem_not_counted_for_evict:0
+mem_replication_backlog:0
+mem_total_replication_buffers:0
+mem_clients_slaves:0
+mem_clients_normal:1664
+mem_cluster_links:4288
+mem_aof_buffer:0
+mem_allocator:jemalloc-5.3.0
+mem_overhead_db_hashtable_rehashing:0
+active_defrag_running:0
+lazyfree_pending_objects:0
+lazyfreed_objects:0
+
+# Persistence
+loading:0
+async_loading:0
+current_cow_peak:0
+current_cow_size:0
+current_cow_size_age:0
+current_fork_perc:0.00
+current_save_keys_processed:0
+current_save_keys_total:0
+rdb_changes_since_last_save:2166
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1769288540
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:-1
+rdb_current_bgsave_time_sec:-1
+rdb_saves:0
+rdb_last_cow_size:0
+rdb_last_load_keys_expired:0
+rdb_last_load_keys_loaded:0
+aof_enabled:0
+aof_rewrite_in_progress:0
+aof_rewrite_scheduled:0
+aof_last_rewrite_time_sec:-1
+aof_current_rewrite_time_sec:-1
+aof_last_bgrewrite_status:ok
+aof_rewrites:0
+aof_rewrites_consecutive_failures:0
+aof_last_write_status:ok
+aof_last_cow_size:0
+module_fork_in_progress:0
+module_fork_last_cow_size:0
+
+# Stats
+total_connections_received:9
+total_commands_processed:2708
+instantaneous_ops_per_sec:0
+total_net_input_bytes:388770
+total_net_output_bytes:36858
+total_net_repl_input_bytes:0
+total_net_repl_output_bytes:0
+instantaneous_input_kbps:0.00
+instantaneous_output_kbps:0.00
+instantaneous_input_repl_kbps:0.00
+instantaneous_output_repl_kbps:0.00
+rejected_connections:0
+sync_full:0
+sync_partial_ok:0
+sync_partial_err:0
+expired_keys:0
+expired_stale_perc:0.00
+expired_time_cap_reached_count:0
+expire_cycle_cpu_milliseconds:46
+evicted_keys:0
+evicted_clients:0
+evicted_scripts:0
+total_eviction_exceeded_time:0
+current_eviction_exceeded_time:0
+keyspace_hits:0
+keyspace_misses:0
+pubsub_channels:0
+pubsub_patterns:0
+pubsubshard_channels:0
+latest_fork_usec:0
+total_forks:0
+migrate_cached_sockets:0
+slave_expires_tracked_keys:0
+active_defrag_hits:0
+active_defrag_misses:0
+active_defrag_key_hits:0
+active_defrag_key_misses:0
+total_active_defrag_time:0
+current_active_defrag_time:0
+tracking_total_keys:0
+tracking_total_items:0
+tracking_total_prefixes:0
+unexpected_error_replies:0
+total_error_replies:0
+dump_payload_sanitizations:0
+total_reads_processed:47
+total_writes_processed:37
+io_threaded_reads_processed:0
+io_threaded_writes_processed:0
+io_threaded_freed_objects:0
+io_threaded_accept_processed:0
+io_threaded_poll_processed:0
+io_threaded_total_prefetch_batches:0
+io_threaded_total_prefetch_entries:0
+client_query_buffer_limit_disconnections:0
+client_output_buffer_limit_disconnections:0
+reply_buffer_shrinks:2
+reply_buffer_expands:0
+eventloop_cycles:4183
+eventloop_duration_sum:405425
+eventloop_duration_cmd_sum:3554
+instantaneous_eventloop_cycles_per_sec:12
+instantaneous_eventloop_duration_usec:114
+acl_access_denied_auth:0
+acl_access_denied_cmd:0
+acl_access_denied_key:0
+acl_access_denied_channel:0
+
+# Replication
+role:master
+connected_slaves:0
+replicas_waiting_psync:0
+master_failover_state:no-failover
+master_replid:e099141d6c1797ad492df00ca1c19bf5bbfc6064
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:10485760
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# CPU
+used_cpu_sys:0.167178
+used_cpu_user:0.314379
+used_cpu_sys_children:0.000000
+used_cpu_user_children:0.000000
+used_cpu_sys_main_thread:0.166897
+used_cpu_user_main_thread:0.313851
+
+# Modules
+
+# Commandstats
+cmdstat_hset:calls=64,usec=48,usec_per_call=0.75,rejected_calls=0,failed_calls=0
+cmdstat_hmset:calls=604,usec=527,usec_per_call=0.87,rejected_calls=0,failed_calls=0
+cmdstat_info:calls=3,usec=194,usec_per_call=64.67,rejected_calls=0,failed_calls=0
+cmdstat_cluster|addslots:calls=1,usec=144,usec_per_call=144.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|nodes:calls=5,usec=249,usec_per_call=49.80,rejected_calls=0,failed_calls=0
+cmdstat_cluster|info:calls=3,usec=58,usec_per_call=19.33,rejected_calls=0,failed_calls=0
+cmdstat_cluster|set-config-epoch:calls=1,usec=16,usec_per_call=16.00,rejected_calls=0,failed_calls=0
+cmdstat_xadd:calls=257,usec=744,usec_per_call=2.89,rejected_calls=0,failed_calls=0
+cmdstat_sadd:calls=1510,usec=1227,usec_per_call=0.81,rejected_calls=0,failed_calls=0
+cmdstat_expire:calls=257,usec=330,usec_per_call=1.28,rejected_calls=0,failed_calls=0
+cmdstat_flushall:calls=1,usec=15,usec_per_call=15.00,rejected_calls=0,failed_calls=0
+cmdstat_ping:calls=2,usec=2,usec_per_call=1.00,rejected_calls=0,failed_calls=0
+
+# Errorstats
+
+# Latencystats
+latency_percentiles_usec_hset:p50=0.001,p99=3.007,p99.9=15.039
+latency_percentiles_usec_hmset:p50=1.003,p99=6.015,p99.9=11.007
+latency_percentiles_usec_info:p50=64.255,p99=72.191,p99.9=72.191
+latency_percentiles_usec_cluster|addslots:p50=144.383,p99=144.383,p99.9=144.383
+latency_percentiles_usec_cluster|nodes:p50=39.167,p99=76.287,p99.9=76.287
+latency_percentiles_usec_cluster|info:p50=20.095,p99=20.095,p99.9=20.095
+latency_percentiles_usec_cluster|set-config-epoch:p50=16.063,p99=16.063,p99.9=16.063
+latency_percentiles_usec_xadd:p50=2.007,p99=15.039,p99.9=24.063
+latency_percentiles_usec_sadd:p50=1.003,p99=3.007,p99.9=12.031
+latency_percentiles_usec_expire:p50=1.003,p99=19.071,p99.9=22.015
+latency_percentiles_usec_flushall:p50=15.039,p99=15.039,p99.9=15.039
+latency_percentiles_usec_ping:p50=1.003,p99=1.003,p99.9=1.003
+
+# Cluster
+cluster_enabled:1
+
+# Keyspace
+db0:keys=370,expires=65,avg_ttl=86108022
+
+# Cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:3
+cluster_size:3
+cluster_current_epoch:3
+cluster_my_epoch:1
+cluster_stats_messages_ping_sent:299
+cluster_stats_messages_pong_sent:269
+cluster_stats_messages_sent:568
+cluster_stats_messages_ping_received:267
+cluster_stats_messages_pong_received:299
+cluster_stats_messages_meet_received:2
+cluster_stats_messages_publish_received:229
+cluster_stats_messages_received:797
+total_cluster_links_buffer_limit_exceeded:0
+
+------ CLUSTER NODES OUTPUT ------
+c0afdfba7d7f6767012c185e96111641199e4f4c 127.0.0.1:54322@64322,,tls-port=0,shard-id=532e60403a4e33f2fe5beaa30c6873f62acc6423 master - 0 1769288838868 2 connected 5461-10922
+1bdf98f53a8e2960efc76ca9c6ee51710d183deb 127.0.0.1:54323@64323,,tls-port=0,shard-id=95d9c50ec0220338c84614c30b7f758bb6389a44 master - 0 1769288837864 3 connected 10923-16383
+76cb73df13c2c4cc55f6a4109268976cc96cf718 127.0.0.1:54321@64321,,tls-port=0,shard-id=da35be3120d75ae0956668740b6e58f48853773a myself,master - 0 0 1 connected 0-5460
+
+------ CLIENT LIST OUTPUT ------
+id=10 addr=127.0.0.1:44504 laddr=127.0.0.1:54321 fd=13 name=*redacted* age=297 idle=297 flags=N capa= db=0 sub=0 psub=0 ssub=0 multi=-1 watch=0 qbuf=0 qbuf-free=0 argv-mem=0 multi-mem=0 rbs=1024 rbp=0 obl=0 oll=0 omem=0 tot-mem=1664 events=r cmd=sadd user=*redacted* redir=-1 resp=2 lib-name= lib-ver= tot-net-in=334880 tot-net-out=16512 tot-cmds=2692
+
+------ MODULES INFO OUTPUT ------
+
+------ CONFIG DEBUG OUTPUT ------
+lazyfree-lazy-user-del yes
+activedefrag no
+repl-diskless-load disabled
+sanitize-dump-payload no
+io-threads 1
+lazyfree-lazy-server-del yes
+lazyfree-lazy-user-flush yes
+replica-read-only yes
+lazyfree-lazy-eviction yes
+list-compress-depth 0
+debug-context ""
+slave-read-only yes
+client-query-buffer-limit 1gb
+repl-diskless-sync yes
+lazyfree-lazy-expire yes
+dual-channel-replication-enabled no
+import-mode no
+proto-max-bulk-len 512mb
+
+------ FAST MEMORY TEST ------
+1679597:M 24 Jan 2026 21:07:19.840 # Bio worker thread #0 terminated
+1679597:M 24 Jan 2026 21:07:19.841 # Bio worker thread #1 terminated
+1679597:M 24 Jan 2026 21:07:19.841 # Bio worker thread #2 terminated
+*** Preparing to test memory region 55ee9ed92000 (520192 bytes)
+*** Preparing to test memory region 55eebcd1e000 (520192 bytes)
+*** Preparing to test memory region 7fad34000000 (135168 bytes)
+*** Preparing to test memory region 7fad38a00000 (8388608 bytes)
+*** Preparing to test memory region 7fad39200000 (2097152 bytes)
+*** Preparing to test memory region 7fad3957d000 (8388608 bytes)
+*** Preparing to test memory region 7fad39d7e000 (8388608 bytes)
+*** Preparing to test memory region 7fad3a57f000 (8388608 bytes)
+*** Preparing to test memory region 7fad3ad80000 (8388608 bytes)
+*** Preparing to test memory region 7fad3b580000 (6815744 bytes)
+*** Preparing to test memory region 7fad3bdca000 (20480 bytes)
+*** Preparing to test memory region 7fad3be22000 (12288 bytes)
+*** Preparing to test memory region 7fad3c01c000 (32768 bytes)
+*** Preparing to test memory region 7fad3c561000 (12288 bytes)
+*** Preparing to test memory region 7fad3c775000 (4096 bytes)
+*** Preparing to test memory region 7fad3c86b000 (8192 bytes)
+*** Preparing to test memory region 7fad3c8b2000 (4096 bytes)
+.
+== Key server Node 2 keys:
+
+== Key server Node 2 log:
+1679614:M 24 Jan 2026 21:02:20.285 # WARNING: Changing databases number from 16 to 1 since we are in cluster mode
+1679614:M 24 Jan 2026 21:02:20.285 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1679614:M 24 Jan 2026 21:02:20.285 * oO0OoO0OoO0Oo Valkey is starting oO0OoO0OoO0Oo
+1679614:M 24 Jan 2026 21:02:20.285 * Valkey version=8.1.5, bits=64, commit=00000000, modified=0, pid=1679614, just started
+1679614:M 24 Jan 2026 21:02:20.285 * Configuration loaded
+1679614:M 24 Jan 2026 21:02:20.285 * monotonic clock: POSIX clock_gettime
+1679614:M 24 Jan 2026 21:02:20.286 * Running mode=cluster, port=54322.
+1679614:M 24 Jan 2026 21:02:20.286 * No cluster configuration found, I'm c0afdfba7d7f6767012c185e96111641199e4f4c
+1679614:M 24 Jan 2026 21:02:20.307 * Server initialized
+1679614:M 24 Jan 2026 21:02:20.307 * Ready to accept connections tcp
+1679614:M 24 Jan 2026 21:02:20.842 * configEpoch set to 2 via CLUSTER SET-CONFIG-EPOCH
+1679614:M 24 Jan 2026 21:02:20.842 * Cluster meet 127.0.0.1:54321 (user request from 'id=6 addr=127.0.0.1:33256 laddr=127.0.0.1:54322 fd=13 name=*redacted* user=*redacted* lib-name= lib-ver=').
+1679614:M 24 Jan 2026 21:02:20.935 * IP address for this node updated to 127.0.0.1
+1679614:M 24 Jan 2026 21:02:20.935 * Successfully completed handshake with 76cb73df13c2c4cc55f6a4109268976cc96cf718 ()
+1679614:M 24 Jan 2026 21:02:22.315 * Cluster state changed: ok
+
+
+=== VALKEY BUG REPORT START: Cut & paste starting from here ===
+1679614:M 24 Jan 2026 21:07:19.831 # valkey 8.1.5 crashed by signal: 6, si_code: 0
+1679614:M 24 Jan 2026 21:07:19.831 # Killed by PID: 1679511, UID: 989
+1679614:M 24 Jan 2026 21:07:19.831 # Crashed running the instruction at: 0x7f571e1349a2
+
+------ STACK TRACE ------
+EIP:
+/lib64/libc.so.6(+0x7a9a2) [0x7f571e1349a2]
+
+1679614 valkey-server *
+/lib64/libc.so.6(+0x1a290) [0x7f571e0d4290]
+/lib64/libc.so.6(+0x7a9a2) [0x7f571e1349a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7f571e128c3c]
+/lib64/libc.so.6(+0x6ec84) [0x7f571e128c84]
+/lib64/libc.so.6(epoll_wait+0x25) [0x7f571e1af895]
+valkey-server *:54322 [cluster](+0x1a0c3) [0x560fc6c860c3]
+valkey-server *:54322 [cluster](aeProcessEvents+0x322) [0x560fc6c86532]
+valkey-server *:54322 [cluster](aeMain+0x2d) [0x560fc6c8673d]
+valkey-server *:54322 [cluster](main+0x408) [0x560fc6c7bc28]
+/lib64/libc.so.6(+0x35b5) [0x7f571e0bd5b5]
+/lib64/libc.so.6(__libc_start_main+0x88) [0x7f571e0bd668]
+valkey-server *:54322 [cluster](_start+0x25) [0x560fc6c7d6b5]
+
+1679617 bio_close_file
+/lib64/libc.so.6(+0x7a9a2) [0x7f571e1349a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7f571e128c3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7f571e1292ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7f571e12b97e]
+valkey-server *:54322 [cluster](bioProcessBackgroundJobs+0x1af) [0x560fc6d53d6f]
+/lib64/libc.so.6(+0x72464) [0x7f571e12c464]
+/lib64/libc.so.6(+0xf55ac) [0x7f571e1af5ac]
+
+1679618 bio_aof
+/lib64/libc.so.6(+0x7a9a2) [0x7f571e1349a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7f571e128c3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7f571e1292ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7f571e12b97e]
+valkey-server *:54322 [cluster](bioProcessBackgroundJobs+0x1af) [0x560fc6d53d6f]
+/lib64/libc.so.6(+0x72464) [0x7f571e12c464]
+/lib64/libc.so.6(+0xf55ac) [0x7f571e1af5ac]
+
+1679619 bio_lazy_free
+/lib64/libc.so.6(+0x7a9a2) [0x7f571e1349a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7f571e128c3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7f571e1292ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7f571e12b97e]
+valkey-server *:54322 [cluster](bioProcessBackgroundJobs+0x1af) [0x560fc6d53d6f]
+/lib64/libc.so.6(+0x72464) [0x7f571e12c464]
+/lib64/libc.so.6(+0xf55ac) [0x7f571e1af5ac]
+
+4/4 expected stacktraces.
+
+------ STACK TRACE DONE ------
+
+------ REGISTERS ------
+1679614:M 24 Jan 2026 21:07:19.838 # 
+RAX:fffffffffffffffc RBX:00007f571dcb33b0
+RCX:00007f571e1349a2 RDX:0000000000002790
+RDI:0000000000000007 RSI:00007f571dd18000
+RBP:00007ffceb3f40c0 RSP:00007ffceb3f4098
+R8 :0000000000000000 R9 :0000000000000000
+R10:000000000000005a R11:0000000000000246
+R12:00007f571dc40880 R13:00007f571dc46100
+R14:0000000000000000 R15:0000000000000001
+RIP:00007f571e1349a2 EFL:0000000000000246
+CSGSFS:002b000000000033
+1679614:M 24 Jan 2026 21:07:19.838 * hide-user-data-from-log is on, skip logging stack content to avoid spilling user data.
+
+------ INFO OUTPUT ------
+# Server
+redis_version:7.2.4
+server_name:valkey
+valkey_version:8.1.5
+valkey_release_stage:ga
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:3d220603f78e220d
+server_mode:cluster
+os:Linux 6.8.0-1044-azure x86_64
+arch_bits:64
+monotonic_clock:POSIX clock_gettime
+multiplexing_api:epoll
+gcc_version:15.2.1
+process_id:1679614
+process_supervised:no
+run_id:fac1b5c1af46762b88a841de14b92edb0c102ad6
+tcp_port:54322
+server_time_usec:1769288839778768
+uptime_in_seconds:299
+uptime_in_days:0
+hz:10
+configured_hz:10
+clients_hz:10
+lru_clock:7681159
+executable:/var/lib/pcp/testsuite/valkey-server
+config_file:
+io_threads_active:0
+availability_zone:
+listener0:name=tcp,bind=*,bind=-::*,port=54322
+
+# Clients
+connected_clients:1
+cluster_connections:4
+maxclients:10000
+client_recent_max_input_buffer:0
+client_recent_max_output_buffer:0
+blocked_clients:0
+tracking_clients:0
+pubsub_clients:0
+watching_clients:0
+clients_in_timeout_table:0
+total_watched_keys:0
+total_blocking_keys:0
+total_blocking_keys_on_nokey:0
+paused_reason:none
+paused_actions:none
+paused_timeout_milliseconds:0
+
+# Memory
+used_memory:3534424
+used_memory_human:3.37M
+used_memory_rss:15872000
+used_memory_rss_human:15.14M
+used_memory_peak:3599312
+used_memory_peak_human:3.43M
+used_memory_peak_perc:98.20%
+used_memory_overhead:3020168
+used_memory_startup:2676504
+used_memory_dataset:514256
+used_memory_dataset_perc:59.94%
+allocator_allocated:3617680
+allocator_active:3911680
+allocator_resident:5681152
+allocator_muzzy:0
+total_system_memory:16767848448
+total_system_memory_human:15.62G
+used_memory_lua:32768
+used_memory_vm_eval:32768
+used_memory_lua_human:32.00K
+used_memory_scripts_eval:0
+number_of_cached_scripts:0
+number_of_functions:0
+number_of_libraries:0
+used_memory_vm_functions:35840
+used_memory_vm_total:68608
+used_memory_vm_total_human:67.00K
+used_memory_functions:240
+used_memory_scripts:240
+used_memory_scripts_human:240B
+maxmemory:0
+maxmemory_human:0B
+maxmemory_policy:noeviction
+allocator_frag_ratio:1.08
+allocator_frag_bytes:294000
+allocator_rss_ratio:1.45
+allocator_rss_bytes:1769472
+rss_overhead_ratio:2.79
+rss_overhead_bytes:10190848
+mem_fragmentation_ratio:4.49
+mem_fragmentation_bytes:12339736
+mem_not_counted_for_evict:0
+mem_replication_backlog:0
+mem_total_replication_buffers:0
+mem_clients_slaves:0
+mem_clients_normal:1664
+mem_cluster_links:4288
+mem_aof_buffer:0
+mem_allocator:jemalloc-5.3.0
+mem_overhead_db_hashtable_rehashing:0
+active_defrag_running:0
+lazyfree_pending_objects:0
+lazyfreed_objects:0
+
+# Persistence
+loading:0
+async_loading:0
+current_cow_peak:0
+current_cow_size:0
+current_cow_size_age:0
+current_fork_perc:0.00
+current_save_keys_processed:0
+current_save_keys_total:0
+rdb_changes_since_last_save:1847
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1769288540
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:-1
+rdb_current_bgsave_time_sec:-1
+rdb_saves:0
+rdb_last_cow_size:0
+rdb_last_load_keys_expired:0
+rdb_last_load_keys_loaded:0
+aof_enabled:0
+aof_rewrite_in_progress:0
+aof_rewrite_scheduled:0
+aof_last_rewrite_time_sec:-1
+aof_current_rewrite_time_sec:-1
+aof_last_bgrewrite_status:ok
+aof_rewrites:0
+aof_rewrites_consecutive_failures:0
+aof_last_write_status:ok
+aof_last_cow_size:0
+module_fork_in_progress:0
+module_fork_last_cow_size:0
+
+# Stats
+total_connections_received:8
+total_commands_processed:2602
+instantaneous_ops_per_sec:0
+total_net_input_bytes:371663
+total_net_output_bytes:31203
+total_net_repl_input_bytes:0
+total_net_repl_output_bytes:0
+instantaneous_input_kbps:0.00
+instantaneous_output_kbps:0.00
+instantaneous_input_repl_kbps:0.00
+instantaneous_output_repl_kbps:0.00
+rejected_connections:0
+sync_full:0
+sync_partial_ok:0
+sync_partial_err:0
+expired_keys:0
+expired_stale_perc:0.00
+expired_time_cap_reached_count:0
+expire_cycle_cpu_milliseconds:52
+evicted_keys:0
+evicted_clients:0
+evicted_scripts:0
+total_eviction_exceeded_time:0
+current_eviction_exceeded_time:0
+keyspace_hits:0
+keyspace_misses:0
+pubsub_channels:0
+pubsub_patterns:0
+pubsubshard_channels:0
+latest_fork_usec:0
+total_forks:0
+migrate_cached_sockets:0
+slave_expires_tracked_keys:0
+active_defrag_hits:0
+active_defrag_misses:0
+active_defrag_key_hits:0
+active_defrag_key_misses:0
+total_active_defrag_time:0
+current_active_defrag_time:0
+tracking_total_keys:0
+tracking_total_items:0
+tracking_total_prefixes:0
+unexpected_error_replies:0
+total_error_replies:0
+dump_payload_sanitizations:0
+total_reads_processed:46
+total_writes_processed:37
+io_threaded_reads_processed:0
+io_threaded_writes_processed:0
+io_threaded_freed_objects:0
+io_threaded_accept_processed:0
+io_threaded_poll_processed:0
+io_threaded_total_prefetch_batches:0
+io_threaded_total_prefetch_entries:0
+client_query_buffer_limit_disconnections:0
+client_output_buffer_limit_disconnections:0
+reply_buffer_shrinks:2
+reply_buffer_expands:0
+eventloop_cycles:5545
+eventloop_duration_sum:410360
+eventloop_duration_cmd_sum:3392
+instantaneous_eventloop_cycles_per_sec:24
+instantaneous_eventloop_duration_usec:57
+acl_access_denied_auth:0
+acl_access_denied_cmd:0
+acl_access_denied_key:0
+acl_access_denied_channel:0
+
+# Replication
+role:master
+connected_slaves:0
+replicas_waiting_psync:0
+master_failover_state:no-failover
+master_replid:aad5c1af01e52f930a02f6b2b820d59278ad5279
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:10485760
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# CPU
+used_cpu_sys:0.182437
+used_cpu_user:0.331268
+used_cpu_sys_children:0.000000
+used_cpu_user_children:0.000000
+used_cpu_sys_main_thread:0.181999
+used_cpu_user_main_thread:0.330472
+
+# Modules
+
+# Commandstats
+cmdstat_cluster|addslots:calls=1,usec=166,usec_per_call=166.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|nodes:calls=5,usec=245,usec_per_call=49.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|set-config-epoch:calls=1,usec=12,usec_per_call=12.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|meet:calls=1,usec=25,usec_per_call=25.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|info:calls=1,usec=8,usec_per_call=8.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|slots:calls=1,usec=31,usec_per_call=31.00,rejected_calls=0,failed_calls=0
+cmdstat_hmset:calls=259,usec=278,usec_per_call=1.07,rejected_calls=0,failed_calls=0
+cmdstat_xadd:calls=306,usec=768,usec_per_call=2.51,rejected_calls=0,failed_calls=0
+cmdstat_flushall:calls=1,usec=14,usec_per_call=14.00,rejected_calls=0,failed_calls=0
+cmdstat_expire:calls=306,usec=326,usec_per_call=1.07,rejected_calls=0,failed_calls=0
+cmdstat_ping:calls=2,usec=2,usec_per_call=1.00,rejected_calls=0,failed_calls=0
+cmdstat_hset:calls=209,usec=475,usec_per_call=2.27,rejected_calls=0,failed_calls=0
+cmdstat_publish:calls=229,usec=158,usec_per_call=0.69,rejected_calls=0,failed_calls=0
+cmdstat_info:calls=3,usec=100,usec_per_call=33.33,rejected_calls=0,failed_calls=0
+cmdstat_sadd:calls=1277,usec=784,usec_per_call=0.61,rejected_calls=0,failed_calls=0
+
+# Errorstats
+
+# Latencystats
+latency_percentiles_usec_cluster|addslots:p50=166.911,p99=166.911,p99.9=166.911
+latency_percentiles_usec_cluster|nodes:p50=48.127,p99=63.231,p99.9=63.231
+latency_percentiles_usec_cluster|set-config-epoch:p50=12.031,p99=12.031,p99.9=12.031
+latency_percentiles_usec_cluster|meet:p50=25.087,p99=25.087,p99.9=25.087
+latency_percentiles_usec_cluster|info:p50=8.031,p99=8.031,p99.9=8.031
+latency_percentiles_usec_cluster|slots:p50=31.103,p99=31.103,p99.9=31.103
+latency_percentiles_usec_hmset:p50=1.003,p99=4.015,p99.9=8.031
+latency_percentiles_usec_xadd:p50=1.003,p99=14.015,p99.9=25.087
+latency_percentiles_usec_flushall:p50=14.015,p99=14.015,p99.9=14.015
+latency_percentiles_usec_expire:p50=1.003,p99=13.055,p99.9=38.143
+latency_percentiles_usec_ping:p50=1.003,p99=1.003,p99.9=1.003
+latency_percentiles_usec_hset:p50=2.007,p99=9.023,p99.9=27.007
+latency_percentiles_usec_publish:p50=0.001,p99=5.023,p99.9=21.119
+latency_percentiles_usec_info:p50=27.007,p99=62.207,p99.9=62.207
+latency_percentiles_usec_sadd:p50=1.003,p99=2.007,p99.9=12.031
+
+# Cluster
+cluster_enabled:1
+
+# Keyspace
+db0:keys=382,expires=78,avg_ttl=86108013
+
+# Cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:3
+cluster_size:3
+cluster_current_epoch:3
+cluster_my_epoch:2
+cluster_stats_messages_ping_sent:301
+cluster_stats_messages_pong_sent:326
+cluster_stats_messages_meet_sent:1
+cluster_stats_messages_publish_sent:231
+cluster_stats_messages_sent:859
+cluster_stats_messages_ping_received:326
+cluster_stats_messages_pong_received:302
+cluster_stats_messages_received:628
+total_cluster_links_buffer_limit_exceeded:0
+
+------ CLUSTER NODES OUTPUT ------
+1bdf98f53a8e2960efc76ca9c6ee51710d183deb 127.0.0.1:54323@64323,,tls-port=0,shard-id=95d9c50ec0220338c84614c30b7f758bb6389a44 master - 0 1769288839277 3 connected 10923-16383
+76cb73df13c2c4cc55f6a4109268976cc96cf718 127.0.0.1:54321@64321,,tls-port=0,shard-id=da35be3120d75ae0956668740b6e58f48853773a master - 0 1769288838273 1 connected 0-5460
+c0afdfba7d7f6767012c185e96111641199e4f4c 127.0.0.1:54322@64322,,tls-port=0,shard-id=532e60403a4e33f2fe5beaa30c6873f62acc6423 myself,master - 0 0 2 connected 5461-10922
+
+------ CLIENT LIST OUTPUT ------
+id=10 addr=127.0.0.1:33270 laddr=127.0.0.1:54322 fd=13 name=*redacted* age=297 idle=297 flags=N capa= db=0 sub=0 psub=0 ssub=0 multi=-1 watch=0 qbuf=0 qbuf-free=0 argv-mem=0 multi-mem=0 rbs=1024 rbp=0 obl=0 oll=0 omem=0 tot-mem=1664 events=r cmd=sadd user=*redacted* redir=-1 resp=2 lib-name= lib-ver= tot-net-in=315717 tot-net-out=17449 tot-cmds=2587
+
+------ MODULES INFO OUTPUT ------
+
+------ CONFIG DEBUG OUTPUT ------
+list-compress-depth 0
+lazyfree-lazy-server-del yes
+io-threads 1
+lazyfree-lazy-user-del yes
+lazyfree-lazy-eviction yes
+sanitize-dump-payload no
+debug-context ""
+repl-diskless-sync yes
+dual-channel-replication-enabled no
+lazyfree-lazy-expire yes
+activedefrag no
+import-mode no
+lazyfree-lazy-user-flush yes
+replica-read-only yes
+proto-max-bulk-len 512mb
+repl-diskless-load disabled
+slave-read-only yes
+client-query-buffer-limit 1gb
+
+------ FAST MEMORY TEST ------
+1679614:M 24 Jan 2026 21:07:19.840 # Bio worker thread #0 terminated
+1679614:M 24 Jan 2026 21:07:19.840 # Bio worker thread #1 terminated
+1679614:M 24 Jan 2026 21:07:19.840 # Bio worker thread #2 terminated
+*** Preparing to test memory region 560fc6fc9000 (520192 bytes)
+*** Preparing to test memory region 560ffb65b000 (520192 bytes)
+*** Preparing to test memory region 7f5714000000 (135168 bytes)
+*** Preparing to test memory region 7f571ae00000 (8388608 bytes)
+*** Preparing to test memory region 7f571b600000 (2097152 bytes)
+*** Preparing to test memory region 7f571b97d000 (8388608 bytes)
+*** Preparing to test memory region 7f571c17e000 (8388608 bytes)
+*** Preparing to test memory region 7f571c97f000 (8388608 bytes)
+*** Preparing to test memory region 7f571d180000 (8388608 bytes)
+*** Preparing to test memory region 7f571d980000 (6815744 bytes)
+*** Preparing to test memory region 7f571e053000 (20480 bytes)
+*** Preparing to test memory region 7f571e0ab000 (12288 bytes)
+*** Preparing to test memory region 7f571e2a5000 (32768 bytes)
+*** Preparing to test memory region 7f571e7ea000 (12288 bytes)
+*** Preparing to test memory region 7f571e9fe000 (4096 bytes)
+*** Preparing to test memory region 7f571eaf4000 (8192 bytes)
+*** Preparing to test memory region 7f571eb3b000 (4096 bytes)
+.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O
+Fast memory test PASSED, however your memory can still be broken. Please run a memory test for several hours if possible.
+
+------ DUMPING CODE AROUND EIP ------
+Symbol: (null) (base: (nil))
+Module: /lib64/libc.so.6 (base 0x7f571e0ba000)
+$ xxd -r -p /tmp/dump.hex /tmp/dump.bin
+$ objdump --adjust-vma=(nil) -D -b binary -m i386:x86-64 /tmp/dump.bin
+------
+
+=== VALKEY BUG REPORT END. Make sure to include from START to END. ===
+
+       Please report the crash by opening an issue on github:
+
+           https://github.com/valkey-io/valkey/issues
+
+  If a module was involved, please open in the module's repo instead.
+
+  Suspect RAM error? Use valkey-server --test-memory to verify it.
+
+  Some other issues could be detected by valkey-server --check-system
+
+== Key server Node 3 keys:
+
+== Key server Node 3 log:
+1679641:M 24 Jan 2026 21:02:20.570 # WARNING: Changing databases number from 16 to 1 since we are in cluster mode
+1679641:M 24 Jan 2026 21:02:20.570 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1679641:M 24 Jan 2026 21:02:20.570 * oO0OoO0OoO0Oo Valkey is starting oO0OoO0OoO0Oo
+1679641:M 24 Jan 2026 21:02:20.570 * Valkey version=8.1.5, bits=64, commit=00000000, modified=0, pid=1679641, just started
+1679641:M 24 Jan 2026 21:02:20.570 * Configuration loaded
+1679641:M 24 Jan 2026 21:02:20.570 * monotonic clock: POSIX clock_gettime
+1679641:M 24 Jan 2026 21:02:20.570 * Running mode=cluster, port=54323.
+1679641:M 24 Jan 2026 21:02:20.571 * No cluster configuration found, I'm 1bdf98f53a8e2960efc76ca9c6ee51710d183deb
+1679641:M 24 Jan 2026 21:02:20.592 * Server initialized
+1679641:M 24 Jan 2026 21:02:20.592 * Ready to accept connections tcp
+1679641:M 24 Jan 2026 21:02:20.842 * configEpoch set to 3 via CLUSTER SET-CONFIG-EPOCH
+1679641:M 24 Jan 2026 21:02:20.843 * Cluster meet 127.0.0.1:54321 (user request from 'id=5 addr=127.0.0.1:60998 laddr=127.0.0.1:54323 fd=13 name=*redacted* user=*redacted* lib-name= lib-ver=').
+1679641:M 24 Jan 2026 21:02:20.935 * IP address for this node updated to 127.0.0.1
+1679641:M 24 Jan 2026 21:02:20.935 * Successfully completed handshake with 76cb73df13c2c4cc55f6a4109268976cc96cf718 ()
+1679641:M 24 Jan 2026 21:02:22.599 # Cluster is currently down: At least one hash slot is not served by any available node. Please check the 'cluster-require-full-coverage' configuration.
+1679641:M 24 Jan 2026 21:02:22.600 * Cluster state changed: ok
+1679641:M 24 Jan 2026 21:02:22.860 * Closing link for node ext.name838a172e04e1e814c22ac77885eeab40 that sent a lightweight message of type publish as its first message on the link
+
+
+=== VALKEY BUG REPORT START: Cut & paste starting from here ===
+1679641:M 24 Jan 2026 21:07:19.831 # valkey 8.1.5 crashed by signal: 6, si_code: 0
+1679641:M 24 Jan 2026 21:07:19.831 # Killed by PID: 1679511, UID: 989
+1679641:M 24 Jan 2026 21:07:19.831 # Crashed running the instruction at: 0x7f33b92099a2
+
+------ STACK TRACE ------
+EIP:
+/lib64/libc.so.6(+0x7a9a2) [0x7f33b92099a2]
+
+1679646 bio_lazy_free
+/lib64/libc.so.6(+0x7a9a2) [0x7f33b92099a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7f33b91fdc3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7f33b91fe2ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7f33b920097e]
+valkey-server *:54323 [cluster](bioProcessBackgroundJobs+0x1af) [0x560695ccad6f]
+/lib64/libc.so.6(+0x72464) [0x7f33b9201464]
+/lib64/libc.so.6(+0xf55ac) [0x7f33b92845ac]
+
+1679645 bio_aof
+/lib64/libc.so.6(+0x7a9a2) [0x7f33b92099a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7f33b91fdc3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7f33b91fe2ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7f33b920097e]
+valkey-server *:54323 [cluster](bioProcessBackgroundJobs+0x1af) [0x560695ccad6f]
+/lib64/libc.so.6(+0x72464) [0x7f33b9201464]
+/lib64/libc.so.6(+0xf55ac) [0x7f33b92845ac]
+
+1679644 bio_close_file
+/lib64/libc.so.6(+0x7a9a2) [0x7f33b92099a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7f33b91fdc3c]
+/lib64/libc.so.6(+0x6f2ac) [0x7f33b91fe2ac]
+/lib64/libc.so.6(pthread_cond_wait+0x14e) [0x7f33b920097e]
+valkey-server *:54323 [cluster](bioProcessBackgroundJobs+0x1af) [0x560695ccad6f]
+/lib64/libc.so.6(+0x72464) [0x7f33b9201464]
+/lib64/libc.so.6(+0xf55ac) [0x7f33b92845ac]
+
+1679641 valkey-server *
+/lib64/libc.so.6(+0x1a290) [0x7f33b91a9290]
+/lib64/libc.so.6(+0x7a9a2) [0x7f33b92099a2]
+/lib64/libc.so.6(+0x6ec3c) [0x7f33b91fdc3c]
+/lib64/libc.so.6(+0x6ec84) [0x7f33b91fdc84]
+/lib64/libc.so.6(epoll_wait+0x25) [0x7f33b9284895]
+valkey-server *:54323 [cluster](+0x1a0c3) [0x560695bfd0c3]
+valkey-server *:54323 [cluster](aeProcessEvents+0x322) [0x560695bfd532]
+valkey-server *:54323 [cluster](aeMain+0x2d) [0x560695bfd73d]
+valkey-server *:54323 [cluster](main+0x408) [0x560695bf2c28]
+/lib64/libc.so.6(+0x35b5) [0x7f33b91925b5]
+/lib64/libc.so.6(__libc_start_main+0x88) [0x7f33b9192668]
+valkey-server *:54323 [cluster](_start+0x25) [0x560695bf46b5]
+
+4/4 expected stacktraces.
+
+------ STACK TRACE DONE ------
+
+------ REGISTERS ------
+1679641:M 24 Jan 2026 21:07:19.838 # 
+RAX:fffffffffffffffc RBX:00007f33b8cb33b0
+RCX:00007f33b92099a2 RDX:0000000000002790
+RDI:0000000000000007 RSI:00007f33b8d18000
+RBP:00007ffdba0889f0 RSP:00007ffdba0889c8
+R8 :0000000000000000 R9 :0000000000000000
+R10:0000000000000064 R11:0000000000000246
+R12:00007f33b8c40880 R13:00007f33b8c46140
+R14:0000000000000000 R15:0000000000000001
+RIP:00007f33b92099a2 EFL:0000000000000246
+CSGSFS:002b000000000033
+1679641:M 24 Jan 2026 21:07:19.838 * hide-user-data-from-log is on, skip logging stack content to avoid spilling user data.
+
+------ INFO OUTPUT ------
+# Server
+redis_version:7.2.4
+server_name:valkey
+valkey_version:8.1.5
+valkey_release_stage:ga
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:3d220603f78e220d
+server_mode:cluster
+os:Linux 6.8.0-1044-azure x86_64
+arch_bits:64
+monotonic_clock:POSIX clock_gettime
+multiplexing_api:epoll
+gcc_version:15.2.1
+process_id:1679641
+process_supervised:no
+run_id:64bc170cb160e43cba0cf5062e15ee906512eeac
+tcp_port:54323
+server_time_usec:1769288839744488
+uptime_in_seconds:299
+uptime_in_days:0
+hz:10
+configured_hz:10
+clients_hz:10
+lru_clock:7681159
+executable:/var/lib/pcp/testsuite/valkey-server
+config_file:
+io_threads_active:0
+availability_zone:
+listener0:name=tcp,bind=*,bind=-::*,port=54323
+
+# Clients
+connected_clients:1
+cluster_connections:4
+maxclients:10000
+client_recent_max_input_buffer:0
+client_recent_max_output_buffer:0
+blocked_clients:0
+tracking_clients:0
+pubsub_clients:0
+watching_clients:0
+clients_in_timeout_table:0
+total_watched_keys:0
+total_blocking_keys:0
+total_blocking_keys_on_nokey:0
+paused_reason:none
+paused_actions:none
+paused_timeout_milliseconds:0
+
+# Memory
+used_memory:3503152
+used_memory_human:3.34M
+used_memory_rss:15470592
+used_memory_rss_human:14.75M
+used_memory_peak:3543792
+used_memory_peak_human:3.38M
+used_memory_peak_perc:98.85%
+used_memory_overhead:3012280
+used_memory_startup:2676760
+used_memory_dataset:490872
+used_memory_dataset_perc:59.40%
+allocator_allocated:3586408
+allocator_active:3854336
+allocator_resident:5619712
+allocator_muzzy:0
+total_system_memory:16767848448
+total_system_memory_human:15.62G
+used_memory_lua:32768
+used_memory_vm_eval:32768
+used_memory_lua_human:32.00K
+used_memory_scripts_eval:0
+number_of_cached_scripts:0
+number_of_functions:0
+number_of_libraries:0
+used_memory_vm_functions:35840
+used_memory_vm_total:68608
+used_memory_vm_total_human:67.00K
+used_memory_functions:240
+used_memory_scripts:240
+used_memory_scripts_human:240B
+maxmemory:0
+maxmemory_human:0B
+maxmemory_policy:noeviction
+allocator_frag_ratio:1.07
+allocator_frag_bytes:267928
+allocator_rss_ratio:1.46
+allocator_rss_bytes:1765376
+rss_overhead_ratio:2.75
+rss_overhead_bytes:9850880
+mem_fragmentation_ratio:4.42
+mem_fragmentation_bytes:11969600
+mem_not_counted_for_evict:0
+mem_replication_backlog:0
+mem_total_replication_buffers:0
+mem_clients_slaves:0
+mem_clients_normal:1664
+mem_cluster_links:4288
+mem_aof_buffer:0
+mem_allocator:jemalloc-5.3.0
+mem_overhead_db_hashtable_rehashing:0
+active_defrag_running:0
+lazyfree_pending_objects:0
+lazyfreed_objects:0
+
+# Persistence
+loading:0
+async_loading:0
+current_cow_peak:0
+current_cow_size:0
+current_cow_size_age:0
+current_fork_perc:0.00
+current_save_keys_processed:0
+current_save_keys_total:0
+rdb_changes_since_last_save:1336
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1769288540
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:-1
+rdb_current_bgsave_time_sec:-1
+rdb_saves:0
+rdb_last_cow_size:0
+rdb_last_load_keys_expired:0
+rdb_last_load_keys_loaded:0
+aof_enabled:0
+aof_rewrite_in_progress:0
+aof_rewrite_scheduled:0
+aof_last_rewrite_time_sec:-1
+aof_current_rewrite_time_sec:-1
+aof_last_bgrewrite_status:ok
+aof_rewrites:0
+aof_rewrites_consecutive_failures:0
+aof_last_write_status:ok
+aof_last_cow_size:0
+module_fork_in_progress:0
+module_fork_last_cow_size:0
+
+# Stats
+total_connections_received:6
+total_commands_processed:1331
+instantaneous_ops_per_sec:0
+total_net_input_bytes:266049
+total_net_output_bytes:23895
+total_net_repl_input_bytes:0
+total_net_repl_output_bytes:0
+instantaneous_input_kbps:0.00
+instantaneous_output_kbps:0.00
+instantaneous_input_repl_kbps:0.00
+instantaneous_output_repl_kbps:0.00
+rejected_connections:0
+sync_full:0
+sync_partial_ok:0
+sync_partial_err:0
+expired_keys:0
+expired_stale_perc:0.00
+expired_time_cap_reached_count:0
+expire_cycle_cpu_milliseconds:44
+evicted_keys:0
+evicted_clients:0
+evicted_scripts:0
+total_eviction_exceeded_time:0
+current_eviction_exceeded_time:0
+keyspace_hits:0
+keyspace_misses:1
+pubsub_channels:0
+pubsub_patterns:0
+pubsubshard_channels:0
+latest_fork_usec:0
+total_forks:0
+migrate_cached_sockets:0
+slave_expires_tracked_keys:0
+active_defrag_hits:0
+active_defrag_misses:0
+active_defrag_key_hits:0
+active_defrag_key_misses:0
+total_active_defrag_time:0
+current_active_defrag_time:0
+tracking_total_keys:0
+tracking_total_items:0
+tracking_total_prefixes:0
+unexpected_error_replies:0
+total_error_replies:0
+dump_payload_sanitizations:0
+total_reads_processed:39
+total_writes_processed:32
+io_threaded_reads_processed:0
+io_threaded_writes_processed:0
+io_threaded_freed_objects:0
+io_threaded_accept_processed:0
+io_threaded_poll_processed:0
+io_threaded_total_prefetch_batches:0
+io_threaded_total_prefetch_entries:0
+client_query_buffer_limit_disconnections:0
+client_output_buffer_limit_disconnections:0
+reply_buffer_shrinks:2
+reply_buffer_expands:0
+eventloop_cycles:4245
+eventloop_duration_sum:404127
+eventloop_duration_cmd_sum:2240
+instantaneous_eventloop_cycles_per_sec:12
+instantaneous_eventloop_duration_usec:145
+acl_access_denied_auth:0
+acl_access_denied_cmd:0
+acl_access_denied_key:0
+acl_access_denied_channel:0
+
+# Replication
+role:master
+connected_slaves:0
+replicas_waiting_psync:0
+master_failover_state:no-failover
+master_replid:7d7ae3efc009cfa2e8ced1b21b2796ee5379a885
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:10485760
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# CPU
+used_cpu_sys:0.211797
+used_cpu_user:0.272621
+used_cpu_sys_children:0.000000
+used_cpu_user_children:0.000000
+used_cpu_sys_main_thread:0.210692
+used_cpu_user_main_thread:0.272596
+
+# Modules
+
+# Commandstats
+cmdstat_info:calls=2,usec=67,usec_per_call=33.50,rejected_calls=0,failed_calls=0
+cmdstat_xadd:calls=256,usec=686,usec_per_call=2.68,rejected_calls=0,failed_calls=0
+cmdstat_hmset:calls=156,usec=300,usec_per_call=1.92,rejected_calls=0,failed_calls=0
+cmdstat_expire:calls=256,usec=296,usec_per_call=1.16,rejected_calls=0,failed_calls=0
+cmdstat_cluster|info:calls=1,usec=8,usec_per_call=8.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|meet:calls=1,usec=25,usec_per_call=25.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|nodes:calls=5,usec=235,usec_per_call=47.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|addslots:calls=1,usec=157,usec_per_call=157.00,rejected_calls=0,failed_calls=0
+cmdstat_cluster|set-config-epoch:calls=1,usec=12,usec_per_call=12.00,rejected_calls=0,failed_calls=0
+cmdstat_sadd:calls=627,usec=345,usec_per_call=0.55,rejected_calls=0,failed_calls=0
+cmdstat_hset:calls=19,usec=39,usec_per_call=2.05,rejected_calls=0,failed_calls=0
+cmdstat_geoadd:calls=1,usec=23,usec_per_call=23.00,rejected_calls=0,failed_calls=0
+cmdstat_get:calls=1,usec=4,usec_per_call=4.00,rejected_calls=0,failed_calls=0
+cmdstat_flushall:calls=1,usec=18,usec_per_call=18.00,rejected_calls=0,failed_calls=0
+cmdstat_ping:calls=2,usec=1,usec_per_call=0.50,rejected_calls=0,failed_calls=0
+cmdstat_set:calls=1,usec=24,usec_per_call=24.00,rejected_calls=0,failed_calls=0
+
+# Errorstats
+
+# Latencystats
+latency_percentiles_usec_info:p50=26.111,p99=41.215,p99.9=41.215
+latency_percentiles_usec_xadd:p50=2.007,p99=14.015,p99.9=22.015
+latency_percentiles_usec_hmset:p50=2.007,p99=8.031,p99.9=10.047
+latency_percentiles_usec_expire:p50=1.003,p99=13.055,p99.9=17.023
+latency_percentiles_usec_cluster|info:p50=8.031,p99=8.031,p99.9=8.031
+latency_percentiles_usec_cluster|meet:p50=25.087,p99=25.087,p99.9=25.087
+latency_percentiles_usec_cluster|nodes:p50=46.079,p99=57.087,p99.9=57.087
+latency_percentiles_usec_cluster|addslots:p50=157.695,p99=157.695,p99.9=157.695
+latency_percentiles_usec_cluster|set-config-epoch:p50=12.031,p99=12.031,p99.9=12.031
+latency_percentiles_usec_sadd:p50=0.001,p99=3.007,p99.9=7.007
+latency_percentiles_usec_hset:p50=1.003,p99=14.015,p99.9=14.015
+latency_percentiles_usec_geoadd:p50=23.039,p99=23.039,p99.9=23.039
+latency_percentiles_usec_get:p50=4.015,p99=4.015,p99.9=4.015
+latency_percentiles_usec_flushall:p50=18.047,p99=18.047,p99.9=18.047
+latency_percentiles_usec_ping:p50=0.001,p99=1.003,p99.9=1.003
+latency_percentiles_usec_set:p50=24.063,p99=24.063,p99.9=24.063
+
+# Cluster
+cluster_enabled:1
+
+# Keyspace
+db0:keys=348,expires=64,avg_ttl=86108049
+
+# Cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:3
+cluster_size:3
+cluster_current_epoch:3
+cluster_my_epoch:3
+cluster_stats_messages_ping_sent:300
+cluster_stats_messages_pong_sent:307
+cluster_stats_messages_meet_sent:1
+cluster_stats_messages_sent:608
+cluster_stats_messages_ping_received:307
+cluster_stats_messages_pong_received:301
+cluster_stats_messages_publish_received:1
+cluster_stats_messages_received:609
+total_cluster_links_buffer_limit_exceeded:0
+
+------ CLUSTER NODES OUTPUT ------
+76cb73df13c2c4cc55f6a4109268976cc96cf718 127.0.0.1:54321@64321,,tls-port=0,shard-id=da35be3120d75ae0956668740b6e58f48853773a master - 0 1769288839443 1 connected 0-5460
+1bdf98f53a8e2960efc76ca9c6ee51710d183deb 127.0.0.1:54323@64323,,tls-port=0,shard-id=95d9c50ec0220338c84614c30b7f758bb6389a44 myself,master - 0 0 3 connected 10923-16383
+c0afdfba7d7f6767012c185e96111641199e4f4c 127.0.0.1:54322@64322,,tls-port=0,shard-id=532e60403a4e33f2fe5beaa30c6873f62acc6423 master - 0 1769288838439 2 connected 5461-10922
+
+------ CLIENT LIST OUTPUT ------
+id=7 addr=127.0.0.1:32784 laddr=127.0.0.1:54323 fd=13 name=*redacted* age=297 idle=297 flags=N capa= db=0 sub=0 psub=0 ssub=0 multi=-1 watch=0 qbuf=0 qbuf-free=0 argv-mem=0 multi-mem=0 rbs=1024 rbp=0 obl=0 oll=0 omem=0 tot-mem=1664 events=r cmd=expire user=*redacted* redir=-1 resp=2 lib-name= lib-ver= tot-net-in=205603 tot-net-out=10546 tot-cmds=1317
+
+------ MODULES INFO OUTPUT ------
+
+------ CONFIG DEBUG OUTPUT ------
+dual-channel-replication-enabled no
+sanitize-dump-payload no
+list-compress-depth 0
+lazyfree-lazy-server-del yes
+repl-diskless-load disabled
+slave-read-only yes
+lazyfree-lazy-eviction yes
+import-mode no
+repl-diskless-sync yes
+debug-context ""
+activedefrag no
+lazyfree-lazy-expire yes
+client-query-buffer-limit 1gb
+replica-read-only yes
+proto-max-bulk-len 512mb
+lazyfree-lazy-user-flush yes
+io-threads 1
+lazyfree-lazy-user-del yes
+
+------ FAST MEMORY TEST ------
+1679641:M 24 Jan 2026 21:07:19.839 # Bio worker thread #0 terminated
+1679641:M 24 Jan 2026 21:07:19.839 # Bio worker thread #1 terminated
+1679641:M 24 Jan 2026 21:07:19.839 # Bio worker thread #2 terminated
+*** Preparing to test memory region 560695f40000 (520192 bytes)
+*** Preparing to test memory region 5606cf658000 (520192 bytes)
+*** Preparing to test memory region 7f33b0000000 (135168 bytes)
+*** Preparing to test memory region 7f33b5e00000 (8388608 bytes)
+*** Preparing to test memory region 7f33b6600000 (2097152 bytes)
+*** Preparing to test memory region 7f33b697d000 (8388608 bytes)
+*** Preparing to test memory region 7f33b717e000 (8388608 bytes)
+*** Preparing to test memory region 7f33b797f000 (8388608 bytes)
+*** Preparing to test memory region 7f33b8180000 (8388608 bytes)
+*** Preparing to test memory region 7f33b8980000 (6815744 bytes)
+*** Preparing to test memory region 7f33b9128000 (20480 bytes)
+*** Preparing to test memory region 7f33b9180000 (12288 bytes)
+*** Preparing to test memory region 7f33b937a000 (32768 bytes)
+*** Preparing to test memory region 7f33b98bf000 (12288 bytes)
+*** Preparing to test memory region 7f33b9ad3000 (4096 bytes)
+*** Preparing to test memory region 7f33b9bc9000 (8192 bytes)
+*** Preparing to test memory region 7f33b9c10000 (4096 bytes)
+.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O
+Fast memory test PASSED, however your memory can still be broken. Please run a memory test for several hours if possible.
+
+------ DUMPING CODE AROUND EIP ------
+Symbol: (null) (base: (nil))
+Module: /lib64/libc.so.6 (base 0x7f33b918f000)
+$ xxd -r -p /tmp/dump.hex /tmp/dump.bin
+$ objdump --adjust-vma=(nil) -D -b binary -m i386:x86-64 /tmp/dump.bin
+------
+
+=== VALKEY BUG REPORT END. Make sure to include from START to END. ===
+
+       Please report the crash by opening an issue on github:
+
+           https://github.com/valkey-io/valkey/issues
+
+  If a module was involved, please open in the module's repo instead.
+
+  Suspect RAM error? Use valkey-server --test-memory to verify it.
+
+  Some other issues could be detected by valkey-server --check-system
+
+== Key server Node 1 keys:
+
+== Key server Node 1 log:
+
+== Key server Node 2 keys:
+
+== Key server Node 2 log:
+
+== Key server Node 3 keys:
+
+== Key server Node 3 log:

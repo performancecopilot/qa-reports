@@ -1,0 +1,271 @@
+
+=== really_fubar ===
+really_fubar: nothing appropriate.
+--- (1) ---
+No manual entry for really_fubar in section 1
+
+=== pminfo ===
+pminfo: nothing appropriate.
+--- (1) ---
+PMINFO(1) General Commands Manual PMINFO(1)
+
+NAME
+ pminfo - display information about performance metrics
+
+SYNOPSIS
+ pminfo [-dfFIlLmMstTvVxz?] [-a archive] [-b batchsize] [-c dmfile]
+ [--container name] [-D debug] [-h hostname] [-K spec] [-[n|N] pmnsfile]
+ [-O time] [-r dmname=expr] [-Z timezone] [metricname | pmid | indom]...
+
+DESCRIPTION
+ pminfo displays various types of information about performance metrics
+ available through the facilities of the Performance Co-Pilot (PCP).
+
+ The metrics of interest are named in the metricname arguments. If met-
+ ricname is a non-leaf node in the PMNS, then pminfo will recursively
+ descend the PMNS and report on all leaf nodes. If no metricname argu-
+ ment is given, the root of the PMNS is used.
+
+ If the metricname argument is in numeric dotted notation, it is inter-
+ preted as either a 3-dotted pmid (metric identifier - domain, cluster,
+ item numbers) or a 2-dotted indom (instance domain identifier - domain,
+ serial number). In the pmid case, a reverse PMID-to-name lookup is
+ performed, and in the indom case, the instance domain is reported di-
+ rectly. This latter mode can be used to report the instance domain
+ ``one line'' and long form help text summaries.
+
+ Unless directed to another host by the -h option, by default pminfo
+ will contact the Performance Metrics Collector Daemon (PMCD) on the lo-
+ cal host. The connection to a PMCD is only required if pminfo requires
+ distributed PMNS information, and/or meta-data describing metrics,
+ and/or metric values, and/or help text.
+
+ The -a option causes pminfo to use the specified set of archives rather
+ than connecting to a PMCD.
+
+ The -L option causes pminfo to use a local context to collect metrics
+ from PMDAs on the local host without PMCD. Only some metrics are
+ available in this mode.
+
+ The -a, -h and -L options are mutually exclusive.
+
+OPTIONS
+ The available command line options are:
+
+ -a archive, --archive=archive
+ Performance metric values are retrieved from the set of Perfor-
+ mance Co-Pilot (PCP) archive files identified by the archive argu-
+ ment, which is a comma-separated list of names, each of which may
+ be the base name of an archive or the name of a directory contain-
+ ing one or more archives.
+
+ -b, --batch
+ This option may be used to define the maximum number of metrics to
+ be fetched in a single request for the -f and -v options. The de-
+ fault value for batchsize is 128.
+
+ -c dmfile, --derived=dmfile
+ The dmfile argument specifies a file that contains derived metric
+ definitions in the format described for pmLoadDerivedConfig(3).
+ The -c option provides a way to load global derived metric defini-
+ tions that is an alternative to the more generic use of the
+ PCP_DERIVED_CONFIG environment variable as described in PCPIn-
+ tro(1). Using the -c option and the PCP_DERIVED_CONFIG environ-
+ ment variable to specify the same configuration is a bad idea, so
+ choose one or the other method. See also the -r option below.
+
+ --container=container
+ Specify an individual container to be queried.
+
+ -d, --desc
+ Metric descriptions detailing the PMID, data type, data semantics,
+ units, scale and associated instance domain.
+
+ -f, --fetch
+ Fetch and print values for all instances. When fetching from a
+ set of archives, only those instances present in the first archive
+ record for a metric will be displayed; see also the -O option,
+ else use pmlogdump(1) which may be a better tool for examining
+ archives.
+
+ -F, --fetchall
+ Same as -f but try harder to fetch instances for metrics which
+ have non-enumerable instance domains (e.g. metrics in the ``proc''
+ subtree of the default PMNS on some platforms).
+
+ -h host, --host=host
+ Fetch performance metrics from pmcd(1) on host, rather than from
+ the default localhost.
+
+ -I, --fullindom
+ Print the InDom in verbose mode.
+
+ -K spec, --spec-local=spec
+ When using the -L option to fetch metrics from a local context,
+ this option controls the DSO PMDAs that should be made accessible.
+ The spec argument conforms to the syntax described in pmSpecLo-
+ calPMDA(3). More than one -K option may be used.
+
+ -l, --labels
+ Print label sets associated with metrics and instances. Labels
+ are optional metric metadata described in detail in pmLookupLa-
+ bels(3).
+
+ -L, --local-PMDA
+ Use a local context to collect metrics from DSO PMDAs on the local
+ host without PMCD. See also -K.
+
+ -m, --pmid
+ Print the PMID in terse mode.
+
+ -M, --fullpmid
+ Print the PMID in verbose mode.
+
+ -n pmnsfile, --namespace=pmnsfile
+ Normally pminfo operates on the distributed Performance Metrics
+ Name Space (PMNS), however if the -n option is specified an alter-
+ native local PMNS is loaded from the file pmnsfile.
+
+ -N pmnsfile, --uniqnames=pmnsfile
+ The -N option supports the same function as -n, except for the
+ handling of duplicate names for the same Performance Metric Iden-
+ tifier (PMID) in pmnsfile - duplicate names are allowed with -n
+ but they are not allowed with -N.
+
+ -O time, --origin=time
+ When used in conjunction with an archive source of metrics and the
+ options -f/, the time argument defines a time origin at which the
+ metrics should be fetched from the set of archives. Refer to
+ PCPIntro(1) for a complete description of this option, and the
+ syntax for the time argument.
+
+ -r dmname=expr, --register=dmname=expr
+ Register a per-context derived metric using pmAddDerivedMetric(3).
+ dmname is the name of the new derived metric, and expr is the ex-
+ pression for the derived metric, following the syntax described in
+ pmRegisterDerived(3). Multiple -r options are allowed. See also
+ the -c option above.
+
+ -s, --series
+ Print time series identifiers associated with metrics, instances
+ and sources. These unique identifiers are calculated from intrin-
+ sic (non-optional) labels and other metric metadata associated
+ with each PMAPI context (sources), metrics and instances.
+ Archive, local context or pmcd(1) connections for the same host
+ all produce the same source identifier. See also pmLookupLa-
+ bels(3) and the -l option.
+
+ -t, --oneline
+ Print the ``one line'' help summary, if available.
+
+ -T, --helptext
+ Print the help text, if available.
+
+ -v, --verify
+ Verify mode in which descriptions and values are retrieved, but
+ only error conditions are reported. This option silently disables
+ any output from the options -f/--fetch, -l/--labels,
+ -I/--fullindom, -M/--fullpmid, -m/--pmid, -t/--oneline and
+ -T/--helptext.
+
+ -V, --version
+ Display version number and exit.
+
+ -x, --events
+ Like the -f/--fetch option, but with the additional functionality
+ that if a value is processed that is of type PM_TYPE_EVENT or
+ PM_TYPE_HIGHRES_EVENT, then the event records will be unpacked and
+ the details of each event record reported.
+
+ -z, --hostzone
+ Change the reporting timezone to the local timezone at the host
+ that is the source of the performance metrics, as identified via
+ either the -h or -a options.
+
+ -Z timezone, --timezone=timezone
+ By default, pminfo reports the time of day according to the local
+ timezone on the system where pminfo is run. The -Z option changes
+ the timezone to timezone in the format of the environment variable
+ TZ as described in environ(7).
+
+ -?, --help
+ Display usage message and exit.
+
+FILES
+ $PCP_VAR_DIR/pmns/*
+ default local PMNS specification files
+
+PCP ENVIRONMENT
+ Environment variables with the prefix PCP_ are used to parameterize the
+ file and directory names used by PCP. On each installation, the file
+ /etc/pcp.conf contains the local values for these variables. The
+ $PCP_CONF variable may be used to specify an alternative configuration
+ file, as described in pcp.conf(5).
+
+ For environment variables affecting PCP tools, see pmGetOptions(3).
+
+DEBUGGING OPTIONS
+ The -D or --debug option enables the output of additional diagnostics
+ on stderr to help triage problems, although the information is some-
+ times cryptic and primarily intended to provide guidance for developers
+ rather end-users. debug is a comma separated list of debugging op-
+ tions; use pmdbg(1) with the -l option to obtain a list of the avail-
+ able debugging options and their meaning.
+
+ Debugging options specific to pminfo are as follows:
+ +--------+------------------------------------------------------------+
+ | Option | Description |
+ +--------+------------------------------------------------------------+
+ | appl4 | report batch downsizing if batchsize would exceed maximum |
+ | | PDU size |
+ +--------+------------------------------------------------------------+
+ | appl5 | dump PDU stats at end if context is a host |
+ +--------+------------------------------------------------------------+
+
+SEE ALSO
+ PCPIntro(1), pmcd(1), pmchart(1), pmlogdump(1), pmprobe(1), pmrep(1),
+ pmval(1), PMAPI(3), pmAddDerivedMetric(3), pmGetOptions(3), pmLoad-
+ DerivedConfig(3), pmLookupLabels(3), pmRegisterDerived(3), pmSpecLo-
+ calPMDA(3), PMNS(5), pcp.conf(5) and pcp.env(5).
+
+Performance Co-Pilot PCP PMINFO(1)
+
+=== pminfo ===
+pminfo: nothing appropriate.
+--- (1) ---
+
+=== pmdatxmon ===
+pmdatxmon: nothing appropriate.
+--- (1) ---
+
+=== txrecord ===
+txrecord: nothing appropriate.
+--- (1) ---
+
+=== genload ===
+genload: nothing appropriate.
+--- (1) ---
+
+=== PCPIntro ===
+PCPIntro: nothing appropriate.
+--- (1) ---
+
+=== PCPIntro ===
+PCPIntro: nothing appropriate.
+--- (3) ---
+
+=== pmNewContext ===
+pmNewContext: nothing appropriate.
+--- (3) ---
+
+=== pmRecordSetup ===
+pmRecordSetup: nothing appropriate.
+--- (3) ---
+
+=== pmRecordControl ===
+pmRecordControl: nothing appropriate.
+--- (3) ---
+
+=== pcp.env ===
+pcp.env: nothing appropriate.
+--- (5) ---
