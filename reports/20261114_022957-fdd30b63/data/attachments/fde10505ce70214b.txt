@@ -1,0 +1,78 @@
+QA output created by 1483
+
+=== pmcd ===
+
+=== pmfind ===
+
+=== pmie ===
+
+=== pmie_check ===
+
+=== pmie_daily ===
+
+=== pmie_farm ===
+
+=== pmie_farm_check ===
+
+=== pmlogger ===
+
+=== pmlogger_check ===
+
+=== pmlogger_daily ===
+
+=== pmlogger_farm ===
+
+=== pmlogger_farm_check ===
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]: Terminated                 _egrep -r "^($pat|#!#$pat)" $CONTROLFILE $CONTROLDIR | sed -e 's/|/ /' | while read ctl_file host primary socks dir args; do
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:     case "$host" in
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         \#!#*)
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             _do_dir_and_args
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         ;;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         \#*)
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         ;;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         *)
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             _do_dir_and_args
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         ;;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:     esac; ctl_line="$host $primary $socks $dir $args"; ctl_host=`echo "$ctl_line" | sed -e 's/[         ].*//'`; if echo "$_host" | grep '^[a-zA-Z0-9][a-zA-Z0-9.-]*$' > /dev/null; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         if [ "$ctl_host" = "$_host" -o "$ctl_host" = "#!#$_host" ]; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             :;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         else
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             if [ "$_host" = "$LOCALHOST" ]; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 if [ "$ctl_host" = "LOCALHOSTNAME" -o "$ctl_host" = "#!#LOCALHOSTNAME" ]; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                     :;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 else
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                     continue;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 fi;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             else
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 continue;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             fi;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         fi;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:     else
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         if echo "$ctl_host" | grep -E "^($pat|#!#$pat)" > /dev/null; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             ok=false; case "$ctl_host" in
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 \#!\#*)
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                     ok=true
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 ;;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 \#*)
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 ;;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 *)
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                     ok=true
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 ;;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             esac; $ok || continue;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         else
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             continue;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         fi;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:     fi; ctl_line=`echo "$ctl_line" | _expand_control | sed -e 's/^#!#//'`; check=`echo "$ctl_line" | wc -w | sed -e 's/ //g'`; if [ "$check" -lt 4 ]; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         _warning "$ctl_file: insufficient fields in control line for host "`echo "$ctl_line" | sed -e 's/ .*//'`; continue;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:     fi; primary=`echo "$ctl_line" | $PCP_AWK_PROG '{ print $2 }'`; if [ "$primary" = y ]; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         touch $tmp/primary_seen; if $EXPLICIT_CLASS || [ "$ACTION" = status ]; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             :;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         else
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             if [ "$ACTION" != "check" ]; then
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:                 _warning "$ctl_file: cannot $ACTION the primary ${IAM} from $prog";
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:             fi; continue;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:         fi;
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]:     fi; echo "$ctl_file" "$ctl_line";
+Nov 14 00:20:10 290ebb3c707d pmlogctl[634776]: done > $tmp/tmp
+
+=== pmproxy ===
