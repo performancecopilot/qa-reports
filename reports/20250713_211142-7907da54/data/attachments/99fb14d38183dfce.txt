@@ -1,0 +1,47 @@
+QA output created by 1662
+PING
+PONG
+=== std out ===
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -Ddev0,discovery -f -t -A -c CONFFILE -U USERNAME -T 10sec -l LOGFILE -r KEYSPORT -p PROXYPORT -s PROXYSOCK
+8 bytes in 2 blocks are definitely lost in loss record 25 of 541
+at 0x4868866: malloc (vg_replace_malloc.c:446)
+by 0x4F12260: __pmDupLogInDom (logmeta.c:2018)
+by 0x48D818D: pmDiscoverInvokeInDomCallBacks.lto_priv.0 (discover.c:837)
+by 0x48DE7F3: process_metadata (discover.c:1727)
+by 0x48DECA7: UnknownInlinedFun (discover.c:2009)
+by 0x48DECA7: directory_changed_cb (discover.c:2061)
+by 0x48DF321: UnknownInlinedFun (discover.c:211)
+by 0x48DF321: changed_callback.lto_priv.0 (discover.c:2124)
+by 0x48DDF0E: fs_change_callBack.lto_priv.0 (discover.c:483)
+by 0x4EC9792: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4EC9E12: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4EB08F1: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x4005256: main_loop (server.c:907)
+by 0x4003D12: main (pmproxy.c:471)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:__pmDupLogInDom
+   fun:pmDiscoverInvokeInDomCallBacks.lto_priv.0
+   fun:process_metadata
+   fun:UnknownInlinedFun
+   fun:directory_changed_cb
+   fun:UnknownInlinedFun
+   fun:changed_callback.lto_priv.0
+   fun:fs_change_callBack.lto_priv.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+LEAK SUMMARY:
+definitely lost: 8 bytes in 2 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: N errors from N contexts ...
+[triaged]

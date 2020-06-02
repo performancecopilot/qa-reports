@@ -1,0 +1,43 @@
+QA output created by 1662
+PING
+PONG
+=== std out ===
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -Ddev0,discovery -f -t -A -c CONFFILE -U USERNAME -T 10sec -l LOGFILE -r KEYSPORT -p PROXYPORT -s PROXYSOCK
+4 bytes in 1 blocks are definitely lost in loss record 10 of 523
+at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+by 0x4CEC096: __pmDupLogInDom (in /usr/lib/libpcp.so.4)
+by 0x48B55AB: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48B75D1: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48B8217: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x48B4612: ??? (in /usr/lib/libpcp_web.so.1)
+by 0x4C76EFA: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4C75B8F: uv__io_poll (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4C6585B: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x113B24: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x112EAD: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x4DB3082: (below main) (libc-start.c:308)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:__pmDupLogInDom
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/libpcp_web.so.1
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   obj:PCP_BINADM_DIR/pmproxy
+   obj:PCP_BINADM_DIR/pmproxy
+   fun:(below main)
+}
+LEAK SUMMARY:
+definitely lost: 4 bytes in 1 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: N errors from N contexts ...
+[triaged]

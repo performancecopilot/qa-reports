@@ -1,0 +1,407 @@
+QA output created by 1196
+=== no-error case ===
+Installing files ...
+make: Nothing to be done for 'install'.
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+Updating the PMCD control file, and notifying PMCD ...
+Check whacko metrics have appeared ... 1 metrics and 1 values
+
+whacko.time PMID: 241.0.0
+    value NUMBER
+    inst [29 or "sample"] value 0
+    inst [30 or "sampledso"] value 0
+    inst [241 or "whacko"] value 0
+Culling the Performance Metrics Name Space ...
+whacko ... done
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check whacko metrics have gone away ... OK
+Error: whacko: Unknown metric name
+    inst [29 or "sample"] value 0
+    inst [30 or "sampledso"] value 0
+
+=== domain number clash case ... will clobber and remove sample PMDA ===
+Installing files ...
+make: Nothing to be done for 'install'.
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+Warning: PCP_PMCDCONF_PATH[N] culling entry with same PMDA domain (29) but different name (sample not whacko)
+Updating the PMCD control file, and notifying PMCD ...
+Check whacko metrics have appeared ... 1 metrics and 1 values
+
+whacko.time PMID: 29.0.0
+    value NUMBER
+    inst [29 or "whacko"] value 0
+    inst [30 or "sampledso"] value 0
+Culling the Performance Metrics Name Space ...
+whacko ... done
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check whacko metrics have gone away ... OK
+Error: whacko: Unknown metric name
+    inst [30 or "sampledso"] value 0
+
+=== domain name clash case ... will clobber and remove sample PMDA ===
+Installing files ...
+make: Nothing to be done for 'install'.
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+Warning: PCP_PMCDCONF_PATH[N] culling entry with same PMDA name (sample) but different domain (29 not 241)
+Updating the PMCD control file, and notifying PMCD ...
+Check sample metrics have appeared ... 1 warnings, 1 metrics and 0 values
+
+whacko.time PMID: 241.0.0
+    value NUMBER
+    inst [30 or "sampledso"] value 0
+    inst [241 or "sample"] value 0
+Culling the Performance Metrics Name Space ...
+sample ... not found in Name Space, this is OK
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check sample metrics have gone away ... OK
+whacko.time: pmLookupDesc: Unknown or illegal metric identifier
+    inst [30 or "sampledso"] value 0
+Culling the Performance Metrics Name Space ...
+whacko ... done
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check whacko metrics have gone away ... OK
+Job for pmlogger.service failed because the service did not take the steps required by its unit configuration.
+See "systemctl status pmlogger.service" and "journalctl -xe" for details.
+Sun Jul 20 20:19:52 UTC 2025
+Arrgh ... pmlogger (primary) failed to start after 20 seconds
+at Sun Jul 20 20:19:52 UTC 2025.
+++ pmlogger log (/var/log/pcp/pmlogger/667360decf10/pmlogger.log) ...
+-rw-r--r-- 1 pcp pcp 30709 Jul 20 20:08 /var/log/pcp/pmlogger/667360decf10/pmlogger.log
+Log for pmlogger on 667360decf10 started Sun Jul 20 20:08:20 2025
+
+[Sun Jul 20 20:08:20] pmlogger(1286374) Info: Start
+preprocessor cmd: /usr/lib/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting primary logger for host "667360decf10" via "local:"
+__pmLogNewFile: "/var/log/pcp/pmlogger/667360decf10/20250720.20.08.index" already exists, not over-written
+__pmLogNewFile: "/var/log/pcp/pmlogger/667360decf10/20250720.20.08-00.index" already exists, not over-written
+Archive basename: /var/log/pcp/pmlogger/667360decf10/20250720.20.08-01
+
+Group [1073 metrics] {
+	kernel.all.pressure.irq.full.total
+	kernel.all.pressure.irq.full.avg
+        ...
+} logged every 10 sec: 37016 bytes or 305.00 Mbytes/day
+
+Group [3 metrics] {
+	proc.memory.rss
+	proc.memory.size
+        ...
+} logged every 300 sec: 1492 bytes or 0.41 Mbytes/day
+
+Group [89 metrics] {
+	hinv.nfchost
+	kernel.all.pid_max
+        ...
+} logged once: 6504 bytes
+
+Group [46 metrics] {
+	proc.io.cancelled_write_bytes
+	proc.io.write_bytes
+        ...
+} logged every 60 sec: 33176 bytes or 45.56 Mbytes/day
+[Sun Jul 20 20:08:22] pmlogger(1286374) Info: pmlogger: Caught signal 15, exiting
+
+Log finished Sun Jul 20 20:08:22 2025
+
+++ previous pmlogger log (/var/log/pcp/pmlogger/667360decf10/pmlogger.log.prev) ...
+-rw-r--r-- 1 pcp pcp 30599 Jul 20 20:08 /var/log/pcp/pmlogger/667360decf10/pmlogger.log.prev
+Log for pmlogger on 667360decf10 started Sun Jul 20 20:08:18 2025
+
+[Sun Jul 20 20:08:18] pmlogger(1285562) Info: Start
+preprocessor cmd: /usr/lib/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting primary logger for host "667360decf10" via "local:"
+__pmLogNewFile: "/var/log/pcp/pmlogger/667360decf10/20250720.20.08.index" already exists, not over-written
+Archive basename: /var/log/pcp/pmlogger/667360decf10/20250720.20.08-00
+
+Group [89 metrics] {
+	hinv.nfchost
+	kernel.all.pid_max
+        ...
+} logged once: 6504 bytes
+
+Group [1073 metrics] {
+	kernel.all.pressure.irq.full.total
+	kernel.all.pressure.irq.full.avg
+        ...
+} logged every 10 sec: 37016 bytes or 305.00 Mbytes/day
+
+Group [3 metrics] {
+	proc.memory.rss
+	proc.memory.size
+        ...
+} logged every 300 sec: 1572 bytes or 0.43 Mbytes/day
+
+Group [46 metrics] {
+	proc.io.cancelled_write_bytes
+	proc.io.write_bytes
+        ...
+} logged every 60 sec: 35212 bytes or 48.36 Mbytes/day
+[Sun Jul 20 20:08:20] pmlogger(1285562) Info: pmlogger: Caught signal 15, exiting
+
+Log finished Sun Jul 20 20:08:20 2025
+++ /var/log/pcp/pmlogger/pmlogger_check.log.prev
+-rw-r--r-- 1 pcp pcp 11 Jul 20 20:19 /var/log/pcp/pmlogger/pmlogger_check.log.prev
+Terminated
+++ /var/log/pcp/pmlogger/pmlogger_janitor.log
+-rw-r--r-- 1 pcp pcp 302 Jul 20 20:19 /var/log/pcp/pmlogger/pmlogger_janitor.log
+pmlogger_janitor: Warning: is another PCP cron job running concurrently?
+-r--r--r-- 1 pcp pcp 25 Jul 20 20:08 /var/log/pcp/pmlogger/667360decf10/lock
+1288074 pmlogger_janitor
+pmlogger_janitor: [control.d/local:36]
+Warning: failed to acquire exclusive lock (/var/log/pcp/pmlogger/667360decf10/lock) ...
+++ /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+-rw-r--r-- 1 pcp pcp 302 Jul 20 20:18 /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+pmlogger_janitor: Warning: is another PCP cron job running concurrently?
+-r--r--r-- 1 pcp pcp 25 Jul 20 20:08 /var/log/pcp/pmlogger/667360decf10/lock
+1288074 pmlogger_janitor
+pmlogger_janitor: [control.d/local:36]
+Warning: failed to acquire exclusive lock (/var/log/pcp/pmlogger/667360decf10/lock) ...
+
+++ systemctl status for pmcd.service ...
+● pmcd.service - Performance Metrics Collector Daemon
+   Loaded: loaded (/lib/systemd/system/pmcd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2025-07-20 20:18:49 UTC; 1min 2s ago
+     Docs: man:pmcd(1)
+  Process: 1337448 ExecStop=/etc/init.d/pmcd stop-systemd (code=exited, status=0/SUCCESS)
+ Main PID: 1337947 (pmcd)
+    Tasks: 11 (limit: 307)
+   CGroup: /system.slice/pmcd.service
+           ├─1337947 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+           ├─1337950 /var/lib/pcp/pmdas/root/pmdaroot
+           ├─1337951 /var/lib/pcp/pmdas/proc/pmdaproc -d 3
+           ├─1337952 /var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+           ├─1337953 /var/lib/pcp/pmdas/sample/pmdasample -d 29
+           ├─1337954 /var/lib/pcp/pmdas/linux/pmdalinux
+           ├─1337955 /usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+           ├─1337963 /var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+           ├─1337964 /var/lib/pcp/pmdas/dm/pmdadm -d 129
+           ├─1337965 /usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+           └─1337976 /var/lib/pcp/pmdas/simple/pmdasimple -d 253
+
+++ last 4 journal entries for pmcd.service
+-- Logs begin at Sun 2025-07-20 18:22:02 UTC, end at Sun 2025-07-20 20:19:52 UTC. --
+Jul 20 20:18:48 667360decf10 systemd[1]: Stopping Performance Metrics Collector Daemon...
+-- Subject: Unit pmcd.service has begun shutting down
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmcd.service has begun shutting down.
+Jul 20 20:18:49 667360decf10 systemd[1]: Stopped Performance Metrics Collector Daemon.
+-- Subject: Unit pmcd.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmcd.service has finished shutting down.
+Jul 20 20:18:49 667360decf10 systemd[1]: Starting Performance Metrics Collector Daemon...
+-- Subject: Unit pmcd.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmcd.service has begun starting up.
+Jul 20 20:18:49 667360decf10 systemd[1]: Started Performance Metrics Collector Daemon.
+-- Subject: Unit pmcd.service has finished start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmcd.service has finished starting up.
+-- 
+-- The start-up result is RESULT.
+
+++ systemctl status for pmlogger.service ...
+● pmlogger.service - Performance Metrics Archive Logger
+   Loaded: loaded (/lib/systemd/system/pmlogger.service; enabled; vendor preset: enabled)
+   Active: activating (start) since Sun 2025-07-20 20:19:32 UTC; 19s ago
+     Docs: man:pmlogger(1)
+ Main PID: 1340373 (rc)
+    Tasks: 4 (limit: 307)
+   CGroup: /system.slice/pmlogger.service
+           ├─1340373 /bin/sh /etc/pcp/pmlogger/rc start-systemd
+           ├─1340425 /bin/sh /usr/lib/pcp/bin/pmlogger_check --quick -V --only-primary
+           ├─1340554 /bin/sh /usr/lib/pcp/bin/pmlogger_check --quick -V --only-primary
+           └─1341502 pmsleep 0.1
+
+++ last 4 journal entries for pmlogger.service
+-- Logs begin at Sun 2025-07-20 18:22:02 UTC, end at Sun 2025-07-20 20:19:52 UTC. --
+Jul 20 20:19:32 667360decf10 systemd[1]: pmlogger.service: Service hold-off time over, scheduling restart.
+Jul 20 20:19:32 667360decf10 systemd[1]: pmlogger.service: Scheduled restart job, restart counter is at 1.
+-- Subject: Automatic restarting of a unit has been scheduled
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Automatic restarting of the unit pmlogger.service has been scheduled, as the result for
+-- the configured Restart= setting for the unit.
+Jul 20 20:19:32 667360decf10 systemd[1]: Stopped Performance Metrics Archive Logger.
+-- Subject: Unit pmlogger.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmlogger.service has finished shutting down.
+Jul 20 20:19:32 667360decf10 systemd[1]: Starting Performance Metrics Archive Logger...
+-- Subject: Unit pmlogger.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmlogger.service has begun starting up.
+
+++ systemctl status for pmlogger_farm.service ...
+● pmlogger_farm.service - pmlogger farm service
+   Loaded: loaded (/lib/systemd/system/pmlogger_farm.service; disabled; vendor preset: enabled)
+   Active: inactive (dead) since Sun 2025-07-20 20:19:32 UTC; 19s ago
+     Docs: man:pmlogger_check(1)
+  Process: 1340148 ExecStart=/usr/lib/pcp/bin/pmlogger_farm $PMLOGGER_CHECK_PARAMS (code=killed, signal=TERM)
+ Main PID: 1340148 (code=killed, signal=TERM)
+
+++ last 4 journal entries for pmlogger_farm.service
+-- Logs begin at Sun 2025-07-20 18:22:02 UTC, end at Sun 2025-07-20 20:19:52 UTC. --
+Jul 20 20:18:42 667360decf10 systemd[1]: Stopped pmlogger farm service.
+-- Subject: Unit pmlogger_farm.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmlogger_farm.service has finished shutting down.
+Jul 20 20:19:32 667360decf10 systemd[1]: Started pmlogger farm service.
+-- Subject: Unit pmlogger_farm.service has finished start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmlogger_farm.service has finished starting up.
+-- 
+-- The start-up result is RESULT.
+Jul 20 20:19:32 667360decf10 systemd[1]: Stopping pmlogger farm service...
+-- Subject: Unit pmlogger_farm.service has begun shutting down
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmlogger_farm.service has begun shutting down.
+Jul 20 20:19:32 667360decf10 systemd[1]: Stopped pmlogger farm service.
+-- Subject: Unit pmlogger_farm.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit pmlogger_farm.service has finished shutting down.
+++ pmlc output ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+
+++ archive created ...
+Log Label (Log Format Version 3)
+Performance metrics from host 667360decf10
+    commencing Sun Jul 20 20:08:20.549012721 2025
+    ending     Sun Jul 20 20:08:22.439551794 2025
+++ archive contains 7 records
+
+++ local pmlogger map ...
+++ No files in /var/lib/pcp/tmp/pmlogger !?
+
+++ Likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1340373       1  0 20:19 ?        00:00:00 /bin/sh /etc/pcp/pmlogger/rc start-systemd
+pcp      1340425 1340373  0 20:19 ?        00:00:00 /bin/sh /usr/lib/pcp/bin/pmlogger_check --quick -V --only-primary
+pcp      1340554 1340425  0 20:19 ?        00:00:00 /bin/sh /usr/lib/pcp/bin/pmlogger_check --quick -V --only-primary

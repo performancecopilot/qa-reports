@@ -1,0 +1,78 @@
+time_stamp: step 2 delta 0.003438 secs tag cleanup old archives
+pmproxy_was_running=true
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Sat Jul 12 20:50:56 UTC 2025
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1776124       1 11 20:50 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -F -A
+pmproxy_pid=1776124
+time_stamp: step 3 delta 0.391685 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.281771 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.010533 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.177930 secs tag compression
+=== restarting pmlogger
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host pkrvmq0rgcvqdmg
+PMCD host        pkrvmq0rgcvqdmg
+log started      Sat Jul 12 20:51:00.410135942 2025 (times in local time)
+last log entry   Sat Jul 12 20:51:00.906279748 2025
+current time     Sat Jul 12 20:51:01.909457908 2025
+log volume       0
+log size         169084
+time_stamp: step 7 delta 2.229261 secs tag restart pmcd & pmlogger
+=== wait for pmproxy to process filesystem events
+time_stamp: step 8 delta 2.004589 secs tag wait for pmproxy
+=== checking pmproxy file descriptors for deleted files, should be none
++++ pmproxy.log +++
+Log for pmproxy on pkrvmq0rgcvqdmg started Sat Jul 12 20:51:00 2025
+
+pmproxy: PID = 1776928, PDU version = 2, user = pcp (997)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    12       unix   /run/pcp/pmproxy.socket
+  ok    13 44322 inet   INADDR_ANY
+  ok    14 44322 ipv6   INADDR_ANY
+  ok    15 44323 inet   INADDR_ANY
+  ok    16 44323 ipv6   INADDR_ANY
+[Sat Jul 12 20:51:00] pmproxy(1776928) Info: Key server slots, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on pkrvmq0rgcvqdmg started Sat Jul 12 20:50:56 2025
+
+pmproxy: PID = 1776124, PDU version = 2, user = pcp (997)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    12       unix   /run/pcp/pmproxy.socket
+  ok    13 44322 inet   INADDR_ANY
+  ok    14 44322 ipv6   INADDR_ANY
+  ok    15 44323 inet   INADDR_ANY
+  ok    16 44323 ipv6   INADDR_ANY
+[Sat Jul 12 20:50:56] pmproxy(1776124) Info: Key server slots, schema version setup
+malloc_consolidate(): invalid chunk size
++++ pmlogger.log +++
+Log for pmlogger on pkrvmq0rgcvqdmg started Sat Jul 12 20:50:56 2025
+
+[Sat Jul 12 20:50:56] pmlogger(1776221) Info: Start
+preprocessor cmd: /usr/lib/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "pkrvmq0rgcvqdmg" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Sat Jul 12 20:50:59] pmlogger(1776221) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Sat Jul 12 20:50:59 2025
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host pkrvmq0rgcvqdmg
+PMCD host        pkrvmq0rgcvqdmg
+log started      Sat Jul 12 20:51:05.850536570 2025 (times in local time)
+last log entry   Sat Jul 12 20:51:06.328224974 2025
+current time     Sat Jul 12 20:51:06.347665260 2025
+log volume       0
+log size         169016
+Restart pmproxy ...
+exit: 0

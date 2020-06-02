@@ -1,0 +1,707 @@
+QA output created by 258
+make succeeded.
+Job for pmlogger.service failed because the service did not take the steps required by its unit configuration.
+See "systemctl status pmlogger.service" and "journalctl -xeu pmlogger.service" for details.
+Sun Jul 20 19:29:40 UTC 2025
+Arrgh ... pmlogger (primary) failed to start after 20 seconds
+at Sun Jul 20 19:29:40 UTC 2025.
+++ pmlogger log (/var/log/pcp/pmlogger/ccb437e11094/pmlogger.log) ...
+-rw-r--r-- 1 pcp pcp 29372 Jul 20 19:06 /var/log/pcp/pmlogger/ccb437e11094/pmlogger.log
+Log for pmlogger on ccb437e11094 started Sun Jul 20 19:06:42 2025
+
+[Sun Jul 20 19:06:42] pmlogger(530812) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting primary logger for host "ccb437e11094" via "local:"
+__pmLogNewFile: "/var/log/pcp/pmlogger/ccb437e11094/20250720.19.06.index" already exists, not over-written
+Archive basename: /var/log/pcp/pmlogger/ccb437e11094/20250720.19.06-00
+
+Group [89 metrics] {
+	hinv.nfchost
+	kernel.all.pid_max
+        ...
+} logged once: 6416 bytes
+
+Group [1030 metrics] {
+	network.all.out.packets
+	network.all.out.bytes
+        ...
+} logged every 10 sec: 34324 bytes or 282.82 Mbytes/day
+
+Group [3 metrics] {
+	proc.memory.rss
+	proc.memory.size
+        ...
+} logged every 300 sec: 1116 bytes or 0.31 Mbytes/day
+
+Group [46 metrics] {
+	proc.io.cancelled_write_bytes
+	proc.io.write_bytes
+        ...
+} logged every 60 sec: 23904 bytes or 32.83 Mbytes/day
+[Sun Jul 20 19:06:43] pmlogger(530812) Info: pmlogger: Caught signal 15, exiting
+
+Log finished Sun Jul 20 19:06:43 2025
+
+++ previous pmlogger log (/var/log/pcp/pmlogger/ccb437e11094/pmlogger.log.prev) ...
+-rw-r--r-- 1 pcp pcp 29262 Jul 20 19:06 /var/log/pcp/pmlogger/ccb437e11094/pmlogger.log.prev
+Log for pmlogger on ccb437e11094 started Sun Jul 20 19:06:23 2025
+
+[Sun Jul 20 19:06:23] pmlogger(520543) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting primary logger for host "ccb437e11094" via "local:"
+Archive basename: /var/log/pcp/pmlogger/ccb437e11094/20250720.19.06
+
+Group [89 metrics] {
+	hinv.nfchost
+	kernel.all.pid_max
+        ...
+} logged once: 6408 bytes
+
+Group [1030 metrics] {
+	network.all.out.packets
+	network.all.out.bytes
+        ...
+} logged every 10 sec: 34324 bytes or 282.82 Mbytes/day
+
+Group [3 metrics] {
+	proc.memory.rss
+	proc.memory.size
+        ...
+} logged every 300 sec: 1140 bytes or 0.31 Mbytes/day
+
+Group [46 metrics] {
+	proc.io.cancelled_write_bytes
+	proc.io.write_bytes
+        ...
+} logged every 60 sec: 23988 bytes or 32.94 Mbytes/day
+[Sun Jul 20 19:06:42] pmlogger(520543) Info: pmlogger: Caught signal 15, exiting
+
+Log finished Sun Jul 20 19:06:42 2025
+++ /var/log/pcp/pmlogger/pmlogger_check.log
+-rw-r--r-- 1 pcp pcp 297 Jul 20 19:28 /var/log/pcp/pmlogger/pmlogger_check.log
+pmlogger_check: Warning: is another PCP cron job running concurrently?
+-r--r--r-- 1 pcp pcp 24 Jul 20 19:06 /var/log/pcp/pmlogger/ccb437e11094/lock
+531111 pmlogger_janitor
+pmlogger_check: [control.d/local:36]
+Warning: failed to acquire exclusive lock (/var/log/pcp/pmlogger/ccb437e11094/lock) ...
+++ /var/log/pcp/pmlogger/pmlogger_check.log.prev
+-rw-r--r-- 1 pcp pcp 11 Jul 20 19:29 /var/log/pcp/pmlogger/pmlogger_check.log.prev
+Terminated
+++ /var/log/pcp/pmlogger/pmlogger_janitor.log
+-rw-r--r-- 1 pcp pcp 301 Jul 20 19:29 /var/log/pcp/pmlogger/pmlogger_janitor.log
+pmlogger_janitor: Warning: is another PCP cron job running concurrently?
+-r--r--r-- 1 pcp pcp 24 Jul 20 19:06 /var/log/pcp/pmlogger/ccb437e11094/lock
+531111 pmlogger_janitor
+pmlogger_janitor: [control.d/local:36]
+Warning: failed to acquire exclusive lock (/var/log/pcp/pmlogger/ccb437e11094/lock) ...
+++ /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+-rw-r--r-- 1 pcp pcp 11 Jul 20 19:28 /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+Terminated
+
+++ systemctl status for pmcd.service ...
+● pmcd.service - Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmcd.service; enabled; preset: disabled)
+     Active: active (running) since Sun 2025-07-20 19:28:34 UTC; 1min 5s ago
+       Docs: man:pmcd(1)
+   Main PID: 640615 (pmcd)
+      Tasks: 12 (limit: 1638)
+     Memory: 43.8M
+        CPU: 574ms
+     CGroup: /system.slice/pmcd.service
+             ├─640615 /usr/libexec/pcp/bin/pmcd -A -T 3 -C 512
+             ├─640619 /var/lib/pcp/pmdas/root/pmdaroot
+             ├─640620 /var/lib/pcp/pmdas/proc/pmdaproc -d 3
+             ├─640621 /var/lib/pcp/pmdas/trace/pmdatrace -d 10
+             ├─640622 /var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+             ├─640623 /var/lib/pcp/pmdas/sample/pmdasample -d 29
+             ├─640624 /var/lib/pcp/pmdas/linux/pmdalinux
+             ├─640625 /usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+             ├─640637 /var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+             ├─640638 /var/lib/pcp/pmdas/dm/pmdadm -d 129
+             ├─640639 /usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+             └─640651 /var/lib/pcp/pmdas/simple/pmdasimple -d 253
+
+++ last 4 journal entries for pmcd.service
+Jul 20 19:28:34 ccb437e11094 systemd[1]: Stopped Performance Metrics Collector Daemon.
+░░ Subject: A stop job for unit pmcd.service has finished
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A stop job for unit pmcd.service has finished.
+░░ 
+░░ The job identifier is 11706 and the job result is done.
+Jul 20 19:28:34 ccb437e11094 systemd[1]: pmcd.service: Consumed 1.396s CPU time.
+░░ Subject: Resources consumed by unit runtime
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ The unit pmcd.service completed and consumed the indicated resources.
+Jul 20 19:28:34 ccb437e11094 systemd[1]: Starting Performance Metrics Collector Daemon...
+░░ Subject: A start job for unit pmcd.service has begun execution
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A start job for unit pmcd.service has begun execution.
+░░ 
+░░ The job identifier is 11706.
+Jul 20 19:28:34 ccb437e11094 systemd[1]: Started Performance Metrics Collector Daemon.
+░░ Subject: A start job for unit pmcd.service has finished successfully
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A start job for unit pmcd.service has finished successfully.
+░░ 
+░░ The job identifier is 11706.
+
+++ systemctl status for pmlogger.service ...
+● pmlogger.service - Performance Metrics Archive Logger
+     Loaded: loaded (/usr/lib/systemd/system/pmlogger.service; enabled; preset: disabled)
+     Active: activating (start) since Sun 2025-07-20 19:29:20 UTC; 20s ago
+       Docs: man:pmlogger(1)
+   Main PID: 645079 (rc)
+      Tasks: 4 (limit: 1638)
+     Memory: 3.9M
+        CPU: 2.487s
+     CGroup: /system.slice/pmlogger.service
+             ├─645079 /usr/bin/sh /etc/pcp/pmlogger/rc start-systemd
+             ├─645135 /usr/bin/sh /usr/libexec/pcp/bin/pmlogger_check --quick -V --only-primary
+             ├─645272 /usr/bin/sh /usr/libexec/pcp/bin/pmlogger_check --quick -V --only-primary
+             └─646698 pmsleep 0.1
+
+++ last 4 journal entries for pmlogger.service
+Jul 20 19:29:20 ccb437e11094 systemd[1]: pmlogger.service: Scheduled restart job, restart counter is at 1.
+░░ Subject: Automatic restarting of a unit has been scheduled
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ Automatic restarting of the unit pmlogger.service has been scheduled, as the result for
+░░ the configured Restart= setting for the unit.
+Jul 20 19:29:20 ccb437e11094 systemd[1]: Stopped Performance Metrics Archive Logger.
+░░ Subject: A stop job for unit pmlogger.service has finished
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A stop job for unit pmlogger.service has finished.
+░░ 
+░░ The job identifier is 11832 and the job result is done.
+Jul 20 19:29:20 ccb437e11094 systemd[1]: pmlogger.service: Consumed 5.463s CPU time.
+░░ Subject: Resources consumed by unit runtime
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ The unit pmlogger.service completed and consumed the indicated resources.
+Jul 20 19:29:20 ccb437e11094 systemd[1]: Starting Performance Metrics Archive Logger...
+░░ Subject: A start job for unit pmlogger.service has begun execution
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A start job for unit pmlogger.service has begun execution.
+░░ 
+░░ The job identifier is 11832.
+
+++ systemctl status for pmlogger_farm.service ...
+○ pmlogger_farm.service - pmlogger farm service
+     Loaded: loaded (/usr/lib/systemd/system/pmlogger_farm.service; disabled; preset: disabled)
+     Active: inactive (dead) since Sun 2025-07-20 19:29:20 UTC; 20s ago
+   Duration: 300ms
+       Docs: man:pmlogger_check(1)
+    Process: 644853 ExecStart=/usr/libexec/pcp/bin/pmlogger_farm $PMLOGGER_CHECK_PARAMS (code=killed, signal=TERM)
+   Main PID: 644853 (code=killed, signal=TERM)
+        CPU: 322ms
+
+++ last 4 journal entries for pmlogger_farm.service
+Jul 20 19:29:19 ccb437e11094 systemd[1]: Started pmlogger farm service.
+░░ Subject: A start job for unit pmlogger_farm.service has finished successfully
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A start job for unit pmlogger_farm.service has finished successfully.
+░░ 
+░░ The job identifier is 11585.
+Jul 20 19:29:20 ccb437e11094 systemd[1]: Stopping pmlogger farm service...
+░░ Subject: A stop job for unit pmlogger_farm.service has begun execution
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A stop job for unit pmlogger_farm.service has begun execution.
+░░ 
+░░ The job identifier is 11877.
+Jul 20 19:29:20 ccb437e11094 systemd[1]: pmlogger_farm.service: Deactivated successfully.
+░░ Subject: Unit succeeded
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ The unit pmlogger_farm.service has successfully entered the 'dead' state.
+Jul 20 19:29:20 ccb437e11094 systemd[1]: Stopped pmlogger farm service.
+░░ Subject: A stop job for unit pmlogger_farm.service has finished
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A stop job for unit pmlogger_farm.service has finished.
+░░ 
+░░ The job identifier is 11877 and the job result is done.
+++ pmlc output ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+
+++ archive not created
+
+++ local pmlogger map ...
+++ No files in /var/lib/pcp/tmp/pmlogger !?
+
+++ Likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       645079       1  0 19:29 ?        00:00:00 /usr/bin/sh /etc/pcp/pmlogger/rc start-systemd
+pcp       645135  645079  0 19:29 ?        00:00:00 /usr/bin/sh /usr/libexec/pcp/bin/pmlogger_check --quick -V --only-primary
+pcp       645272  645135  0 19:29 ?        00:00:00 /usr/bin/sh /usr/libexec/pcp/bin/pmlogger_check --quick -V --only-primary
+Job for pmlogger.service failed because the service did not take the steps required by its unit configuration.
+See "systemctl status pmlogger.service" and "journalctl -xeu pmlogger.service" for details.
+Sun Jul 20 19:30:47 UTC 2025
+Arrgh ... pmlogger (primary) failed to start after 20 seconds
+at Sun Jul 20 19:30:47 UTC 2025.
+++ pmlogger log (/var/log/pcp/pmlogger/ccb437e11094/pmlogger.log) ...
+-rw-r--r-- 1 pcp pcp 29372 Jul 20 19:06 /var/log/pcp/pmlogger/ccb437e11094/pmlogger.log
+Log for pmlogger on ccb437e11094 started Sun Jul 20 19:06:42 2025
+
+[Sun Jul 20 19:06:42] pmlogger(530812) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting primary logger for host "ccb437e11094" via "local:"
+__pmLogNewFile: "/var/log/pcp/pmlogger/ccb437e11094/20250720.19.06.index" already exists, not over-written
+Archive basename: /var/log/pcp/pmlogger/ccb437e11094/20250720.19.06-00
+
+Group [89 metrics] {
+	hinv.nfchost
+	kernel.all.pid_max
+        ...
+} logged once: 6416 bytes
+
+Group [1030 metrics] {
+	network.all.out.packets
+	network.all.out.bytes
+        ...
+} logged every 10 sec: 34324 bytes or 282.82 Mbytes/day
+
+Group [3 metrics] {
+	proc.memory.rss
+	proc.memory.size
+        ...
+} logged every 300 sec: 1116 bytes or 0.31 Mbytes/day
+
+Group [46 metrics] {
+	proc.io.cancelled_write_bytes
+	proc.io.write_bytes
+        ...
+} logged every 60 sec: 23904 bytes or 32.83 Mbytes/day
+[Sun Jul 20 19:06:43] pmlogger(530812) Info: pmlogger: Caught signal 15, exiting
+
+Log finished Sun Jul 20 19:06:43 2025
+
+++ previous pmlogger log (/var/log/pcp/pmlogger/ccb437e11094/pmlogger.log.prev) ...
+-rw-r--r-- 1 pcp pcp 29262 Jul 20 19:06 /var/log/pcp/pmlogger/ccb437e11094/pmlogger.log.prev
+Log for pmlogger on ccb437e11094 started Sun Jul 20 19:06:23 2025
+
+[Sun Jul 20 19:06:23] pmlogger(520543) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting primary logger for host "ccb437e11094" via "local:"
+Archive basename: /var/log/pcp/pmlogger/ccb437e11094/20250720.19.06
+
+Group [89 metrics] {
+	hinv.nfchost
+	kernel.all.pid_max
+        ...
+} logged once: 6408 bytes
+
+Group [1030 metrics] {
+	network.all.out.packets
+	network.all.out.bytes
+        ...
+} logged every 10 sec: 34324 bytes or 282.82 Mbytes/day
+
+Group [3 metrics] {
+	proc.memory.rss
+	proc.memory.size
+        ...
+} logged every 300 sec: 1140 bytes or 0.31 Mbytes/day
+
+Group [46 metrics] {
+	proc.io.cancelled_write_bytes
+	proc.io.write_bytes
+        ...
+} logged every 60 sec: 23988 bytes or 32.94 Mbytes/day
+[Sun Jul 20 19:06:42] pmlogger(520543) Info: pmlogger: Caught signal 15, exiting
+
+Log finished Sun Jul 20 19:06:42 2025
+++ /var/log/pcp/pmlogger/pmlogger_check.log.prev
+-rw-r--r-- 1 pcp pcp 11 Jul 20 19:30 /var/log/pcp/pmlogger/pmlogger_check.log.prev
+Terminated
+++ /var/log/pcp/pmlogger/pmlogger_janitor.log
+-rw-r--r-- 1 pcp pcp 301 Jul 20 19:30 /var/log/pcp/pmlogger/pmlogger_janitor.log
+pmlogger_janitor: Warning: is another PCP cron job running concurrently?
+-r--r--r-- 1 pcp pcp 24 Jul 20 19:06 /var/log/pcp/pmlogger/ccb437e11094/lock
+531111 pmlogger_janitor
+pmlogger_janitor: [control.d/local:36]
+Warning: failed to acquire exclusive lock (/var/log/pcp/pmlogger/ccb437e11094/lock) ...
+++ /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+-rw-r--r-- 1 pcp pcp 301 Jul 20 19:29 /var/log/pcp/pmlogger/pmlogger_janitor.log.prev
+pmlogger_janitor: Warning: is another PCP cron job running concurrently?
+-r--r--r-- 1 pcp pcp 24 Jul 20 19:06 /var/log/pcp/pmlogger/ccb437e11094/lock
+531111 pmlogger_janitor
+pmlogger_janitor: [control.d/local:36]
+Warning: failed to acquire exclusive lock (/var/log/pcp/pmlogger/ccb437e11094/lock) ...
+
+++ systemctl status for pmcd.service ...
+● pmcd.service - Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmcd.service; enabled; preset: disabled)
+     Active: active (running) since Sun 2025-07-20 19:29:41 UTC; 1min 6s ago
+       Docs: man:pmcd(1)
+   Main PID: 647327 (pmcd)
+      Tasks: 12 (limit: 1638)
+     Memory: 43.8M
+        CPU: 559ms
+     CGroup: /system.slice/pmcd.service
+             ├─647327 /usr/libexec/pcp/bin/pmcd -A -T 3 -C 512
+             ├─647331 /var/lib/pcp/pmdas/root/pmdaroot
+             ├─647332 /var/lib/pcp/pmdas/proc/pmdaproc -d 3
+             ├─647333 /var/lib/pcp/pmdas/trace/pmdatrace -d 10
+             ├─647334 /var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+             ├─647335 /var/lib/pcp/pmdas/sample/pmdasample -d 29
+             ├─647336 /var/lib/pcp/pmdas/linux/pmdalinux
+             ├─647337 /usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+             ├─647345 /var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+             ├─647346 /var/lib/pcp/pmdas/dm/pmdadm -d 129
+             ├─647347 /usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+             └─647355 /var/lib/pcp/pmdas/simple/pmdasimple -d 253
+
+++ last 4 journal entries for pmcd.service
+Jul 20 19:29:41 ccb437e11094 systemd[1]: Stopped Performance Metrics Collector Daemon.
+░░ Subject: A stop job for unit pmcd.service has finished
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A stop job for unit pmcd.service has finished.
+░░ 
+░░ The job identifier is 11878 and the job result is done.
+Jul 20 19:29:41 ccb437e11094 systemd[1]: pmcd.service: Consumed 1.335s CPU time.
+░░ Subject: Resources consumed by unit runtime
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ The unit pmcd.service completed and consumed the indicated resources.
+Jul 20 19:29:41 ccb437e11094 systemd[1]: Starting Performance Metrics Collector Daemon...
+░░ Subject: A start job for unit pmcd.service has begun execution
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A start job for unit pmcd.service has begun execution.
+░░ 
+░░ The job identifier is 11878.
+Jul 20 19:29:41 ccb437e11094 systemd[1]: Started Performance Metrics Collector Daemon.
+░░ Subject: A start job for unit pmcd.service has finished successfully
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A start job for unit pmcd.service has finished successfully.
+░░ 
+░░ The job identifier is 11878.
+
+++ systemctl status for pmlogger.service ...
+● pmlogger.service - Performance Metrics Archive Logger
+     Loaded: loaded (/usr/lib/systemd/system/pmlogger.service; enabled; preset: disabled)
+     Active: activating (start) since Sun 2025-07-20 19:30:27 UTC; 20s ago
+       Docs: man:pmlogger(1)
+   Main PID: 649687 (rc)
+      Tasks: 4 (limit: 1638)
+     Memory: 3.9M
+        CPU: 2.527s
+     CGroup: /system.slice/pmlogger.service
+             ├─649687 /usr/bin/sh /etc/pcp/pmlogger/rc start-systemd
+             ├─649748 /usr/bin/sh /usr/libexec/pcp/bin/pmlogger_check --quick -V --only-primary
+             ├─649877 /usr/bin/sh /usr/libexec/pcp/bin/pmlogger_check --quick -V --only-primary
+             └─650839 pmsleep 0.1
+
+++ last 4 journal entries for pmlogger.service
+Jul 20 19:30:27 ccb437e11094 systemd[1]: pmlogger.service: Scheduled restart job, restart counter is at 1.
+░░ Subject: Automatic restarting of a unit has been scheduled
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ Automatic restarting of the unit pmlogger.service has been scheduled, as the result for
+░░ the configured Restart= setting for the unit.
+Jul 20 19:30:27 ccb437e11094 systemd[1]: Stopped Performance Metrics Archive Logger.
+░░ Subject: A stop job for unit pmlogger.service has finished
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A stop job for unit pmlogger.service has finished.
+░░ 
+░░ The job identifier is 12004 and the job result is done.
+Jul 20 19:30:27 ccb437e11094 systemd[1]: pmlogger.service: Consumed 5.517s CPU time.
+░░ Subject: Resources consumed by unit runtime
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ The unit pmlogger.service completed and consumed the indicated resources.
+Jul 20 19:30:27 ccb437e11094 systemd[1]: Starting Performance Metrics Archive Logger...
+░░ Subject: A start job for unit pmlogger.service has begun execution
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A start job for unit pmlogger.service has begun execution.
+░░ 
+░░ The job identifier is 12004.
+
+++ systemctl status for pmlogger_farm.service ...
+○ pmlogger_farm.service - pmlogger farm service
+     Loaded: loaded (/usr/lib/systemd/system/pmlogger_farm.service; disabled; preset: disabled)
+     Active: inactive (dead) since Sun 2025-07-20 19:30:27 UTC; 20s ago
+   Duration: 154ms
+       Docs: man:pmlogger_check(1)
+    Process: 649543 ExecStart=/usr/libexec/pcp/bin/pmlogger_farm $PMLOGGER_CHECK_PARAMS (code=killed, signal=TERM)
+   Main PID: 649543 (code=killed, signal=TERM)
+        CPU: 179ms
+
+++ last 4 journal entries for pmlogger_farm.service
+Jul 20 19:30:27 ccb437e11094 systemd[1]: Started pmlogger farm service.
+░░ Subject: A start job for unit pmlogger_farm.service has finished successfully
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A start job for unit pmlogger_farm.service has finished successfully.
+░░ 
+░░ The job identifier is 11877.
+Jul 20 19:30:27 ccb437e11094 systemd[1]: Stopping pmlogger farm service...
+░░ Subject: A stop job for unit pmlogger_farm.service has begun execution
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A stop job for unit pmlogger_farm.service has begun execution.
+░░ 
+░░ The job identifier is 12049.
+Jul 20 19:30:27 ccb437e11094 systemd[1]: pmlogger_farm.service: Deactivated successfully.
+░░ Subject: Unit succeeded
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ The unit pmlogger_farm.service has successfully entered the 'dead' state.
+Jul 20 19:30:27 ccb437e11094 systemd[1]: Stopped pmlogger farm service.
+░░ Subject: A stop job for unit pmlogger_farm.service has finished
+░░ Defined-By: systemd
+░░ Support: https://access.redhat.com/support
+░░ 
+░░ A stop job for unit pmlogger_farm.service has finished.
+░░ 
+░░ The job identifier is 12049 and the job result is done.
+++ pmlc output ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmlc -P
+Unable to connect to primary pmlogger at local:: Connection refused
+Error [<stdin>, line 1]
+Not connected to any pmlogger instance
+
+++ archive not created
+
+++ local pmlogger map ...
+++ No files in /var/lib/pcp/tmp/pmlogger !?
+
+++ Likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       649687       1  0 19:30 ?        00:00:00 /usr/bin/sh /etc/pcp/pmlogger/rc start-systemd
+pcp       649748  649687  0 19:30 ?        00:00:00 /usr/bin/sh /usr/libexec/pcp/bin/pmlogger_check --quick -V --only-primary
+pcp       649877  649748  0 19:30 ?        00:00:00 /usr/bin/sh /usr/libexec/pcp/bin/pmlogger_check --quick -V --only-primary
