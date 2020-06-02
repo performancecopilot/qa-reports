@@ -1,0 +1,118 @@
+QA output created by 662
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 601, in _update_chunk_length
+    self.chunk_left = int(line, 16)
+ValueError: invalid literal for int() with base 16: b''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 360, in _error_catcher
+    yield
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 666, in read_chunked
+    self._update_chunk_length()
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 605, in _update_chunk_length
+    raise httplib.IncompleteRead(line)
+http.client.IncompleteRead: IncompleteRead(0 bytes read)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/requests/models.py", line 750, in generate
+    for chunk in self.raw.stream(chunk_size, decode_content=True):
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 490, in stream
+    for line in self.read_chunked(amt, decode_content=decode_content):
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 694, in read_chunked
+    self._original_response.close()
+  File "/usr/lib64/python3.6/contextlib.py", line 99, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/usr/lib/python3.6/site-packages/urllib3/response.py", line 378, in _error_catcher
+    raise ProtocolError('Connection broken: %r' % e, e)
+urllib3.exceptions.ProtocolError: ('Connection broken: IncompleteRead(0 bytes read)', IncompleteRead(0 bytes read))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/lib/pcp/testsuite/src/test_webapi.py", line 183, in <module>
+    test_metadata(ctx_host,'prefix=sample') # whole shebang
+  File "/var/lib/pcp/testsuite/src/test_webapi.py", line 161, in test_metadata
+    req = requests.get(url=url + 'pmapi/'+str(ctx)+'/_metric?'+metrics)
+  File "/usr/lib/python3.6/site-packages/requests/api.py", line 75, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3.6/site-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3.6/site-packages/requests/sessions.py", line 535, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3.6/site-packages/requests/sessions.py", line 688, in send
+    r.content
+  File "/usr/lib/python3.6/site-packages/requests/models.py", line 828, in content
+    self._content = b''.join(self.iter_content(CONTENT_CHUNK_SIZE)) or b''
+  File "/usr/lib/python3.6/site-packages/requests/models.py", line 753, in generate
+    raise ChunkedEncodingError(e)
+requests.exceptions.ChunkedEncodingError: ('Connection broken: IncompleteRead(0 bytes read)', IncompleteRead(0 bytes read))
+Received PM_CONTEXT_HOST ####
+command NOSUCHAPI response code 400
+context NOSUCHCONTEXT response code 400
+context 0 response code 400
+non-pmwebapi response code 400
+context #### host metric .* enumeration with pminfo ####
+context #### host metric .* enumeration with pmwebinfo ####
+context #### host metric .* enumeration match count PASS
+context #### host-kernel metric kernel.* enumeration with pminfo ####
+context #### host-kernel metric kernel.* enumeration with pmwebinfo ####
+context #### host-kernel metric kernel.* enumeration match count PASS
+context #### response code 400
+context #### fetch names= response code 400
+context #### fetch name=no.such.metric response code 400
+context #### fetch names=no.such.metric1,pmcd.client.whoami,no.such.metric2 response code 200
+timestamps fields:2 len(values[]):1
+  metric:pmcd.client.whoami
+  with instances
+context #### fetch names=sample.event.records response code 200
+timestamps fields:2 len(values[]):1
+  metric:sample.event.records
+  with instances
+context #### fetch pmids=121634826,0x740000b response code 200
+timestamps fields:2 len(values[]):2
+  metric:sample.long.one
+  with instances
+  metric:sample.long.ten
+  with instances
+context #### fetch name=keepalive response code 400
+context #### fetch names=sample.bogus_bin,sample.sysinfo,sample.byte_rate,sample.ulong.bin response code 200
+timestamps fields:2 len(values[]):4
+  metric:sample.bogus_bin
+  with instances
+  metric:sample.byte_rate
+  with instances
+  metric:sample.sysinfo
+  with instances
+  metric:sample.ulong.bin
+  with instances
+context #### fetch names=sample.longlong.bin,,,sample.ulonglong.million,sample.float.hundred response code 200
+timestamps fields:2 len(values[]):3
+  metric:sample.float.hundred
+  with instances
+  metric:sample.longlong.bin
+  with instances
+  metric:sample.ulonglong.million
+  with instances
+context #### fetch names=sample.double.bin_ctr,sample.aggregate.null,sample.hordes.one response code 200
+timestamps fields:2 len(values[]):3
+  metric:sample.aggregate.null
+  with instances
+  metric:sample.double.bin_ctr
+  with instances
+  metric:sample.hordes.one
+  with instances
+context #### fetch names=sample.dodgey.value response code 200
+timestamps fields:2 len(values[]):1
+  metric:sample.dodgey.value
+  with instances
+context #### fetch pmid=blargh response code 400
+context #### metadata prefix=no.such.metric response code 400
+context #### metadata prefix=no.such.metric1,pmcd.client.whoami,no.such.metric2 response code 200
+len(metrics[]):3
+  metric:no.such.metric1 metadata:3
+  metric:no.such.metric2 metadata:3
+  metric:pmcd.client.whoami metadata:10
