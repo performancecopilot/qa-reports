@@ -1,0 +1,65 @@
+QA output created by 280
+
+Ping primary logger ...
+
+Expect this should do nothing ...
+Start [check]: DATESTAMP
+End [check]: DATESTAMP status=0
+
+Kill off primary logger ...
+Unable to connect to primary pmlogger at LOCALHOST: Connection refused
+
+Expect this to re-start the primary logger ...
+Start [check]: DATESTAMP
+Restarting primary pmlogger for host "LOCALHOST" [dots] [process PID] . done
+End [check]: DATESTAMP status=0
+
+Kill off primary logger ...
+Unable to connect to primary pmlogger at LOCALHOST: Connection refused
+
+Expect this to quietly re-start the primary logger ...
+PMLOGGER.CHECK: Warning: is another PCP cron job running concurrently?
+-r--r--r-- 1 pcp pcp 22 Oct 29 19:20 $PCP_ARCHIVE_DIR/LOCALHOST/lock
+674404 PMLOGGER.CHECK
+PMLOGGER.CHECK: [control:LINE]
+Warning: failed to acquire exclusive lock ($PCP_ARCHIVE_DIR/LOCALHOST/lock) [dots]
+_try_pmlc: failed
+Performance Co-Pilot Logger Control (pmlc), Version 7.0.3
+
+pmlc commands
+
+  show loggers [@<host>]             display <pid>s of running pmloggers
+  connect _logger_id [@<host>]       connect to designated pmlogger
+  status                             information about connected pmlogger
+  query metric-list                  show logging state of metrics
+  new volume                         start a new log volume
+  disconnect                         disconnect from pmlogger
+
+  log { mandatory | advisory } on <interval> _metric-list
+  log { mandatory | advisory } off _metric-list
+  log mandatory maybe _metric-list
+
+  timezone local|logger|'<timezone>' change reporting timezone
+  help                               print this help message
+  sleep <n>                          pause for <n> milliseconds
+  quit                               exit from pmlc
+
+  _logger_id   is  primary | <pid> | port <n>
+  _metric-list is  _metric-spec | { _metric-spec ... }
+  _metric-spec is  <metric-name> | <metric-name> [ <instance> ... ]
+
+pmlc> connect primary
+pmlc> 
+Unable to connect to primary pmlogger at local:: Connection refused
+
+Expect this to get a mutex failure ...
+PMLOGGER.CHECK: Warning: is another PCP cron job running concurrently?
+-rw-r--r-- 1 USER GROUP 0 Mmm D YYYY $PCP_ARCHIVE_DIR/LOCALHOST/lock
+PMLOGGER.CHECK: [control:LINE]
+Warning: failed to acquire exclusive lock ($PCP_ARCHIVE_DIR/LOCALHOST/lock) [dots]
+
+Expect this to cleanup an old lock file ...
+PMLOGGER.CHECK: [control:LINE]
+Warning: removing lock file older than 30 minutes
+-rw-r--r-- 1 USER GROUP 0 Jan 2 1997 $PCP_ARCHIVE_DIR/LOCALHOST/lock
+[triaged]
