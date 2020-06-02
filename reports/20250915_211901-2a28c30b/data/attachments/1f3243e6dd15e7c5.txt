@@ -1,0 +1,40 @@
+=== empty config and _no_ -L, should exit immediately ===
+
+=== empty config and -L, no reconnect and no exit ===
+_wait_for_pmlogger() success at iter 0 ...
+Connected to pmlogger on port 4331 at local:
+pmlogger [699875] on host local: is logging metrics from host 75719d6aa7f7
+PMCD host        75719d6aa7f7
+logging hasn't started yet
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 75719d6aa7f7
+PMCD host        75719d6aa7f7
+log started      Mon Sep 15 19:20:00.693072320 2025 (times in local time)
+last log entry   Mon Sep 15 19:20:01.147998275 2025
+current time     Mon Sep 15 19:20:01.149966845 2025
+log volume       0
+log size         44876
+
+=== non-empty config, reconnect when pmcd restarted ===
+_wait_for_pmlogger() success at iter 0 ...
+Connected to pmlogger on port 4330 at local:
+pmlogger [702197] on host local: is logging metrics from host 75719d6aa7f7
+PMCD host        75719d6aa7f7
+logging hasn't started yet
+pid=702197
+pcp       702197       1  0 19:20 ?        00:00:00 pmlogger -c /var/tmp/389-699799.config -l /var/tmp/389-699799.log /var/tmp/389-699799
+_service pmcd stop: expecting state "inactive", found state "deactivating"
+--- start systemctl status for pmcd.service ---
+* pmcd.service - Performance Metrics Collector Daemon
+   Loaded: loaded (/lib/systemd/system/pmcd.service; enabled; vendor preset: enabled)
+   Active: deactivating (stop) since Mon 2025-09-15 19:20:01 UTC; 381ms ago
+     Docs: man:pmcd(1)
+  Process: 700404 ExecStart=/etc/init.d/pmcd start-systemd (code=exited, status=0/SUCCESS)
+ Main PID: 700404 (code=exited, status=0/SUCCESS); Control PID: 702450 (pmcd)
+    Tasks: 3 (limit: 307)
+   CGroup: /system.slice/pmcd.service
+           |-702450 /bin/sh /etc/init.d/pmcd stop-systemd
+           |-702805 /bin/sh /etc/init.d/pmcd stop-systemd
+           `-702879 sed -e s/\//\\\//g -e s/.*/\/[0-9][:\\.][0-9][0-9]  *& \/s\/ .*\/\/p/
+--- end systemctl status for pmcd.service ---

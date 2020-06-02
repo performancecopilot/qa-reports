@@ -1,0 +1,425 @@
+QA output created by 1770
+Creating temporary sasldb, add some usernames to it
+Verify saslpasswd2 has successfully added new users
+USER@HOST: userPassword
+remoteuser@HOST: userPassword
+Ensure pmcd can read the password file
+New pmdaproc config without any authentication
+New pmdaproc config with remote authentication
+New pmdaproc config with mapped authentication
+Start pmcd with this shiny new sasldb and no access
+Start pmproxy with mandatory authentication
+
+=== Establish context for an unauthenticated user ===
+{
+    "context": "CONTEXT"
+    "source": "SOURCE"
+    "hostspec": "HOSTSPEC"
+    "labels": {
+        "domainname": "DOMAINNAME"
+        "hostname": "HOSTNAME"
+        "machineid": "MACHINEID"
+    }
+}
+
+=== I/O metric access using unauthenticated context ===
+{
+    "context": "CONTEXT"
+    "timestamp": "TIMESTAMP"
+    "values": [
+        {
+            "pmid": "3.32.5",
+            "name": "proc.io.write_bytes",
+            "instances": [            ]
+        }
+    ]
+}
+NO VALUES
+
+Restart pmcd with this sasldb and remote auth mode
+
+=== Establish context for authenticated local user ===
+{
+    "context": "CONTEXT"
+    "source": "SOURCE"
+    "hostspec": "HOSTSPEC"
+    "labels": {
+        "domainname": "DOMAINNAME"
+        "groupid": GID
+        "hostname": "HOSTNAME"
+        "machineid": "MACHINEID"
+        "userid": UID
+    }
+}
+
+=== I/O metric local user access using authenticated context ===
+{
+    "context": "CONTEXT"
+    "timestamp": "TIMESTAMP"
+    "values": [
+        {
+            "pmid": "3.32.5",
+            "name": "proc.io.write_bytes",
+            "instances": [  ...
+            ]
+        }
+    ]
+}
+GOOD VALUES
+
+
+=== Establish context for authenticated remote user ===
+{
+    "context": "CONTEXT"
+    "source": "SOURCE"
+    "hostspec": "HOSTSPEC"
+    "labels": {
+        "domainname": "DOMAINNAME"
+        "hostname": "HOSTNAME"
+        "machineid": "MACHINEID"
+    }
+}
+
+=== I/O metric remote user access using authenticated context ===
+{
+    "context": "CONTEXT"
+    "timestamp": "TIMESTAMP"
+    "values": [
+        {
+            "pmid": "3.32.5",
+            "name": "proc.io.write_bytes",
+            "instances": [  ...
+            ]
+        }
+    ]
+}
+GOOD VALUES
+
+Restart pmcd with this sasldb and mapped auth mode
+
+=== Establish context for authenticated user ===
+{
+    "context": "CONTEXT"
+    "source": "SOURCE"
+    "hostspec": "HOSTSPEC"
+    "labels": {
+        "domainname": "DOMAINNAME"
+        "groupid": GID
+        "hostname": "HOSTNAME"
+        "machineid": "MACHINEID"
+        "userid": UID
+    }
+}
+
+=== I/O metric access using mapped authentication ===
+{
+    "context": "CONTEXT"
+    "timestamp": "TIMESTAMP"
+    "values": [
+        {
+            "pmid": "3.32.5",
+            "name": "proc.io.write_bytes",
+            "instances": [  ...
+            ]
+        }
+    ]
+}
+GOOD VALUES
+
+Wed Sep 17 21:00:52 UTC 2025
+Arrgh ... pmcd at localhost failed to start after 20 seconds
+=== failing pmprobes stdout ===
+-- 0 --
+-- 1 --
+-- 2 --
+-- 3 --
+-- 4 --
+-- 5 --
+-- 6 --
+-- 7 --
+-- 8 --
+-- 9 --
+-- 10 --
+-- 11 --
+-- 12 --
+-- 13 --
+-- 14 --
+-- 15 --
+-- 16 --
+-- 17 --
+-- 18 --
+-- 19 --
+=== failing pmprobes stderr ===
+-- 0 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 1 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 2 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 3 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 4 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 5 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 6 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 7 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 8 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 9 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 10 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 11 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 12 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 13 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 14 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 15 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 16 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 17 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 18 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+-- 19 --
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+... and now
++ pmprobe -n /var/lib/pcp/pmns/root_pmcd -h localhost pmcd.numclients
+pmprobe: Cannot connect to PMCD on host "localhost": Connection refused
+=== triage for pmcd ===
+--- start pmcd.log.prev ---
+Log for pmcd on runnervmf4ws1 started Wed Sep 17 21:00:29 2025
+
+
+active agent dom   pid  in out ver protocol parameters
+============ === ===== === === === ======== ==========
+root           1 1915525   6   7   2 bin pipe cmd=/var/lib/pcp/pmdas/root/pmdaroot
+pmcd           2                 4 dso i:6  lib=/var/lib/pcp/pmdas/pmcd/pmda_pmcd.so entry=pmcd_init [0x7fcda1b17a80]
+proc           3 1915526   9  10   2 bin pipe cmd=/var/lib/pcp/pmdas/proc/pmdaproc -d 3
+pmproxy        4                 4 dso i:7  lib=/var/lib/pcp/pmdas/mmv/pmda_mmv.so entry=pmproxy_init [0x7fcda0dda290]
+xfs           11 1915527  11  12   2 bin pipe cmd=/var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+sample        29 1915528  13  14   2 bin pipe cmd=/var/lib/pcp/pmdas/sample/pmdasample -d 29
+sampledso     30                 4 dso i:7  lib=/var/lib/pcp/pmdas/sample/pmda_sample.so entry=sample_init [0x7fcda0dc8080]
+linux         60 1915529  15  16   2 bin pipe cmd=/var/lib/pcp/pmdas/linux/pmdalinux
+nfsclient     62 1915530  17  18   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+mmv           70                 4 dso i:7  lib=/var/lib/pcp/pmdas/mmv/pmda_mmv.so entry=mmv_init [0x7fcda0dda2e0]
+kvm           95 1915534  19  20   2 bin pipe cmd=/var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+jbd2         122                 4 dso i:4  lib=/var/lib/pcp/pmdas/jbd2/pmda_jbd2.so entry=jbd2_init [0x7fcda0daece0]
+dm           129 1915535  21  22   2 bin pipe cmd=/var/lib/pcp/pmdas/dm/pmdadm -d 129
+openmetrics  144 1915536  23  24   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+opentelemetry 164 1915540  25  26   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/opentelemetry/pmdaopentelemetry.python
+simple       253 1915549  27  28   2 bin pipe cmd=/var/lib/pcp/pmdas/simple/pmdasimple -d 253
+
+Host access list:
+00 01 Cur/MaxCons host-spec                               host-mask                               lvl host-name
+== == =========== ======================================= ======================================= === ==============
+ y  y     0     0 127.0.1.1                               255.255.255.255                           0 localhost
+ y  y     0     0 10.1.0.38                               255.255.255.255                           0 localhost
+ y  y     0     0 /                                       /                                         1 unix:
+    n     0     0 0.0.0.0                                 0.0.0.0                                   4 .*
+    n     0     0 ::                                      ::                                        8 :*
+User access list empty: user-based access control turned off
+Group access list empty: group-based access control turned off
+
+
+pmcd: PID = 1915522, PDU version = 2
+pmcd request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     4       unix   /run/pcp/pmcd.socket
+  ok     0 44321 inet   INADDR_ANY
+  ok     3 44321 ipv6   INADDR_ANY
+[Wed Sep 17 21:00:29] pmcd(1915522) Info: PMNS file "DEFAULT" is unchanged
+[Wed Sep 17 21:00:29] pmcd(1915522) Info: Successful authentication for user "pcpqa"
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: Successful authentication for user "remoteuser"
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: pmcd caught SIGTERM from pid=1915821 uid=0
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: CleanupAgent ...
+Cleanup "proc" agent (dom 3): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:30 2025
+->         Xmit: DESC_REQ PDU, fd=15, pmid=60.68.18
+->         Recv: DESC PDU, fd=16, pdubuf=0x...85fbedc0
+->         Xmit: DESC PDU, fd=31, pmid=60.68.18
+->         Recv: DESC_REQ PDU, fd=31, pdubuf=0x...85fb75a0
+->         Xmit: DESC_REQ PDU, fd=15, pmid=60.68.45
+->         Recv: DESC PDU, fd=16, pdubuf=0x...85fbedc0
+->         Xmit: DESC PDU, fd=31, pmid=60.68.45
+->         Recv: DESC_REQ PDU, fd=31, pdubuf=0x...85fb75a0
+->         Xmit: DESC_REQ PDU, fd=15, pmid=60.68.8
+->         Recv: DESC PDU, fd=16, pdubuf=0x...85fbedc0
+->         Xmit: DESC PDU, fd=31, pmid=60.68.8
+->         Recv: DESC_REQ PDU, fd=31, pdubuf=0x...85fb75a0
+->         Xmit: DESC_REQ PDU, fd=15, pmid=60.68.10
+->         Recv: DESC PDU, fd=16, pdubuf=0x...85fbedc0
+->         Xmit: DESC PDU, fd=31, pmid=60.68.10
+->         Recv: DESC_REQ PDU, fd=31, pdubuf=0x...85fb75a0
+->         Xmit: DESC_REQ PDU, fd=15, pmid=60.68.12
+->         Recv: DESC PDU, fd=16, pdubuf=0x...85fbedc0
+->         Xmit: DESC PDU, fd=31, pmid=60.68.12
+->         Drop PMDA: domain=3, infd=9, outfd=10
+
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: CleanupAgent ...
+Cleanup "sample" agent (dom 29): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:30 2025
+->         Drop PMDA: domain=29, infd=13, outfd=14
+
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: CleanupAgent ...
+Cleanup "linux" agent (dom 60): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:30 2025
+->         Drop PMDA: domain=60, infd=15, outfd=16
+
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: CleanupAgent ...
+Cleanup "nfsclient" agent (dom 62): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:30 2025
+->         Drop PMDA: domain=62, infd=17, outfd=18
+
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: CleanupAgent ...
+Cleanup "openmetrics" agent (dom 144): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:30 2025
+->         Drop PMDA: domain=144, infd=23, outfd=24
+
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: pmdaRootProcessTerminate(..., 1915527) failed: Operation not permitted
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: pmdaRootProcessTerminate(..., 1915534) failed: Operation not permitted
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: pmdaRootProcessTerminate(..., 1915535) failed: Operation not permitted
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: pmdaRootProcessTerminate(..., 1915540) failed: Operation not permitted
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: pmdaRootProcessTerminate(..., 1915549) failed: Operation not permitted
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: __pmProcessTerminate(1915525) failed: Operation not permitted
+[Wed Sep 17 21:00:30] pmcd(1915522) Info: pmcd Shutdown
+
+Log finished Wed Sep 17 21:00:30 2025
+--- end pmcd.log.prev ---
+--- start pmcd.log ---
+Log for pmcd on runnervmf4ws1 started Wed Sep 17 21:00:30 2025
+
+
+active agent dom   pid  in out ver protocol parameters
+============ === ===== === === === ======== ==========
+root           1 1916247   6   7   2 bin pipe cmd=/var/lib/pcp/pmdas/root/pmdaroot
+pmcd           2                 4 dso i:6  lib=/var/lib/pcp/pmdas/pmcd/pmda_pmcd.so entry=pmcd_init [0x7efcc0fdea80]
+proc           3 1916248   9  10   2 bin pipe cmd=/var/lib/pcp/pmdas/proc/pmdaproc -d 3
+pmproxy        4                 4 dso i:7  lib=/var/lib/pcp/pmdas/mmv/pmda_mmv.so entry=pmproxy_init [0x7efcc0b7c290]
+xfs           11 1916249  11  12   2 bin pipe cmd=/var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+sample        29 1916250  13  14   2 bin pipe cmd=/var/lib/pcp/pmdas/sample/pmdasample -d 29
+sampledso     30                 4 dso i:7  lib=/var/lib/pcp/pmdas/sample/pmda_sample.so entry=sample_init [0x7efcc0b6a080]
+linux         60 1916251  15  16   2 bin pipe cmd=/var/lib/pcp/pmdas/linux/pmdalinux
+nfsclient     62 1916252  17  18   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+mmv           70                 4 dso i:7  lib=/var/lib/pcp/pmdas/mmv/pmda_mmv.so entry=mmv_init [0x7efcc0b7c2e0]
+kvm           95 1916256  19  20   2 bin pipe cmd=/var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+jbd2         122                 4 dso i:4  lib=/var/lib/pcp/pmdas/jbd2/pmda_jbd2.so entry=jbd2_init [0x7efcc0e14ce0]
+dm           129 1916257  21  22   2 bin pipe cmd=/var/lib/pcp/pmdas/dm/pmdadm -d 129
+openmetrics  144 1916258  23  24   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+opentelemetry 164 1916262  25  26   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/opentelemetry/pmdaopentelemetry.python
+simple       253 1916271  27  28   2 bin pipe cmd=/var/lib/pcp/pmdas/simple/pmdasimple -d 253
+
+Host access list:
+00 01 Cur/MaxCons host-spec                               host-mask                               lvl host-name
+== == =========== ======================================= ======================================= === ==============
+ y  y     0     0 127.0.1.1                               255.255.255.255                           0 localhost
+ y  y     0     0 10.1.0.38                               255.255.255.255                           0 localhost
+ y  y     0     0 /                                       /                                         1 unix:
+    n     0     0 0.0.0.0                                 0.0.0.0                                   4 .*
+    n     0     0 ::                                      ::                                        8 :*
+User access list empty: user-based access control turned off
+Group access list empty: group-based access control turned off
+
+
+pmcd: PID = 1916244, PDU version = 2
+pmcd request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     4       unix   /run/pcp/pmcd.socket
+  ok     0 44321 inet   INADDR_ANY
+  ok     3 44321 ipv6   INADDR_ANY
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: PMNS file "DEFAULT" is unchanged
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: Successful authentication for user "pcpqa"
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: pmcd caught SIGTERM from pid=1916783 uid=0
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: CleanupAgent ...
+Cleanup "proc" agent (dom 3): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:31 2025
+->         Recv error: expecting PMNS_IDS PDU, fd=24, err=-12357: Unknown metric name
+->         Xmit: PMNS_NAMES PDU, fd=23, numpmid=1
+->         Recv: TYPE-82? PDU, fd=24, pdubuf=0x...e13f1440
+->         Xmit: PMNS_NAMES PDU, fd=23, numpmid=1
+->         Recv: TYPE-82? PDU, fd=24, pdubuf=0x...e13f1440
+->         Recv error: expecting PMNS_IDS PDU, fd=24, err=-12357: Unknown metric name
+->         Xmit: PMNS_NAMES PDU, fd=25, numpmid=1
+->         Recv: TYPE-82? PDU, fd=26, pdubuf=0x...e13f1440
+->         Xmit: PMNS_NAMES PDU, fd=17, numpmid=1
+->         Recv: TYPE-82? PDU, fd=18, pdubuf=0x...e13f8570
+->         Xmit: PMNS_NAMES PDU, fd=9, numpmid=1
+->         Recv: TYPE-82? PDU, fd=10, pdubuf=0x...e13f8570
+->         Xmit: PMNS_NAMES PDU, fd=9, numpmid=1
+->         Recv: TYPE-82? PDU, fd=10, pdubuf=0x...e13f8570
+->         Xmit: PMNS_NAMES PDU, fd=17, numpmid=1
+->         Recv: TYPE-82? PDU, fd=18, pdubuf=0x...e13f8570
+->         Xmit: PMNS_NAMES PDU, fd=9, numpmid=1
+->         Recv: TYPE-82? PDU, fd=10, pdubuf=0x...e13f8570
+->         Xmit: PMNS_IDS PDU, fd=30, numpmid=80
+->         Drop PMDA: domain=3, infd=9, outfd=10
+
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: CleanupAgent ...
+Cleanup "sample" agent (dom 29): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:31 2025
+->         Drop PMDA: domain=29, infd=13, outfd=14
+
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: CleanupAgent ...
+Cleanup "kvm" agent (dom 95): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:31 2025
+->         Drop PMDA: domain=95, infd=19, outfd=20
+
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: CleanupAgent ...
+Cleanup "simple" agent (dom 253): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:31 2025
+->         Drop PMDA: domain=253, infd=27, outfd=28
+
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: CleanupAgent ...
+Cleanup "nfsclient" agent (dom 62): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:31 2025
+->         Drop PMDA: domain=62, infd=17, outfd=18
+
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: CleanupAgent ...
+Cleanup "openmetrics" agent (dom 144): terminated, exit(0)
+
+->PMCD event trace: starting at Wed Sep 17 21:00:31 2025
+->         Drop PMDA: domain=144, infd=23, outfd=24
+
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: pmdaRootProcessTerminate(..., 1916249) failed: Operation not permitted
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: pmdaRootProcessTerminate(..., 1916251) failed: Operation not permitted
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: pmdaRootProcessTerminate(..., 1916257) failed: Operation not permitted
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: pmdaRootProcessTerminate(..., 1916262) failed: Operation not permitted
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: __pmProcessTerminate(1916247) failed: Operation not permitted
+[Wed Sep 17 21:00:31] pmcd(1916244) Info: pmcd Shutdown
+
+Log finished Wed Sep 17 21:00:31 2025
+--- end pmcd.log ---
+--- there are no likely looking processes!
+--- /run/pcp/pmcd.pid is missing
+--- UNIX doman socket is missing
+--- IP port 44321 user(s) ---
+--- start systemctl status for pmcd.service ---
+x pmcd.service - Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmcd.service; enabled; preset: enabled)
+     Active: failed (Result: start-limit-hit) since Wed 2025-09-17 21:00:32 UTC; 20s ago
+   Duration: 190ms
+       Docs: man:pmcd(1)
+    Process: 1916244 ExecStart=/etc/init.d/pmcd start-systemd (code=exited, status=0/SUCCESS)
+    Process: 1916639 ExecStop=/etc/init.d/pmcd stop-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 1916244 (code=exited, status=0/SUCCESS)
+        CPU: 1.368s
+--- end systemctl status for pmcd.service ---

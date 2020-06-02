@@ -1,0 +1,66 @@
+QA output created by 1355
+Start key server
+Start key server proxy to fake loading error for first 3 seconds
+Start pmproxy
+
+== Observe a loading error and reconnect
+Traceback (most recent call last):
+  File "/var/lib/pcp/testsuite/src/key_server_proxy.py", line 78, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/usr/lib64/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/lib64/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib64/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/var/lib/pcp/testsuite/src/key_server_proxy.py", line 65, in main
+    server = await asyncio.start_server(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/usr/lib64/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/asyncio/base_events.py", line 1630, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('127.0.0.1', 54322): [errno 98] address already in use
+
+Stop key server proxy
+/usr/libexec/pcp/bin/pmsignal: line 125: kill: (1562289) - No such process
+
+== Observe a connection lost error and failed reconnect
+
+Start key server proxy again (loading error for first 3 seconds)
+
+== Observe a reconnect
+Traceback (most recent call last):
+  File "/var/lib/pcp/testsuite/src/key_server_proxy.py", line 78, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/usr/lib64/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/lib64/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib64/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/var/lib/pcp/testsuite/src/key_server_proxy.py", line 65, in main
+    server = await asyncio.start_server(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/usr/lib64/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/asyncio/base_events.py", line 1630, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('127.0.0.1', 54322): [errno 98] address already in use
+/usr/libexec/pcp/bin/pmsignal: line 125: kill: (1562343) - No such process
