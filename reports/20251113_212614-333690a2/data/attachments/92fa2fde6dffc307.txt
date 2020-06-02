@@ -1,0 +1,140 @@
+QA output created by 1773
+Start test key server ...
+PING
+PONG
+
+pmseries: [Info] processed 40 archive records from TMP/farm/node80/20201124.0
+pmseries: [Info] processed 40 archive records from TMP/farm/node81/20201124.0
+pmcd_wait: Failed to connect to PMCD on host "localhost@localhost:54322" in 5 seconds
+Arrgh: errors from key server startup ...
+NOTE: pmproxy not started due to errors!  Log file "/var/tmp/1773-1812218.pmproxy.log" contains ...
+Log for pmproxy on b74edad86c47 started Thu Nov 13 21:14:17 2025
+
+[Thu Nov 13 21:14:17] pmproxy(1812396) Error: pmWebTimerSetMetricRegistry: server instrumentation disabled
+[Thu Nov 13 21:14:17] pmproxy(1812396) Error: pmproxy: open_request_local - uv_pipe_bind /run/pcp/pmproxy.socket failed [EADDRINUSE]: address already in use
+[Thu Nov 13 21:14:17] pmproxy(1812396) Error: pmproxy: open_request_port - uv_listen failed port=54322 [EADDRINUSE]: address already in use
+[Thu Nov 13 21:14:17] pmproxy(1812396) Error: pmproxy: open_request_port - uv_listen failed port=54322 [EADDRINUSE]: address already in use
+[Thu Nov 13 21:14:17] pmproxy(1812396) Error: pmproxy: can't open any request ports, exiting
+[Thu Nov 13 21:14:17] pmproxy(1812396) Error: pmproxy not started due to errors!
+
+== NOTE: Due to json sorting issues, see 1773.full.ok for full curl output ==
+
+
+== verify basic two host pmseries checks
+== pmseries hinv.ncpu : should return 2 SIDs
+193b1fa265d370a3727cb212ca11b6c0ecaa0932
+200bd62f839e362e14141507b62f93c1a33fd822
+== pmseries kernel.all.load : should return 2 SIDs
+43c1e8638236f7deebb79638390e02b665e95dd0
+6a02ccc0f1b5f0a115a2749ebb52204360241a32
+== pmseries kernel.all.load+kernel.all.load : should return one fabricated SID
+16aa36d93e5cd0733499eee7dafc07dbb2ad7067
+
+== verify two host series sum (a + b) SID lookup
+kernel.all.load + kernel.all.load
+http://localhost:PROXYPORT/series/query?expr=kernel.all.load%20%2B%20kernel.all.load
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series sum (a + b) with samples
+kernel.all.load[samples:1] + kernel.all.load[samples:1]
+http://localhost:PROXYPORT/series/query?expr=kernel.all.load%5Bsamples%3A1%5D%20%2B%20kernel.all.load%5Bsamples%3A1%5D
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series sum (a + b) with samples by SID
+kernel.all.load + kernel.all.load, SID=16aa36d93e5cd0733499eee7dafc07dbb2ad7067
+http://localhost:PROXYPORT/series/values?series=16aa36d93e5cd0733499eee7dafc07dbb2ad7067&samples=1
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/descs?series=16aa36d93e5cd0733499eee7dafc07dbb2ad7067
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/metrics?series=16aa36d93e5cd0733499eee7dafc07dbb2ad7067
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/instances?series=16aa36d93e5cd0733499eee7dafc07dbb2ad7067
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series difference (a - b) SID lookup
+kernel.all.load - kernel.all.load
+http://localhost:PROXYPORT/series/query?expr=kernel.all.load%20-%20kernel.all.load
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series difference (a - b) with samples
+kernel.all.load[samples:1] - kernel.all.load[samples:1]
+http://localhost:PROXYPORT/series/query?expr=kernel.all.load%5Bsamples%3A1%5D%20-%20kernel.all.load%5Bsamples%3A1%5D
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series difference (a - b) with samples by SID
+kernel.all.load - kernel.all.load, SID=f29c38f54d5a3cb928496439760634617688036b
+http://localhost:PROXYPORT/series/values?series=f29c38f54d5a3cb928496439760634617688036b&samples=1
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/descs?series=f29c38f54d5a3cb928496439760634617688036b
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/metrics?series=f29c38f54d5a3cb928496439760634617688036b
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/instances?series=f29c38f54d5a3cb928496439760634617688036b
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series function (floor(a)) SID lookup
+floor(kernel.all.load)
+http://localhost:PROXYPORT/series/query?expr=floor%28kernel.all.load%29
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series function (floor(a)) with samples
+floor(kernel.all.load[samples:2])
+http://localhost:PROXYPORT/series/query?expr=floor%28kernel.all.load%5Bsamples%3A2%5D%29
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series function (floor(a)) with samples by SID
+floor(kernel.all.load), SID=f2dbf7a113932b3371c8871df932603856d1d7b6
+http://localhost:PROXYPORT/series/values?series=f2dbf7a113932b3371c8871df932603856d1d7b6&samples=2
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/descs?series=f2dbf7a113932b3371c8871df932603856d1d7b6
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/metrics?series=f2dbf7a113932b3371c8871df932603856d1d7b6
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+http://localhost:PROXYPORT/series/instances?series=f2dbf7a113932b3371c8871df932603856d1d7b6
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series function rescale(rate(kernel.percpu.cpu.idle), "millisec/s") SID lookup
+rescale(rate(kernel.percpu.cpu.idle), "millisec/s")
+http://localhost:PROXYPORT/series/query?expr=rescale%28rate%28kernel.percpu.cpu.idle%29,%22millisec/s%22%29
+pmjson failed: No data available
+ .. 0 lines with 0 json { objects }
+
+== verify two host series function rescale(rate(kernel.percpu.cpu.idle), "millisec/s") with samples
+rescale(rate(kernel.percpu.cpu.idle[samples:2]),"millisec/s")
+pmjson failed: No data available
+http://localhost:PROXYPORT/series/query?expr=rescale%28rate%28kernel.percpu.cpu.idle%5Bsamples%3A2%5D%29,%22millisec/s%22%29
+ .. 0 lines with 0 json { objects }
+
+== verify two host series function rescale(kernel.percpu.cpu.idle, "millisec/s") with samples by SID
+rescale(rate(kernel.percpu.cpu.idle), "millisec/s"), SID=7c31a987c26c610b4e26876c6ea7c78c8f0be3b4
+pmjson failed: No data available
+http://localhost:PROXYPORT/series/values?series=7c31a987c26c610b4e26876c6ea7c78c8f0be3b4&samples=2
+ .. 0 lines with 0 json { objects }
+pmjson failed: No data available
+http://localhost:PROXYPORT/series/descs?series=7c31a987c26c610b4e26876c6ea7c78c8f0be3b4
+ .. 0 lines with 0 json { objects }
+pmjson failed: No data available
+http://localhost:PROXYPORT/series/metrics?series=7c31a987c26c610b4e26876c6ea7c78c8f0be3b4
+ .. 0 lines with 0 json { objects }
+pmjson failed: No data available
+http://localhost:PROXYPORT/series/instances?series=7c31a987c26c610b4e26876c6ea7c78c8f0be3b4
+ .. 0 lines with 0 json { objects }
+/usr/libexec/pcp/bin/pmsignal: line 125: kill: (1812396) - No such process

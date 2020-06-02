@@ -1,0 +1,321 @@
+time_stamp: step 2 delta 0.002608 secs tag cleanup old archives
+pmproxy_was_running=false
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Wed Nov 12 20:54:43 UTC 2025
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1874696       1 33 20:54 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -F -A
+pmproxy_pid=1874696
+time_stamp: step 3 delta 0.288184 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.226453 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.008205 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.186181 secs tag compression
+=== restarting pmlogger
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host runnervmw9dnm
+PMCD host        runnervmw9dnm
+log started      Wed Nov 12 20:54:47.207475150 2025 (times in local time)
+last log entry   Wed Nov 12 20:54:47.576597177 2025
+current time     Wed Nov 12 20:54:47.579067526 2025
+log volume       0
+log size         55224
+time_stamp: step 7 delta 1.033488 secs tag restart pmcd & pmlogger
+=== wait for pmproxy to process filesystem events
+time_stamp: step 8 delta 2.004865 secs tag wait for pmproxy
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 9 delta 0.009286 secs tag check for deleted files
+=== checking pmproxy correctly switches logvol when pmlogger bumps to a new logvol
+primary pmlogger archive path: /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02
+contents of /proc/1874696/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 10 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 11 -> /dev/null
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 12 -> socket:[3008450]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 13 -> socket:[3008451]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 14 -> socket:[3008452]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 15 -> socket:[3008453]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 16 -> socket:[3008454]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 17 -> socket:[3008473]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 19 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.0
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 20 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 21 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 22 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 23 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 24 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 25 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 26 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 27 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 28 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 29 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.index
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 30 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 4 -> anon_inode:[io_uring]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 5 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 6 -> pipe:[3008448]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 7 -> pipe:[3008448]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 8 -> pipe:[3008449]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 9 -> pipe:[3008449]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02
+contents of /proc/1874696/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 10 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 11 -> /dev/null
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 12 -> socket:[3008450]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 13 -> socket:[3008451]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 14 -> socket:[3008452]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 15 -> socket:[3008453]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 16 -> socket:[3008454]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 17 -> socket:[3008473]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 19 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.0
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 20 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 21 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 22 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 23 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 24 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 25 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 26 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 27 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 28 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 29 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.index
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 30 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 4 -> anon_inode:[io_uring]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 5 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 6 -> pipe:[3008448]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 7 -> pipe:[3008448]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 8 -> pipe:[3008449]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 9 -> pipe:[3008449]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02
+contents of /proc/1874696/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 10 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 11 -> /dev/null
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 12 -> socket:[3008450]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 13 -> socket:[3008451]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 14 -> socket:[3008452]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 15 -> socket:[3008453]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 16 -> socket:[3008454]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 17 -> socket:[3008473]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 19 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.0
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 20 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 21 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 22 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 23 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 24 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 25 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 26 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 27 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 28 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 29 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.index
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 30 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 4 -> anon_inode:[io_uring]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 5 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 6 -> pipe:[3008448]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 7 -> pipe:[3008448]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 8 -> pipe:[3008449]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 9 -> pipe:[3008449]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02
+contents of /proc/1874696/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 10 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 11 -> /dev/null
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 12 -> socket:[3008450]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 13 -> socket:[3008451]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 14 -> socket:[3008452]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 15 -> socket:[3008453]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 16 -> socket:[3008454]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 17 -> socket:[3008473]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 19 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.0
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 20 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 21 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 22 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 23 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 24 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 25 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 26 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 27 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 28 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 29 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.index
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 30 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 4 -> anon_inode:[io_uring]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 5 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 6 -> pipe:[3008448]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 7 -> pipe:[3008448]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 8 -> pipe:[3008449]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 9 -> pipe:[3008449]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02
+contents of /proc/1874696/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 10 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 11 -> /dev/null
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 12 -> socket:[3008450]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 13 -> socket:[3008451]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 14 -> socket:[3008452]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 15 -> socket:[3008453]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 16 -> socket:[3008454]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 17 -> socket:[3008473]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 19 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.0
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 20 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 21 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 22 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 23 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 24 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 25 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 26 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 27 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 28 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 29 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.index
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 30 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 31 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 32 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 33 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 34 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02.meta
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 4 -> anon_inode:[io_uring]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 5 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 6 -> pipe:[3008448]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 7 -> pipe:[3008448]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 8 -> pipe:[3008449]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 9 -> pipe:[3008449]
+curlogvol=0
+time_stamp: step 10 delta 8.064311 secs tag found old volume #
+
+pmproxy.discover.logvol.change_vol
+    value 0
+Connected to primary pmlogger at local:
+New log volume 1
+
+pmproxy.discover.logvol.change_vol
+    value 0
+primary pmlogger archive path: /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02
+contents of /proc/1874696/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 10 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 11 -> /dev/null
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 12 -> socket:[3008450]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 13 -> socket:[3008451]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 14 -> socket:[3008452]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 15 -> socket:[3008453]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 16 -> socket:[3008454]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 17 -> socket:[3008473]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 19 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.0
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 20 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 21 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 22 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-01.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 23 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 24 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 25 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 26 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 27 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 28 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 29 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.index
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 30 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-00.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 31 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02.0
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 32 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02.meta
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 33 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02.index
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 34 -> /var/log/pcp/pmlogger/runnervmw9dnm/20251112.20.54-02.meta
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 4 -> anon_inode:[io_uring]
+lrwx------ 1 pcp pcp 64 Nov 12 20:54 5 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 6 -> pipe:[3008448]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 7 -> pipe:[3008448]
+lr-x------ 1 pcp pcp 64 Nov 12 20:54 8 -> pipe:[3008449]
+l-wx------ 1 pcp pcp 64 Nov 12 20:54 9 -> pipe:[3008449]
+newlogvol=0
+time_stamp: step 11 delta 2.027929 secs tag found new volume #
+=== checking pmproxy survives pmlogger restart
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host runnervmw9dnm
+PMCD host        runnervmw9dnm
+log started      Wed Nov 12 20:55:00.401203384 2025 (times in local time)
+last log entry   Wed Nov 12 20:55:00.775103091 2025
+current time     Wed Nov 12 20:55:00.777618676 2025
+log volume       0
+log size         55212
+time_stamp: step 12 delta 1.099237 secs tag check pmproxy survives
++++ pmproxy.log +++
+Log for pmproxy on runnervmw9dnm started Wed Nov 12 20:54:43 2025
+
+pmproxy: PID = 1874696, PDU version = 2, user = pcp (997)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    12       unix   /run/pcp/pmproxy.socket
+  ok    13 44322 inet   INADDR_ANY
+  ok    14 44322 ipv6   INADDR_ANY
+  ok    15 44323 inet   INADDR_ANY
+  ok    16 44323 ipv6   INADDR_ANY
+[Wed Nov 12 20:54:43] pmproxy(1874696) Info: Key server slots, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on runnervmw9dnm started Wed Nov 12 20:52:53 2025
+
+pmproxy: PID = 1851147, PDU version = 2, user = pcp (997)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    12       unix   /run/pcp/pmproxy.socket
+  ok    13 44322 inet   INADDR_ANY
+  ok    14 44322 ipv6   INADDR_ANY
+  ok    15 44323 inet   INADDR_ANY
+  ok    16 44323 ipv6   INADDR_ANY
+[Wed Nov 12 20:52:53] pmproxy(1851147) Info: Key server slots, schema version setup
+[Wed Nov 12 20:52:58] pmproxy(1851147) Info: pmproxy caught SIGTERM
+[Wed Nov 12 20:52:58] pmproxy(1851147) Info: pmproxy Shutdown
+
+Log finished Wed Nov 12 20:52:58 2025
++++ pmlogger.log +++
+Log for pmlogger on runnervmw9dnm started Wed Nov 12 20:54:43 2025
+
+[Wed Nov 12 20:54:43] pmlogger(1874909) Info: Start
+preprocessor cmd: /usr/lib/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "runnervmw9dnm" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Wed Nov 12 20:54:46] pmlogger(1874909) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Wed Nov 12 20:54:46 2025
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host runnervmw9dnm
+PMCD host        runnervmw9dnm
+log started      Wed Nov 12 20:55:02.627762637 2025 (times in local time)
+last log entry   Wed Nov 12 20:55:02.961116476 2025
+current time     Wed Nov 12 20:55:02.963485257 2025
+log volume       0
+log size         55224
+Stopping pmproxy ...
