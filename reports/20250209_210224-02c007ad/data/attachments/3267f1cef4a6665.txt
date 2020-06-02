@@ -1,0 +1,138 @@
+QA output created by 1541
+TMP.in: Warning: these are lines that refactor cannot handle
+[34]_change_config foo bar || echo "expect warning"
+[35]_wait_for_pmcd || echo "expect warning"
+[36]_wait_pmcd_end && babble
+[37]_wait_for_pmcd_stop 10
+[38]_wait_for_pmlogger && echo "expect warning"
+[38]_wait_for_pmlogger && echo "expect warning"
+[38]_wait_for_pmlogger && echo "expect warning"
+[39]_wait_pmlogger_end pid &
+[40]_wait_for_pmie warning
+[41]_wait_pmie_end warning
+[42]_wait_for_pmproxy port_warning
+[43]_wait_for_pmproxy -P logfile__warning
+[44]_wait_pmproxy_end || warning
+[45]_disable_loggers >warning
+[46]_get_primary_logger_pid ; warning
+[47]_prepare_pmda_install foo & true_warning
+[48]_restore_pmda_install bar || foo_warning
+[49]_setup_purify prog foo_warning
+[50]_wait_for_pmcd;warning
+[51]_sighup_pmcd>warning
+[52]_get_config foo
+[53]c=`_get_config pmie`
+[54]c=$(_get_config bar)
+[55]w=`_get_word_size warning`
+[56]w="`_get_word_size warning`"
+[57]w=$(_get_word_size)
+[58]w="$(_get_word_size)"
+[59]e=`_get_endian warning`
+[60]_check_metric foo bar warning
+awk: cmd. line:16: fatal: 4 is invalid as number of arguments for split
+--- TMP.in DATESTAMP
++++ TMP.out DATESTAMP
+@@ -1,102 +0,0 @@
+-
+-# expect these all to to be rewritten
+-#
+-_change_config foo bar
+-_change_config x y
+-_wait_for_pmcd
+-_wait_pmcd_end	# tab comment
+-_wait_for_pmcd_stop
+-_wait_for_pmlogger # space comment
+-_wait_for_pmlogger pid
+-_wait_for_pmlogger -P path
+-_wait_for_pmlogger pid path delay
+-_wait_pmlogger_end pid
+-_wait_for_pmie
+-_wait_pmie_end	# tab comment
+-_wait_for_pmproxy
+-_wait_pmproxy_end # space comment
+-_disable_loggers
+-_get_primary_logger_pid
+-_prepare_pmda_install foo
+-_restore_pmda_install bar
+-_setup_purify prog
+-_sighup_pmcd
+-_check_metric sample.bin
+-_check_metric sample.bin remotehost
+-_service pmcd start
+-_service pmcd start >foo
+-_service pmcd start 2>foo_err
+-    _service pmcd stop | foo cmd
+-_service pmcd stop 2>&1 | foo cmd
+-
+-# expect these to be warnings
+-#
+-_change_config foo bar || echo "expect warning"
+-_wait_for_pmcd || echo "expect warning"
+-_wait_pmcd_end && babble
+-_wait_for_pmcd_stop 10
+-_wait_for_pmlogger && echo "expect warning"
+-_wait_pmlogger_end pid &
+-_wait_for_pmie warning	# comment
+-_wait_pmie_end warning # comment
+-_wait_for_pmproxy port_warning
+-_wait_for_pmproxy -P logfile__warning
+-_wait_pmproxy_end || warning
+-_disable_loggers >warning
+-_get_primary_logger_pid ; warning
+-_prepare_pmda_install foo & true_warning
+-_restore_pmda_install bar || foo_warning
+-_setup_purify prog foo_warning
+-_wait_for_pmcd;warning
+-_sighup_pmcd>warning
+-_get_config foo
+-c=`_get_config pmie`
+-c=$(_get_config bar)
+-w=`_get_word_size warning`
+-w="`_get_word_size warning`"
+-w=$(_get_word_size)
+-w="$(_get_word_size)"
+-e=`_get_endian warning`
+-_check_metric foo bar warning
+-_service pmcd >foo start
+-
+-# no changes or warnings ...
+-#
+-_change_config foo bar || echo nothing	# refactor-ok
+-_wait_for_pmcd	# refactor-ok
+-_wait_for_pmlogger	# refactor-ok
+-_wait_pmlogger_end	# refactor-ok
+-x_get_word_size
+-_get_word_sizex
+-    if _get_word_size
+-    if _get_endian
+-my_get_endian_mumble
+-_get_config pmie >$tmp.tmp || _exit 1
+-if _check_metric simple.now; then :; else _exit 8; fi
+-_check_metric sample.seconds $hosts_32 || _exit 1
+-space at the end of the line 
+-tab at the end of the line	
+-
+-# no refactoring here ...
+-#
+-_cleanup()
+-{
+-    _change_config foo	# no change expected
+-    _wait_for_pmcd	# no change expected
+-    _wait_pmcd_end	# no change expected
+-    _wait_for_pmcd_stop	# no change expected
+-    _wait_for_pmlogger	# no change expected
+-    _wait_pmlogger_end	# no change expected
+-    _wait_for_pmie	# no change expected
+-    _wait_pmie_end	# no change expected
+-    _wait_for_pmproxy	# no change expected
+-    _wait_pmproxy_end	# no change expected
+-    _disable_loggers	# no change expected
+-    _get_primary_logger_pid	# no change expected
+-    _prepare_pmda_install	# no change expected
+-    _restore_pmda_install	# no change expected
+-    _setup_purify	# no change expected
+-    _sighup_pmcd	# no change expected
+-    _service pmlogger stop	# no change expected
+-}
+-
+TMP.in: would be updated

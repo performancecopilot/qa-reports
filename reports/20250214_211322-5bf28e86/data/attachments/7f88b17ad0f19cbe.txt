@@ -1,0 +1,46 @@
+QA output created by 1355
+Start key server
+Start key server proxy to fake loading error for first 3 seconds
+Start pmproxy
+
+== Observe a loading error and reconnect
+Traceback (most recent call last):
+  File "src/key_server_proxy.py", line 78, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.7/asyncio/runners.py", line 43, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.7/asyncio/base_events.py", line 584, in run_until_complete
+    return future.result()
+  File "src/key_server_proxy.py", line 68, in main
+    int(local_port),
+  File "/usr/lib/python3.7/asyncio/streams.py", line 114, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+  File "/usr/lib/python3.7/asyncio/base_events.py", line 1378, in create_server
+    % (sa, err.strerror.lower())) from None
+OSError: [Errno 98] error while attempting to bind on address ('127.0.0.1', 54322): address already in use
+
+Stop key server proxy
+/usr/lib/pcp/bin/pmsignal: 123: kill: No such process
+
+
+== Observe a connection lost error and failed reconnect
+
+Start key server proxy again (loading error for first 3 seconds)
+
+== Observe a reconnect
+Traceback (most recent call last):
+  File "src/key_server_proxy.py", line 78, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.7/asyncio/runners.py", line 43, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.7/asyncio/base_events.py", line 584, in run_until_complete
+    return future.result()
+  File "src/key_server_proxy.py", line 68, in main
+    int(local_port),
+  File "/usr/lib/python3.7/asyncio/streams.py", line 114, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+  File "/usr/lib/python3.7/asyncio/base_events.py", line 1378, in create_server
+    % (sa, err.strerror.lower())) from None
+OSError: [Errno 98] error while attempting to bind on address ('127.0.0.1', 54322): address already in use
+/usr/lib/pcp/bin/pmsignal: 123: kill: No such process
+
