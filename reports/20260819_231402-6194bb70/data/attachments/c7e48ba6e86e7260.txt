@@ -1,0 +1,59 @@
+QA output created by 1483
+
+=== pmcd ===
+
+=== pmfind ===
+
+=== pmie ===
+
+=== pmie_check ===
+
+=== pmie_daily ===
+
+=== pmie_farm ===
+
+=== pmie_farm_check ===
+
+=== pmlogger ===
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]: Terminated                 $PCP_PS_PROG $PCP_PS_ALL_FLAGS | sed -n -f $__tmp.sed | sort -n -u | while read __pid; do
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:     if $__verbose; then
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:         $PCP_PS_PROG $PCP_PS_ALL_FLAGS 2>&1 | $PCP_AWK_PROG '
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]: $2 == "PID"                { print }
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]: $2 == '"$__pid"'        { print }' > $__tmp.ps;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:     fi; if [ -f /proc/$__pid/cgroup ]; then
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:         __cgroups=`tail -1 /proc/$__pid/cgroup 2>/dev/null`; case "$__cgroups" in
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:             '' | 0::/system.slice/* | 0::/user.slice/* | 0::/init.scope | 1:name=systemd:/* | 1:cpuset:/* | 1:blkio:/*)
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                 if $__verbose; then
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                     echo "Info: _get_pids_by_name: not in container" 1>&2; cat $__tmp.ps 1>&2;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                 fi; echo $__pid
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:             ;;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:             0::/machine.slice/*/container/*)
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                 if $__verbose; then
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                     echo "Info: _get_pids_by_name: in container, skipped" 1>&2; cat $__tmp.ps 1>&2;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                 fi
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:             ;;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:             *)
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                 if $__verbose; then
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                     echo "Warning: _get_pids_by_name: unknown cgroups: \"$__cgroups\"" 1>&2; $PCP_PS_PROG $PCP_PS_ALL_FLAGS 2>&1 | $PCP_AWK_PROG '
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]: $2 == "PID"        { print }
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]: $2 == '"$__pid"'        { print }' 1>&2;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:                 fi; echo $__pid
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:             ;;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:         esac;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:     else
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:         if $__verbose; then
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:             echo "Info: _get_pids_by_name: no /proc/$__pid/cgroup file, assumed not in container" 1>&2; cat $__tmp.ps 1>&2;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:         fi; echo $__pid;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]:     fi;
+Aug 19 19:55:33 fec5ceeb1ea3 pmlogger[640103]: done
+Aug 19 20:47:49 fec5ceeb1ea3 pmlogger[1109419]: Terminated                 pmlogger_check --quick $VFLAG $PMLOGGER_CHECK_PARAMS > $bgtmp/pmcheck.out 2> $bgtmp/pmcheck
+
+=== pmlogger_check ===
+
+=== pmlogger_daily ===
+
+=== pmlogger_farm ===
+
+=== pmlogger_farm_check ===
+
+=== pmproxy ===
