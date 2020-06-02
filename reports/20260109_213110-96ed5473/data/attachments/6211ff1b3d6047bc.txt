@@ -1,0 +1,60 @@
+QA output created by 1602
+== Start a key server cluster
+== Start node 1
+PONG
+OK
+== Start node 2
+PONG
+OK
+== Start node 3
+PONG
+OK
+
+== Create key server cluster
+[OK] All nodes agree about slots configuration.
+[OK] All 16384 slots covered.
+
+== Wait for cluster to get ready
+OK
+
+== Cluster status
+cluster_state:ok
+cluster_known_nodes:3
+cluster_size:3
+
+== start pmproxy
+pmproxy failed to start on port 54324 after 20 seconds
+likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmproxy logfile (/var/tmp/1602-1679780.pmproxy.log) ...
+Log for pmproxy on 90946a5d72d3 started Fri Jan  9 21:00:25 2026
+
+[Fri Jan  9 21:00:25] pmproxy(1680032) Error: pmWebTimerSetMetricRegistry: server instrumentation disabled
+[Fri Jan  9 21:00:25] pmproxy(1680032) Error: pmproxy: open_request_local - uv_pipe_bind /run/pcp/pmproxy.socket failed [EACCES]: permission denied
+[Fri Jan  9 21:00:25] pmproxy(1680032) Error: pmproxy: open_request_port - uv_listen failed port=54324 [EADDRINUSE]: address already in use
+[Fri Jan  9 21:00:25] pmproxy(1680032) Error: pmproxy: open_request_port - uv_listen failed port=54324 [EADDRINUSE]: address already in use
+[Fri Jan  9 21:00:25] pmproxy(1680032) Error: pmproxy: can't open any request ports, exiting
+[Fri Jan  9 21:00:25] pmproxy(1680032) Error: pmproxy not started due to errors!
+
+Log finished Fri Jan  9 21:00:25 2026
+--- start systemctl status for pmproxy.service ---
+* pmproxy.service - Proxy for Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmproxy.service; disabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             `-10-timeout-abort.conf
+     Active: inactive (dead) since Fri 2026-01-09 21:00:22 UTC; 22s ago
+   Duration: 1min 37.354s
+ Invocation: 672bf4a469d74b6f81de720396796489
+       Docs: man:pmproxy(1)
+    Process: 1663756 ExecStart=/usr/libexec/pcp/services/pmproxy start-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 1663756 (code=exited, status=0/SUCCESS)
+   Mem peak: 52M
+        CPU: 1.471s
+--- end systemctl status for pmproxy.service ---
+--- start journalctl entries in last minute for -u pmproxy ---
+Hint: You are currently not seeing messages from other users and the system.
+      Users in groups 'adm', 'systemd-journal', 'wheel' can see all messages.
+      Pass -q to turn off this notice.
+No journal files were opened due to insufficient permissions.
+--- end recent journalctl entries for -u pmproxy ---
+/usr/libexec/pcp/bin/pmsignal: line 125: kill: (1680032) - No such process
