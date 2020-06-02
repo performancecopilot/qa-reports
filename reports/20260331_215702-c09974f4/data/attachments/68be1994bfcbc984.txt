@@ -1,0 +1,69 @@
+pmproxy_was_running=false
+exit: 0
++++ pmproxy before test_webapi.py ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       968395       1 36 20:26 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -F -A
+Received PM_CONTEXT_HOST #1169386999
+command NOSUCHAPI response code 400
+context NOSUCHCONTEXT response code 400
+context 0 response code 400
+non-pmwebapi response code 400
+context #1169386999 host metric .* enumeration with pminfo #4160
+context #1169386999 host metric .* enumeration with pmwebinfo #4162
+context #1169386999 host metric .* enumeration match count PASS
+context #1169386999 host-kernel metric kernel.* enumeration with pminfo #92
+context #1169386999 host-kernel metric kernel.* enumeration with pmwebinfo #92
+context #1169386999 host-kernel metric kernel.* enumeration match count PASS
+context #1169386999 response code 400
+context #1169386999 fetch names= response code 400
+context #1169386999 fetch name=no.such.metric response code 400
+context #1169386999 fetch names=no.such.metric1,pmcd.client.whoami,no.such.metric2 response code 200
+timestamps fields:2 len(values[]):1
+  metric:pmcd.client.whoami
+  with instances
+context #1169386999 fetch names=sample.event.records response code 200
+timestamps fields:2 len(values[]):1
+  metric:sample.event.records
+  with instances
+context #1169386999 fetch pmids=121634826,0x740000b response code 200
+timestamps fields:2 len(values[]):2
+  metric:sample.long.one
+  with instances
+  metric:sample.long.ten
+  with instances
+context #1169386999 fetch name=keepalive response code 400
+context #1169386999 fetch names=sample.bogus_bin,sample.sysinfo,sample.byte_rate,sample.ulong.bin response code 200
+timestamps fields:2 len(values[]):4
+  metric:sample.bogus_bin
+  with instances
+  metric:sample.byte_rate
+  with instances
+  metric:sample.sysinfo
+  with instances
+  metric:sample.ulong.bin
+  with instances
++++ pmproxy after test_webapi.py ...
++++ webapi-host vs webapi-pmcd-host diffs ...
+1c1
+< Total 4160 metrics
+---
+> Total 4162 metrics
+3092a3093
+> sample.bad.unknown
+3304a3306
+> sampledso.bad.unknown
++++ webapi-host-kernel vs webapi-pmcd-host-kernel diffs ...
+
+=== pmproxy log ===
+Log for pmproxy on 795eae26af63 started Tue Mar 31 20:26:56 2026
+
+pmproxy: PID = 968395, PDU version = 2, user = pcp (990)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Tue Mar 31 20:26:56] pmproxy(968395) Info: Key server slots, schema version setup

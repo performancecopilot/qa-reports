@@ -1,0 +1,15 @@
+QA output created by 1985
+Aborted                    (core dumped) if $do_valgrind; then
+    _run_valgrind pmfind -S -m probe=127.0.0.1/32;
+else
+    pmfind -S -m probe=127.0.0.1/32;
+fi | _filter
+./1986: line 41: cd: write error: Success
+Aborted                    (core dumped) ./1986 --valgrind | $PCP_AWK_PROG '
+skip == 1 && $1 == "==="       { skip = 0 }
+/^=== std err ===/             { skip = 1 }
+skip == 0              { print }
+skip == 1              { print >>"'$seq_full'" }'
+!!!
+!!! Killed from check by timeout ...
+!!!
