@@ -1,0 +1,68 @@
+QA output created by 1388
+Creating temporary sasldb, add user running QA to it
+Verify saslpasswd2 has successfully added a new user
+USER@HOST: userPassword
+Ensure pmcd can read the password file
+Start pmcd with this shiny new sasldb
+Start pmproxy with mandatory authentication
+Start test Python PMDA to check if username is in per-context state
+Python pcp.pmda module is not installed, install it and try again
+
+=== invalid username with pminfo ===
+Error: test_python.current_username: Authentication - user not found
+
+=== invalid password with pminfo ===
+Error: test_python.current_username: Authentication - authentication failure
+
+=== correct password with pminfo ===
+Error: test_python.current_username: Unknown metric name
+
+=== no authentication ===
+{
+    "context": "CONTEXT"
+    "source": "SOURCE"
+    "hostspec": "HOSTSPEC"
+    "labels": {
+        "domainname": "DOMAINNAME"
+        "hostname": "HOSTNAME"
+        "machineid": "MACHINEID"
+    }
+}
+
+=== invalid username ===
+{
+    "message": "failed to get context labels: Authentication - user not found",
+    "success": false
+}
+
+=== invalid password ===
+{
+    "message": "failed to get context labels: Authentication - authentication failure",
+    "success": false
+}
+
+=== correct password ===
+{
+    "context": "CONTEXT"
+    "source": "SOURCE"
+    "hostspec": "HOSTSPEC"
+    "labels": {
+        "domainname": "DOMAINNAME"
+        "groupid": GID
+        "hostname": "HOSTNAME"
+        "machineid": "MACHINEID"
+        "userid": UID
+    }
+}
+
+=== using unauthenticated context ===
+
+=== using authenticated context, missing HTTP auth headers (expect failure) ===
+{
+    "context": "CONTEXT"
+    "message": "authentication required",
+    "success": false
+}
+
+=== using authenticated context, with HTTP auth headers (expect success) ===
+cat: /var/log/pcp/pmcd/test_python.log: No such file or directory

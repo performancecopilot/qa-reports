@@ -1,0 +1,121 @@
+localhost -> "e7bee671f76e"
+hostname -f -> "e7bee671f76e"
+pmhostname -> gethostname() -> "e7bee671f76e"
+__pmGetAddrInfo() -> 0x55dd485da2b0
+__pmHostEntGetName() -> 0x55dd485da2b0 "e7bee671f76e" 10.88.0.2
+e7bee671f76e
+localhost has address 127.0.0.1
+Host e7bee671f76e not found: 3(NXDOMAIN)
+Host e7bee671f76e not found: 3(NXDOMAIN)
+Host e7bee671f76e not found: 3(NXDOMAIN)
+=== setup
+Looking for pmlogger using directory /var/log/pcp/pmlogger/1223-local: ...
+Warning: cannot find PID for host local: pmlogger, already exited?
+Looking for pmlogger using directory /var/log/pcp/pmlogger/1223-local: ...
+Not found as expected, launching new pmlogger
+Looking for pmlogger using directory /var/log/pcp/pmlogger/1223-localhost ...
+Found PID 1493936 to stop using signal TERM
+Looking for pmlogger using directory /var/log/pcp/pmlogger/1223-localhost ...
+Not found as expected, launching new pmlogger
+Looking for pmlogger using directory /var/log/pcp/pmlogger/1223-e7bee671f76e ...
+Found PID 1493986 to stop using signal TERM
+Looking for pmlogger using directory /var/log/pcp/pmlogger/1223-e7bee671f76e ...
+Not found as expected, launching new pmlogger
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+e7bee671f76e         20250403.21.55-00 1223     1495318 running  1223-e7bee671f76e
+local:               20250403.21.55    1223     1493889 running  1223-local:
+localhost            20250403.21.55-00 1223     1494579 running  1223-localhost
+== stop LOCALHOSTNAME
+12c12
+< LOCALHOSTNAME n n PCP_ARCHIVE_DIR/1223-LOCALHOSTNAME -r -c /var/tmp/1223-1493354.config
+---
+> #!#LOCALHOSTNAME n n PCP_ARCHIVE_DIR/1223-LOCALHOSTNAME -r -c /var/tmp/1223-1493354.config
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+e7bee671f76e         ?                 1223           ? stopped by pmlogctl 1223-e7bee671f76e
+local:               20250403.21.55    1223     1493889 running  1223-local:
+localhost            20250403.21.55-00 1223     1494579 running  1223-localhost
+== stop local:
+6c6
+< local: n n PCP_ARCHIVE_DIR/1223-local: -r -c /var/tmp/1223-1493354.config
+---
+> #!#local: n n PCP_ARCHIVE_DIR/1223-local: -r -c /var/tmp/1223-1493354.config
+12c12
+< LOCALHOSTNAME n n PCP_ARCHIVE_DIR/1223-LOCALHOSTNAME -r -c /var/tmp/1223-1493354.config
+---
+> #!#LOCALHOSTNAME n n PCP_ARCHIVE_DIR/1223-LOCALHOSTNAME -r -c /var/tmp/1223-1493354.config
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+e7bee671f76e         ?                 1223           ? stopped by pmlogctl 1223-e7bee671f76e
+local:               ?                 1223           ? stopped by pmlogctl 1223-local:
+localhost            20250403.21.55-00 1223     1494579 running  1223-localhost
+== stop localhost
+6c6
+< local: n n PCP_ARCHIVE_DIR/1223-local: -r -c /var/tmp/1223-1493354.config
+---
+> #!#local: n n PCP_ARCHIVE_DIR/1223-local: -r -c /var/tmp/1223-1493354.config
+9c9
+< localhost n n PCP_ARCHIVE_DIR/1223-localhost -r -c /var/tmp/1223-1493354.config
+---
+> #!#localhost n n PCP_ARCHIVE_DIR/1223-localhost -r -c /var/tmp/1223-1493354.config
+12c12
+< LOCALHOSTNAME n n PCP_ARCHIVE_DIR/1223-LOCALHOSTNAME -r -c /var/tmp/1223-1493354.config
+---
+> #!#LOCALHOSTNAME n n PCP_ARCHIVE_DIR/1223-LOCALHOSTNAME -r -c /var/tmp/1223-1493354.config
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+e7bee671f76e         ?                 1223           ? stopped by pmlogctl 1223-e7bee671f76e
+local:               ?                 1223           ? stopped by pmlogctl 1223-local:
+localhost            ?                 1223           ? stopped by pmlogctl 1223-localhost
+== start LOCALHOSTNAME
+6c6
+< local: n n PCP_ARCHIVE_DIR/1223-local: -r -c /var/tmp/1223-1493354.config
+---
+> #!#local: n n PCP_ARCHIVE_DIR/1223-local: -r -c /var/tmp/1223-1493354.config
+9c9
+< localhost n n PCP_ARCHIVE_DIR/1223-localhost -r -c /var/tmp/1223-1493354.config
+---
+> #!#localhost n n PCP_ARCHIVE_DIR/1223-localhost -r -c /var/tmp/1223-1493354.config
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+e7bee671f76e         20250403.21.55-01 1223     1497999 running  1223-e7bee671f76e
+local:               ?                 1223           ? dead     1223-local:
+   + Log for pmlogger on e7bee671f76e started Thu Apr  3 21:55:10 2025
+   + [Thu Apr  3 21:55:10] pmlogger(1498866) Info: Start
+   + Starting logger for host "e7bee671f76e" via "local:"
+   + __pmLogNewFile: "/var/log/pcp/pmlogger/1223-local:/20250403.21.55.index" already exists, not over-written
+localhost            ?                 1223           ? stopped by pmlogctl 1223-localhost
+== start local:
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+e7bee671f76e         20250403.21.55-01 1223     1497999 running  1223-e7bee671f76e
+local:               20250403.21.55-00 1223     1498866 running  1223-local:
+localhost            20250403.21.55-01 1223     1499596 running  1223-localhost
+== start localhost
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+e7bee671f76e         20250403.21.55-01 1223     1497999 running  1223-e7bee671f76e
+local:               20250403.21.55-00 1223     1498866 running  1223-local:
+localhost            20250403.21.55-01 1223     1499596 running  1223-localhost
+== destroy LOCALHOSTNAME
+12d11
+< LOCALHOSTNAME n n PCP_ARCHIVE_DIR/1223-LOCALHOSTNAME -r -c /var/tmp/1223-1493354.config
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+local:               20250403.21.55-00 1223     1498866 running  1223-local:
+localhost            20250403.21.55-01 1223     1499596 running  1223-localhost
+== destroy local:
+6d5
+< local: n n PCP_ARCHIVE_DIR/1223-local: -r -c /var/tmp/1223-1493354.config
+12d10
+< LOCALHOSTNAME n n PCP_ARCHIVE_DIR/1223-LOCALHOSTNAME -r -c /var/tmp/1223-1493354.config
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+localhost            20250403.21.55-01 1223     1499596 running  1223-localhost
+== destroy localhost
+pmcd Host            Archive           Class        PID State    Instance Id
+e7bee671f76e         20250403.21.54-00 primary  1491571 running  e7bee671f76e
+_cleanup: ...
+Warning: no host defined in class 1223 for any pmlogger control file
+Error: no matching host(s) to destroy

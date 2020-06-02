@@ -1,0 +1,50 @@
+== options error message
+from pcp import pmapi
+import sys
+opts = pmapi.pmOptions()
+nops = opts.pmGetOperands()
+nops = opts.pmGetNonOptionsFromList(sys.argv)
+ctx = pmapi.pmContext.fromOptions(opts, sys.argv)
+Traceback (most recent call last):
+  File "/var/tmp/968-1229458.opts", line 1, in <module>
+    from pcp import pmapi
+ImportError: cannot import name 'pmapi' from 'pcp' (/usr/lib/python3/dist-packages/pcp/__init__.py)
+== check setmode
+from pcp import pmapi
+import cpmapi as api
+import sys
+ctx = pmapi.pmContext(api.PM_CONTEXT_ARCHIVE, '/var/lib/pcp/testsuite/archives/src-rattle')
+try:
+    ctx.pmSetMode(api.PM_MODE_INTERP, None, 0)	# no exception
+except pmapi.pmErr as error:
+    sys.stderr.write("Unexpected pmSetMode error: ", error)
+Traceback (most recent call last):
+  File "/var/tmp/968-1229458.mode", line 1, in <module>
+    from pcp import pmapi
+ImportError: cannot import name 'pmapi' from 'pcp' (/usr/lib/python3/dist-packages/pcp/__init__.py)
+== check import
+from pcp import pmi
+import cpmapi as api
+log = pmi.pmiLogImport('/var/tmp/968-1229458.log', 0)
+log.pmiAddMetric("hinv.ncpu", api.PM_ID_NULL,
+                 api.PM_TYPE_U32, api.PM_INDOM_NULL,
+                 api.PM_SEM_DISCRETE, log.pmiUnits(0, 0, 0, 0, 0, 0))
+log.pmiPutValue("hinv.ncpu", None, "42")
+Traceback (most recent call last):
+  File "/var/tmp/968-1229458.pmi", line 1, in <module>
+    from pcp import pmi
+  File "/usr/lib/python3/dist-packages/pcp/pmi.py", line 52, in <module>
+    from pcp.pmapi import pmID, pmInDom, pmUnits, pmHighResResult, pmResult
+ModuleNotFoundError: No module named 'pcp.pmapi'
+== check derive
+from pcp import pmapi
+import sys
+ctx = pmapi.pmContext()
+try:
+    ctx.pmRegisterDerived("fuu", "rat(disk.dev.read)")
+except pmapi.pmErr as error:
+    print(error.message())
+Traceback (most recent call last):
+  File "/var/tmp/968-1229458.derive", line 1, in <module>
+    from pcp import pmapi
+ImportError: cannot import name 'pmapi' from 'pcp' (/usr/lib/python3/dist-packages/pcp/__init__.py)
