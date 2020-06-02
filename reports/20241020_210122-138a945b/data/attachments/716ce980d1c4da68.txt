@@ -1,0 +1,176 @@
+QA output created by 720
+=== std out ===
+pmParseHostAttrsSpec("pcps://nas1.servers.com:44321,4321@firewall.servers.com:44322?compress", ...)
+host[0]: "nas1.servers.com" ports: 44321 4321
+host[1]: "firewall.servers.com" port: 44322
+compress
+protocol=pcps
+pmUnparseHostAttrsSpec("pcps://nas1.servers.com:44321,4321@firewall.servers.com:44322?compress") -> "pcps://nas1.servers.com:44321,4321@firewall.servers.com:44322?compress"
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/parsehostattrs pcps://nas1.servers.com:44321,4321@firewall.servers.com:44322?compress
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+=== std out ===
+pmParseHostAttrsSpec("pcp://localhost:23?compress", ...)
+host[0]: "localhost" port: 23
+compress
+protocol=pcp
+pmUnparseHostAttrsSpec("pcp://localhost:23?compress") -> "pcp://localhost:23?compress"
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/parsehostattrs pcp://localhost:23?compress
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+=== std out ===
+pmParseHostAttrsSpec("pcp://some.host?user=pcpqa&compress&pass=blah", ...)
+host[0]: "some.host"
+password=blah
+compress
+username=pcpqa
+protocol=pcp
+pmUnparseHostAttrsSpec("pcp://some.host?user=pcpqa&compress&pass=blah") -> "pcp://some.host?password=blah&compress&username=pcpqa"
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/parsehostattrs pcp://some.host?user=pcpqa&compress&pass=blah
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+=== std out ===
+pmParseHostAttrsSpec("pcp://some.host?user=pcpqa", ...)
+host[0]: "some.host"
+username=pcpqa
+protocol=pcp
+pmUnparseHostAttrsSpec("pcp://some.host?user=pcpqa") -> "pcp://some.host?username=pcpqa"
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/parsehostattrs pcp://some.host?user=pcpqa
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+=== std out ===
+pmParseHostAttrsSpec("some.host?user=pcpqa", ...)
+host[0]: "some.host"
+username=pcpqa
+pmUnparseHostAttrsSpec("some.host?user=pcpqa") -> "some.host?username=pcpqa"
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/parsehostattrs some.host?user=pcpqa
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+=== std out ===
+pmParseHostAttrsSpec("some.host", ...)
+host[0]: "some.host"
+pmUnparseHostAttrsSpec("some.host") -> "some.host"
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/parsehostattrs some.host
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+=== std out ===
+pmParseHostAttrsSpec("pcp://?compress&exclusive", ...)
+exclusive
+compress
+protocol=pcp
+pmUnparseHostAttrsSpec("pcp://?compress&exclusive") -> "pcp://?exclusive&compress"
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/parsehostattrs pcp://?compress&exclusive
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+=== std out ===
+=== std err ===
+Error: Authentication - authentication failure
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: pminfo -h pcp://localhost?user=NOsuchUSER&pass=DEFINITELYnotApassword
+Conditional jump or move depends on uninitialised value(s)
+at 0x504B3A8: sasl_strlower (in /usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25)
+by 0x505002C: ??? (in /usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25)
+by 0x504BACE: sasl_client_new (in /usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25)
+by 0x48DE195: __pmSecureClientHandshake (in /usr/lib/libpcp.so.3)
+by 0x4880822: ??? (in /usr/lib/libpcp.so.3)
+by 0x48810DB: ??? (in /usr/lib/libpcp.so.3)
+by 0x48855E0: pmNewContext (in /usr/lib/libpcp.so.3)
+by 0x10C14C: ??? (in /usr/bin/pminfo)
+by 0x4953D8F: (below main) (libc_start_call_main.h:58)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:sasl_strlower
+   obj:/usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25
+   fun:sasl_client_new
+   fun:__pmSecureClientHandshake
+   obj:/usr/lib/libpcp.so.3
+   obj:/usr/lib/libpcp.so.3
+   fun:pmNewContext
+   obj:/usr/bin/pminfo
+   fun:(below main)
+}
+Conditional jump or move depends on uninitialised value(s)
+at 0x504B397: sasl_strlower (in /usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25)
+by 0x505002C: ??? (in /usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25)
+by 0x504BACE: sasl_client_new (in /usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25)
+by 0x48DE195: __pmSecureClientHandshake (in /usr/lib/libpcp.so.3)
+by 0x4880822: ??? (in /usr/lib/libpcp.so.3)
+by 0x48810DB: ??? (in /usr/lib/libpcp.so.3)
+by 0x48855E0: pmNewContext (in /usr/lib/libpcp.so.3)
+by 0x10C14C: ??? (in /usr/bin/pminfo)
+by 0x4953D8F: (below main) (libc_start_call_main.h:58)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:sasl_strlower
+   obj:/usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25
+   fun:sasl_client_new
+   fun:__pmSecureClientHandshake
+   obj:/usr/lib/libpcp.so.3
+   obj:/usr/lib/libpcp.so.3
+   fun:pmNewContext
+   obj:/usr/bin/pminfo
+   fun:(below main)
+}
+Conditional jump or move depends on uninitialised value(s)
+at 0x484EE87: strcpy (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+by 0x504BB01: sasl_client_new (in /usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25)
+by 0x48DE195: __pmSecureClientHandshake (in /usr/lib/libpcp.so.3)
+by 0x4880822: ??? (in /usr/lib/libpcp.so.3)
+by 0x48810DB: ??? (in /usr/lib/libpcp.so.3)
+by 0x48855E0: pmNewContext (in /usr/lib/libpcp.so.3)
+by 0x10C14C: ??? (in /usr/bin/pminfo)
+by 0x4953D8F: (below main) (libc_start_call_main.h:58)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:strcpy
+   fun:sasl_client_new
+   fun:__pmSecureClientHandshake
+   obj:/usr/lib/libpcp.so.3
+   obj:/usr/lib/libpcp.so.3
+   fun:pmNewContext
+   obj:/usr/bin/pminfo
+   fun:(below main)
+}
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+Use --track-origins=yes to see where uninitialised values come from
+ERROR SUMMARY: 14 errors from 3 contexts ...
