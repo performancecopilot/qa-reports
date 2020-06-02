@@ -1,0 +1,33 @@
+port=6060
+rm -rf *.log help.dir help.pag dep dep.bak *.[1-9].gz *.[1-9].bz2 *.[1-9].lzma *.[1-9].xz *.[1-9].tmp   dynamic.o         
+for d in `echo  `; do if test -d "$d" -a -f "$d/GNUmakefile"; then /usr/bin/echo === $d ===; /usr/bin/make --no-print-directory -C $d clean || exit $?; fi; done
+gcc -DPCP_VERSION=\"7.2.2\" -fPIC -fno-strict-aliasing -D_GNU_SOURCE -Wshadow -Wno-array-bounds -Wall -O2 -g -I../../src   -c -o dynamic.o dynamic.c
+gcc -DPCP_VERSION=\"7.2.2\" -fPIC -fno-strict-aliasing -D_GNU_SOURCE -Wshadow -Wno-array-bounds -Wall -O2 -g -I../../src -o pmdadynamic -Wl,--no-undefined -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -Wall -L/usr/lib64 -Wl,-rpath=/usr/lib64  dynamic.o -lpcp_pmda -lpcp -lm    
+Installing files ...
+make: Nothing to be done for 'install'.
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+Updating the PMCD control file, and notifying PMCD ...
+Check dynamic metrics have appeared ... 6 metrics and 3 values
+Terminate a PMDA needing attributes
+Fri Oct  2 00:10:17 UTC 2026
+UID          PID    PPID  C STIME TTY          TIME CMD
+root     1220670 1220269  0 00:10 ?        00:00:00 /var/lib/pcp/testsuite/pmdas/dynamic/pmdadynamic -d 247
+kill -KILL 1220670
+ps probe #0
+UID          PID    PPID  C STIME TTY          TIME CMD
+Fri Oct  2 00:10:17 UTC 2026
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host e745757d742e
+PMCD host        e745757d742e
+log started      Fri Oct  2 00:10:47.682211129 2026 (times in local time)
+last log entry   Fri Oct  2 00:10:48.352940715 2026
+current time     Fri Oct  2 00:10:48.382971340 2026
+log volume       0
+log size         70108
+Culling the Performance Metrics Name Space ...
+dynamic ... done
+Updating the PMCD control file, and notifying PMCD ...
+Removing files ...
+Check dynamic metrics have gone away ... OK

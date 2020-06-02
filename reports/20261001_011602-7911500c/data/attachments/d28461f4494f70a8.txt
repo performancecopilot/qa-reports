@@ -1,0 +1,610 @@
+time_stamp: step 2 delta 0.001625 secs tag cleanup old archives
+pmproxy_was_running=true
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Thu Oct  1 00:16:47 UTC 2026
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1873974       1  0 00:16 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -F -A
+pmproxy_pid=1873974
+time_stamp: step 3 delta 0.252083 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.184000 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.009625 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.125574 secs tag compression
+=== restarting pmlogger
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host b97a6d23e1e6
+PMCD host        b97a6d23e1e6
+log started      Thu Oct  1 00:16:51.263914269 2026 (times in local time)
+last log entry   Thu Oct  1 00:16:51.468165550 2026
+current time     Thu Oct  1 00:16:51.469054933 2026
+log volume       0
+log size         47524
+time_stamp: step 7 delta 0.749698 secs tag restart pmcd & pmlogger
+=== wait for pmproxy to process filesystem events
+time_stamp: step 8 delta 2.004304 secs tag wait for pmproxy
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 9 delta 0.010150 secs tag check for deleted files
+=== checking pmproxy correctly switches logvol when pmlogger bumps to a new logvol
+primary pmlogger archive path: /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01
+contents of /proc/1873974/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 11 -> socket:[3197837]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 12 -> socket:[3197838]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 13 -> socket:[3197839]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 14 -> socket:[3197840]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 15 -> socket:[3197841]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 16 -> socket:[3198616]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 17 -> /usr/share/pcp/lib/pmsearch.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 19 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 20 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 21 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 22 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 23 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 24 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 25 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 26 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 27 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 28 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 29 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 30 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 31 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 32 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 33 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 34 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 35 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 36 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 37 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 38 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 39 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.0
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 40 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 41 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 42 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 43 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 44 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 45 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 46 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 47 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 48 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 49 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 5 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 50 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 51 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 52 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 53 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 54 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 55 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 56 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 57 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 58 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 59 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 6 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 60 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 61 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 62 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 63 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 64 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 65 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 66 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 67 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 68 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 69 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 7 -> pipe:[3197836]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 70 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 71 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 72 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 73 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 74 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 75 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 76 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 77 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 78 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 8 -> pipe:[3197836]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 9 -> anon_inode:[eventfd]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01
+contents of /proc/1873974/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 11 -> socket:[3197837]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 12 -> socket:[3197838]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 13 -> socket:[3197839]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 14 -> socket:[3197840]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 15 -> socket:[3197841]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 16 -> socket:[3198616]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 17 -> /usr/share/pcp/lib/pmsearch.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 19 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 20 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 21 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 22 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 23 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 24 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 25 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 26 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 27 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 28 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 29 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 30 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 31 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 32 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 33 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 34 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 35 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 36 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 37 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 38 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 39 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.0
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 40 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 41 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 42 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 43 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 44 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 45 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 46 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 47 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 48 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 49 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 5 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 50 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 51 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 52 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 53 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 54 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 55 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 56 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 57 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 58 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 59 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 6 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 60 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 61 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 62 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 63 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 64 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 65 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 66 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 67 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 68 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 69 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 7 -> pipe:[3197836]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 70 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 71 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 72 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 73 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 74 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 75 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 76 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 77 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 78 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 8 -> pipe:[3197836]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 9 -> anon_inode:[eventfd]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01
+contents of /proc/1873974/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 11 -> socket:[3197837]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 12 -> socket:[3197838]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 13 -> socket:[3197839]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 14 -> socket:[3197840]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 15 -> socket:[3197841]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 16 -> socket:[3198616]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 17 -> /usr/share/pcp/lib/pmsearch.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 19 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 20 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 21 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 22 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 23 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 24 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 25 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 26 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 27 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 28 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 29 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 30 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 31 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 32 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 33 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 34 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 35 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 36 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 37 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 38 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 39 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.0
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 40 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 41 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 42 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 43 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 44 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 45 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 46 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 47 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 48 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 49 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 5 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 50 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 51 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 52 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 53 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 54 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 55 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 56 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 57 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 58 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 59 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 6 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 60 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 61 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 62 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 63 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 64 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 65 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 66 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 67 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 68 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 69 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 7 -> pipe:[3197836]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 70 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 71 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 72 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 73 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 74 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 75 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 76 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 77 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 78 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 8 -> pipe:[3197836]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 9 -> anon_inode:[eventfd]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01
+contents of /proc/1873974/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 11 -> socket:[3197837]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 12 -> socket:[3197838]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 13 -> socket:[3197839]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 14 -> socket:[3197840]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 15 -> socket:[3197841]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 16 -> socket:[3198616]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 17 -> /usr/share/pcp/lib/pmsearch.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 19 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 20 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 21 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 22 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 23 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 24 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 25 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 26 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 27 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 28 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 29 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 30 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 31 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 32 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 33 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 34 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 35 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 36 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 37 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 38 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 39 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.0
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 40 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 41 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 42 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 43 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 44 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 45 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 46 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 47 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 48 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 49 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 5 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 50 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 51 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 52 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 53 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 54 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 55 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 56 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 57 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 58 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 59 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 6 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 60 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 61 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 62 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 63 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 64 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 65 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 66 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 67 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 68 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 69 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 7 -> pipe:[3197836]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 70 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 71 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 72 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 73 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 74 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 75 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 76 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 77 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 78 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 8 -> pipe:[3197836]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 9 -> anon_inode:[eventfd]
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01
+contents of /proc/1873974/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 11 -> socket:[3197837]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 12 -> socket:[3197838]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 13 -> socket:[3197839]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 14 -> socket:[3197840]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 15 -> socket:[3197841]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 16 -> socket:[3198616]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 17 -> /usr/share/pcp/lib/pmsearch.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 19 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 20 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 21 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 22 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 23 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 24 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 25 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 26 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 27 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 28 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 29 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 30 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 31 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 32 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 33 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 34 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 35 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 36 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 37 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 38 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 39 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.0
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 40 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 41 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 42 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 43 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 44 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 45 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 46 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 47 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 48 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 49 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 5 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 50 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 51 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 52 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 53 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 54 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 55 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 56 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 57 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 58 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 59 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 6 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 60 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 61 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 62 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 63 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 64 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 65 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 66 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 67 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 68 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 69 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 7 -> pipe:[3197836]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 70 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 71 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 72 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 73 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 74 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 75 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 76 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 77 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 78 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 79 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 8 -> pipe:[3197836]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 80 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 81 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 82 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01.meta
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 9 -> anon_inode:[eventfd]
+curlogvol=0
+time_stamp: step 10 delta 8.064598 secs tag found old volume #
+
+pmproxy.discover.logvol.change_vol
+    value 0
+Connected to primary pmlogger at local:
+New log volume 1
+
+pmproxy.discover.logvol.change_vol
+    value 0
+primary pmlogger archive path: /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01
+contents of /proc/1873974/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 10 -> /dev/null
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 11 -> socket:[3197837]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 12 -> socket:[3197838]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 13 -> socket:[3197839]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 14 -> socket:[3197840]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 15 -> socket:[3197841]
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 16 -> socket:[3198616]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 17 -> /usr/share/pcp/lib/pmsearch.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 18 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 19 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 20 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 21 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 22 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.10.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 23 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 24 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 25 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 26 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-02.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 27 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 28 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 29 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 30 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.08-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 31 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 32 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 33 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 34 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 35 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 36 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 37 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 38 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 39 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.0
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 4 -> anon_inode:[io_uring]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 40 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 41 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 42 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 43 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 44 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 45 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 46 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.14.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 47 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 48 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 49 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 5 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 50 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 51 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 52 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 53 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 54 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.11.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 55 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 56 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 57 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 58 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 59 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 6 -> pipe:[3197835]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 60 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 61 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 62 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.12-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 63 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 64 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 65 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 66 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 67 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 68 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 69 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 7 -> pipe:[3197836]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 70 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 71 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 72 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 73 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 74 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.13-00.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 75 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.0
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 76 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 77 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 78 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.15.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 79 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01.0
+l-wx------ 1 pcp pcp 64 Oct  1 00:16 8 -> pipe:[3197836]
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 80 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01.meta
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 81 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01.index
+lr-x------ 1 pcp pcp 64 Oct  1 00:16 82 -> /var/log/pcp/pmlogger/b97a6d23e1e6/20261001.00.16-01.meta
+lrwx------ 1 pcp pcp 64 Oct  1 00:16 9 -> anon_inode:[eventfd]
+newlogvol=0
+time_stamp: step 11 delta 2.026062 secs tag found new volume #
+=== checking pmproxy survives pmlogger restart
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host b97a6d23e1e6
+PMCD host        b97a6d23e1e6
+log started      Thu Oct  1 00:17:04.155084928 2026 (times in local time)
+last log entry   Thu Oct  1 00:17:04.367818435 2026
+current time     Thu Oct  1 00:17:04.368826930 2026
+log volume       0
+log size         47512
+time_stamp: step 12 delta 0.802924 secs tag check pmproxy survives
++++ pmproxy.log +++
+Log for pmproxy on b97a6d23e1e6 started Thu Oct  1 00:16:47 2026
+
+pmproxy: PID = 1873974, PDU version = 2, user = pcp (990)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Thu Oct  1 00:16:47] pmproxy(1873974) Info: Key server slots, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on b97a6d23e1e6 started Thu Oct  1 00:14:52 2026
+
+pmproxy: PID = 1845369, PDU version = 2, user = pcp (990)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Thu Oct  1 00:14:52] pmproxy(1845369) Info: Key server slots, schema version setup
+[Thu Oct  1 00:16:47] pmproxy(1845369) Info: pmproxy caught SIGTERM
+[Thu Oct  1 00:16:47] pmproxy(1845369) Info: pmproxy Shutdown
+
+Log finished Thu Oct  1 00:16:47 2026
++++ pmlogger.log +++
+Log for pmlogger on b97a6d23e1e6 started Thu Oct  1 00:16:47 2026
+
+[Thu Oct  1 00:16:47] pmlogger(1874088) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "b97a6d23e1e6" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Thu Oct  1 00:16:50] pmlogger(1874088) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Thu Oct  1 00:16:50 2026
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host b97a6d23e1e6
+PMCD host        b97a6d23e1e6
+log started      Thu Oct  1 00:17:05.868972201 2026 (times in local time)
+last log entry   Thu Oct  1 00:17:06.074944453 2026
+current time     Thu Oct  1 00:17:07.088415772 2026
+log volume       0
+log size         73304
+Restart pmproxy ...
+exit: 0

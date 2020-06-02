@@ -1,0 +1,97 @@
+Starting pmcd ... 
+Starting pmlogger ... 
+
+/etc/init.d/pmcd:
+Warning: pmcd control file /etc/pcp/pmcd/pmcd.conf is missing, cannot identify PMDAs
+         to be terminated.
+/etc/init.d/pmcd:
+Error: pmcd control file $PCP_PMCD_CONF_PATH ("/etc/pcp/pmcd/pmcd.conf") is missing, cannot start pmcd.
+Starting pmlogger ... 
+
++ pmprobe pmcd.numclients
+pmprobe: Cannot connect to PMCD on host "local:": Connection refused
+clients=""
+
+=== simple case, no frills, no errors ===
+Starting pmcd ... 
+Starting pmlogger ... 
+
++ pmprobe pmcd.numclients
+pmcd.numclients 1
+clients="1"
+
+=== expected failure: a mere mortal ===
+/etc/init.d/pmcd:
+Error: You must be root (uid 0) to start or stop the Performance Co-Pilot pmcd.
+/etc/init.d/pmlogger: Error: You must be root (uid 0) to start or stop pmlogger via this script
+
++ pmprobe pmcd.numclients
+pmcd.numclients 1
+clients="1"
+=== start again ===
+Starting pmcd ... 
+Starting pmlogger ... 
+
++ pmprobe pmcd.numclients
+pmcd.numclients 1
+clients="1"
+
+=== expect 2 x connect failure: pmcd is true(1), so hard for pmlogger ===
+Starting pmcd ... 
+Starting pmlogger ... 
+
++ pmprobe pmcd.numclients
+pmprobe: Cannot connect to PMCD on host "local:": Connection refused
+clients=""
+=== start again ===
+Starting pmcd ... 
+Starting pmlogger ... 
+
++ pmprobe pmcd.numclients
+pmcd.numclients 1
+clients="1"
+=== expect difficulty terminating pmcd ... it has been sent a SIGSTOP ===
+....................
+Process ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       512141       1  0 23:02 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+/etc/init.d/pmcd: Warning: Forcing pmcd to terminate!
+Starting pmcd ... 
+Starting pmlogger ... 
+
++ pmprobe pmcd.numclients
+pmcd.numclients 1
+clients="1"
+
+=== expect warning: PMLOGGER.CHECK moved, so no pmlogger ===
+Starting pmcd ... 
+/usr/lib/pcp/services/pmlogger:
+Warning: Performance Co-Pilot installation is incomplete (at least the
+         script "pmlogger_check" is missing) and the PCP archive logger(s)
+	 cannot be started.
+failed (status=1)
+
++ pmprobe pmcd.numclients
+pmcd.numclients 1
+clients="1"
+
+=== expect error: pmlogger/control moved, so no pmlogger ===
+Starting pmcd ... 
+/usr/lib/pcp/services/pmlogger:
+Error: PCP archive logger control file $PCP_PMLOGGERCONTROL_PATH ("/etc/pcp/pmlogger/control")
+       is missing!  Cannot start any Performance Co-Pilot archive logger(s).
+failed (status=1)
+
++ pmprobe pmcd.numclients
+pmcd.numclients 1
+clients="1"
+
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host runnervmlun5p
+PMCD host        runnervmlun5p
+log started      Mon Sep 21 23:03:46.365954436 2026 (times in local time)
+last log entry   Mon Sep 21 23:03:46.670552356 2026
+current time     Mon Sep 21 23:03:47.689394820 2026
+log volume       0
+log size         157748
