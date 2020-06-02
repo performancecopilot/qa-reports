@@ -1,0 +1,55 @@
+QA output created by 1476
+=== no change ===
+=== std out ===
+=== std err ===
+Done, no rewriting required
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: pmlogrewrite -c PCP_VAR_DIR/config/pmlogrewrite -Dappl0,appl3 -q -i TMP
+22 bytes in 4 blocks are definitely lost in loss record 26 of 74
+at 0x486CAE6: malloc (vg_replace_malloc.c:447)
+by 0x49F79AE: strdup (in /usr/lib64/libc.so.6)
+by 0x400EFD4: dupstr (lex.l:52)
+by 0x400FB7E: yylex (lex.l:140)
+by 0x40125C2: yyparse (gram.tab.c:2257)
+by 0x4001C08: parseconfig (pmlogrewrite.c:465)
+by 0x4001C08: main (pmlogrewrite.c:1854)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:strdup
+   fun:dupstr
+   fun:yylex
+   fun:yyparse
+   fun:parseconfig
+   fun:main
+}
+LEAK SUMMARY:
+definitely lost: 22 bytes in 4 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 1 errors from 1 contexts ...
+
+=== one type change ===
+
+sample.load
+    Data Type: 32-bit int  InDom: PM_INDOM_NULL 0xffffffff
+    Semantics: instant  Units: none
+=== std out ===
+PCP Archive Rewrite Specifications Summary
+
+Metric: sample.load (29.0.4)
+Semantics:	instant -> discrete
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: pmlogrewrite -c TMP.config -v -q -i TMP
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+
+sample.load
+    Data Type: 32-bit int  InDom: PM_INDOM_NULL 0xffffffff
+    Semantics: discrete  Units: none

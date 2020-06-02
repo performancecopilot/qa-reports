@@ -1,0 +1,63 @@
+QA output created by 317
+
+Verify no pmlogsummary coredump...
+Note: timezone set to local timezone of host "nas1" from archive
+
+pmlogsummary: kernel.all.cpu.wait.total(60.0.35) - failed to extract value: Impossible value or scale conversion
+pmlogsummary: possibly corrupt archive?
+
+Verify no pmlogcheck coredump...
+Note: timezone set to local timezone of host "nas1" from archive
+
+badarchives/logsummary-bug.0:[00:11:08.712] kernel.all.cpu.wait.total: pmExtractValue failed: Impossible value or scale conversion
+pmlogcheck: possibly corrupt archive?
+
+Verify no pmval coredump...
+Note: timezone set to local timezone of host "nas1" from archive
+
+metric:    kernel.all.cpu.wait.total
+archive:   badarchives/logsummary-bug
+host:      nas1
+start:     Thu Aug  2 00:11:08 2007
+end:       Thu Aug  2 00:11:23 2007
+semantics: cumulative counter (converting to rate)
+units:     millisec (converting to time utilization)
+samples:   15
+interval:  1.00 sec
+
+pmval: pmFetch: Corrupted record in a PCP archive
+
+Verify no pmval+derived metrics coredump...
+Note: timezone set to local timezone of host "nas1" from archive
+
+metric:    qa
+archive:   badarchives/logsummary-bug
+host:      nas1
+start:     Thu Aug  2 00:11:08 2007
+end:       Thu Aug  2 00:11:23 2007
+semantics: cumulative counter (converting to rate)
+units:     millisec (converting to time utilization)
+samples:   15
+interval:  1.00 sec
+
+pmval: pmFetch: Corrupted record in a PCP archive
+
+Verify no pmie coredump...
+pmie: timezone set to local timezone from badarchives/logsummary-bug
+pmie: pmFetch failed: Corrupted record in a PCP archive
+
+Verify no pmie+derived metrics coredump...
+pmie: timezone set to local timezone from badarchives/logsummary-bug
+pmie: pmFetch failed: Corrupted record in a PCP archive
+
+Verify no pmrep coredump...
+Traceback (most recent call last):
+  File "/usr/bin/pmrep", line 40, in <module>
+    from pcp import pmapi, pmi, pmconfig
+  File "/usr/lib/python3/dist-packages/pcp/pmi.py", line 126, in <module>
+    LIBPCP_IMPORT.pmiWrite2.restype = c_int
+  File "/usr/lib/python3.8/ctypes/__init__.py", line 386, in __getattr__
+    func = self.__getitem__(name)
+  File "/usr/lib/python3.8/ctypes/__init__.py", line 391, in __getitem__
+    func = self._FuncPtr((name_or_ordinal, self))
+AttributeError: /lib/x86_64-linux-gnu/libpcp_import.so.2: undefined symbol: pmiWrite2

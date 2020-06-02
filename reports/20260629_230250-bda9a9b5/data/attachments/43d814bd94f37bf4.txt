@@ -1,0 +1,54 @@
+QA output created by 1602
+== Start a key server cluster
+== Start node 1
+PONG
+OK
+== Start node 2
+PONG
+OK
+== Start node 3
+PONG
+OK
+
+== Create key server cluster
+[OK] All nodes agree about slots configuration.
+[OK] All 16384 slots covered.
+
+== Wait for cluster to get ready
+OK
+
+== Cluster status
+cluster_state:ok
+cluster_known_nodes:3
+cluster_size:3
+
+== start pmproxy
+pmproxy failed to start on port 54324 after 20 seconds
+likely looking processes ...
+pmproxy logfile (/tmp/1602-1756640.pmproxy.log) ...
+Log for pmproxy on fde4c937a4d2 started Mon Jun 29 22:13:13 2026
+
+[Mon Jun 29 22:13:13] pmproxy(1758510) Error: pmWebTimerSetMetricRegistry: server instrumentation disabled
+[Mon Jun 29 22:13:13] pmproxy(1758510) Error: pmproxy: open_request_local - uv_pipe_bind /run/pcp/pmproxy.socket failed [EACCES]: permission denied
+[Mon Jun 29 22:13:13] pmproxy(1758510) Error: pmproxy: open_request_port - uv_listen failed port=54324 [EADDRINUSE]: address already in use
+[Mon Jun 29 22:13:13] pmproxy(1758510) Error: pmproxy: open_request_port - uv_listen failed port=54324 [EADDRINUSE]: address already in use
+[Mon Jun 29 22:13:13] pmproxy(1758510) Error: pmproxy: can't open any request ports, exiting
+[Mon Jun 29 22:13:13] pmproxy(1758510) Error: pmproxy not started due to errors!
+
+Log finished Mon Jun 29 22:13:13 2026
+--- start systemctl status for pmproxy.service ---
+* pmproxy.service - Proxy for Performance Metrics Collector Daemon
+   Loaded: loaded (/usr/lib/systemd/system/pmproxy.service; disabled; vendor preset: disabled)
+   Active: inactive (dead) since Mon 2026-06-29 22:12:57 UTC; 34s ago
+     Docs: man:pmproxy(1)
+  Process: 1745273 ExecStart=/usr/libexec/pcp/services/pmproxy start-systemd (code=exited, status=0/SUCCESS)
+ Main PID: 1745273 (code=exited, status=0/SUCCESS)
+--- end systemctl status for pmproxy.service ---
+--- start journalctl entries in last minute for -u pmproxy ---
+-- Logs begin at Mon 2026-06-29 19:50:57 UTC, end at Mon 2026-06-29 22:13:32 UTC. --
+Jun 29 22:12:57 fde4c937a4d2 systemd[1]: Stopping Proxy for Performance Metrics Collector Daemon...
+Jun 29 22:12:57 fde4c937a4d2 systemd[1]: pmproxy.service: Succeeded.
+Jun 29 22:12:57 fde4c937a4d2 systemd[1]: Stopped Proxy for Performance Metrics Collector Daemon.
+--- end recent journalctl entries for -u pmproxy ---
+/usr/libexec/pcp/bin/pmsignal: line 129: kill: (1758510) - No such process
+pmsignal: failing command:  kill  TERM 1758510

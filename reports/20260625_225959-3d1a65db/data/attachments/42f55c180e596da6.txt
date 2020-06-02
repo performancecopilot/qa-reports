@@ -1,0 +1,53 @@
+== options error message
+from pcp import pmapi
+import sys
+opts = pmapi.pmOptions()
+nops = opts.pmGetOperands()
+nops = opts.pmGetNonOptionsFromList(sys.argv)
+ctx = pmapi.pmContext.fromOptions(opts, sys.argv)
+Traceback (most recent call last):
+  File "/tmp/968-1091536.opts", line 4, in <module>
+    nops = opts.pmGetOperands()
+  File "/usr/lib/python3/dist-packages/pcp/pmapi.py", line 1139, in pmGetOperands
+    return c_api.pmGetOperands()
+RuntimeError: pmGetOptions is not yet done
+== check setmode
+from pcp import pmapi
+import cpmapi as api
+import sys
+ctx = pmapi.pmContext(api.PM_CONTEXT_ARCHIVE, '/var/lib/pcp/testsuite/archives/src-rattle')
+try:
+    ctx.pmSetMode(api.PM_MODE_INTERP, None, 0)	# no exception
+except pmapi.pmErr as error:
+    sys.stderr.write("Unexpected pmSetMode error: ", error)
+== check import
+from pcp import pmi
+import cpmapi as api
+log = pmi.pmiLogImport('/tmp/968-1091536.log', 0)
+log.pmiAddMetric("hinv.ncpu", api.PM_ID_NULL,
+                 api.PM_TYPE_U32, api.PM_INDOM_NULL,
+                 api.PM_SEM_DISCRETE, log.pmiUnits(0, 0, 0, 0, 0, 0))
+log.pmiPutValue("hinv.ncpu", None, "42")
+Traceback (most recent call last):
+  File "/tmp/968-1091536.pmi", line 1, in <module>
+    from pcp import pmi
+  File "/usr/lib/python3/dist-packages/pcp/pmi.py", line 126, in <module>
+    LIBPCP_IMPORT.pmiWrite2.restype = c_int
+  File "/usr/lib/python3.8/ctypes/__init__.py", line 386, in __getattr__
+    func = self.__getitem__(name)
+  File "/usr/lib/python3.8/ctypes/__init__.py", line 391, in __getitem__
+    func = self._FuncPtr((name_or_ordinal, self))
+AttributeError: /lib/x86_64-linux-gnu/libpcp_import.so.2: undefined symbol: pmiWrite2
+== check derive
+from pcp import pmapi
+import sys
+ctx = pmapi.pmContext()
+try:
+    ctx.pmRegisterDerived("fuu", "rat(disk.dev.read)")
+except pmapi.pmErr as error:
+    print(error.message())
+Impossible value or scale conversion Error: pmRegisterDerivedMetric("fuu", ...)
+rat(disk.dev.read)
+    ^
+Unexpected '('
+
