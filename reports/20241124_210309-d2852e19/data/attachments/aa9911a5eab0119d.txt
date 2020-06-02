@@ -1,0 +1,184 @@
+QA output created by 1290
+
++++ pminfo -h MY_HOSTNAME -d pmcd.agent +++
+
+pmcd.agent.type
+    Data Type: 32-bit unsigned int  InDom: 2.3 0x800003
+    Semantics: discrete  Units: none
+
+pmcd.agent.status
+    Data Type: 32-bit int  InDom: 2.3 0x800003
+    Semantics: discrete  Units: none
+
+pmcd.agent.fenced
+    Data Type: 32-bit unsigned int  InDom: 2.3 0x800003
+    Semantics: instant  Units: none
+
+pmcd.agent.name
+    Data Type: string  InDom: 2.3 0x800003
+    Semantics: discrete  Units: none
+N connects
+N-0 disconnects
+
++++ pminfo -h MY_HOSTNAME -f sample.hordes +++
+[DATE] pminfo(PID) Warning: __pmConnectPMCD: bad version string from pmproxy: ""
+pminfo: Cannot connect to PMCD on host "MY_HOSTNAME": IPC protocol failure
+N connects
+N-0 disconnects
+
++++ pmprobe -v -h MY_HOSTNAME hinv.ncpu +++
+pmprobe: Cannot connect to PMCD on host "MY_HOSTNAME": Connection refused
+N connects
+N-0 disconnects
+
++++ pmval -h MY_HOSTNAME -t 0.5 -s 3 sample.bin +++
+pmval: Cannot connect to PMCD on host "MY_HOSTNAME": Connection refused
+N connects
+N-0 disconnects
+
++++ pmie -h MY_HOSTNAME -c TMP.in -v -t 0.5 -T 1.75 +++
+[DATE] pmie(PID) Info: Cannot connect to pmcd MY_HOSTNAME
+pmie: warning - pmcd via MY_HOSTNAME does not respond
+expr_1: ?
+
+expr_1: ?
+
+expr_1: ?
+
+expr_1: ?
+
+[DATE] pmie(PID) Info: evaluator exiting
+N connects
+N-0 disconnects
+
++++ pmie -h MY_HOSTNAME -c TMP.in -v -t 0.5 -T 1.75 +++
+[DATE] pmie(PID) Info: Cannot connect to pmcd MY_HOSTNAME
+pmie: warning - pmcd via MY_HOSTNAME does not respond
+expr_1: ?
+
+expr_1: ?
+
+expr_1: ?
+
+expr_1: ?
+
+[DATE] pmie(PID) Info: evaluator exiting
+N connects
+N-0 disconnects
+
++++ pmdumptext -h MY_HOSTNAME -t 0.5 -s 2 sample.string.hullo +++
+pmdumptext: Error: MY_HOSTNAME: Connection refused
+N connects
+N-0 disconnects
+
++++ pmdumptext -t 0.5 -s 2 MY_HOSTNAME:sample.string.hullo +++
+pmdumptext: Error: MY_HOSTNAME: Connection refused
+pmdumptext: no valid metrics, exiting.
+N connects
+N-0 disconnects
+
++++ pmdumptext -t 0.5 -s 2 MY_HOSTNAME:kernel.all.load +++
+pmdumptext: Error: MY_HOSTNAME: Connection refused
+pmdumptext: no valid metrics, exiting.
+N connects
+N-0 disconnects
+
++++ pmstat -h MY_HOSTNAME -t 0.5 -s 2 +++
+pmstat: Cannot create fetchgroup: Connection refused
+pmstat: No place to get data from!
+N connects
+N-0 disconnects
+
++++ pmlogger -h MY_HOSTNAME -c TMP.logger.config -t 0.5sec -s 8 -l TMP.logger.log TMP.arch +++
+N connects
+N-0 disconnects
+
++++ pmstat -t 0.5sec -a TMP.arch -z +++
+pmstat: Cannot create fetchgroup: No such file or directory
+pmstat: No place to get data from!
+N connects
+N-0 disconnects
+
+=== pmproxy std out ===
+=== pmproxy std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -Dcontext -U USERNAME -l TMP.log
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+Invalid read of size 1
+at 0x48A4A77: seriesPassBaton (batons.c:131)
+by 0x48BCEB4: UnknownInlinedFun (discover.c:650)
+by 0x48BCEB4: UnknownInlinedFun (discover.c:217)
+by 0x48BCEB4: changed_callback.lto_priv.0 (discover.c:1776)
+by 0x48B449E: fs_change_callBack.lto_priv.0 (discover.c:459)
+by 0x4E9E2C2: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4E9FA32: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4E86621: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x112116: main_loop (server.c:903)
+by 0x110BA8: main (pmproxy.c:465)
+Address 0x3 is not stack'd, malloc'd or (recently) free'd
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:seriesPassBaton
+   fun:UnknownInlinedFun
+   fun:UnknownInlinedFun
+   fun:changed_callback.lto_priv.0
+   fun:fs_change_callBack.lto_priv.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+Process terminating with default action of signal 11 (SIGSEGV)
+Access not within mapped region at address 0x3
+at 0x48A4A77: seriesPassBaton (batons.c:131)
+by 0x48BCEB4: UnknownInlinedFun (discover.c:650)
+by 0x48BCEB4: UnknownInlinedFun (discover.c:217)
+by 0x48BCEB4: changed_callback.lto_priv.0 (discover.c:1776)
+by 0x48B449E: fs_change_callBack.lto_priv.0 (discover.c:459)
+by 0x4E9E2C2: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4E9FA32: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4E86621: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x112116: main_loop (server.c:903)
+by 0x110BA8: main (pmproxy.c:465)
+If you believe this happened as a result of a stack
+overflow in your program's main thread (unlikely but
+possible), you can try to increase the size of the
+main thread stack using the --main-stacksize= flag.
+The main thread stack size used in this run was 8388608.
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+1 errors in context 1 of 107:
+Invalid read of size 1
+at 0x48A4A77: seriesPassBaton (batons.c:131)
+by 0x48BCEB4: UnknownInlinedFun (discover.c:650)
+by 0x48BCEB4: UnknownInlinedFun (discover.c:217)
+by 0x48BCEB4: changed_callback.lto_priv.0 (discover.c:1776)
+by 0x48B449E: fs_change_callBack.lto_priv.0 (discover.c:459)
+by 0x4E9E2C2: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4E9FA32: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4E86621: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x112116: main_loop (server.c:903)
+by 0x110BA8: main (pmproxy.c:465)
+Address 0x3 is not stack'd, malloc'd or (recently) free'd
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:seriesPassBaton
+   fun:UnknownInlinedFun
+   fun:UnknownInlinedFun
+   fun:changed_callback.lto_priv.0
+   fun:fs_change_callBack.lto_priv.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+--1430978-- 
+--1430978-- used_suppression:      1 dtv-addr-init /usr/libexec/valgrind/default.supp:1575 suppressed: 148 bytes in 1 blocks
