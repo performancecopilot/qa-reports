@@ -1,0 +1,264 @@
+time_stamp: step 2 delta 0.008770 secs tag key server start
+time_stamp: step 3 delta 0.148272 secs tag key server active
+time_stamp: step 4 delta 0.003043 secs tag pmlogger start
+time_stamp: step 5 delta 0.001844 secs tag pmlogger active
+time_stamp: step 6 delta 0.019448 secs tag pmproxy start
+=== valgrind output
+Warning: no extra suppressions found for valgrind version 3.27.1
+Warning: using extra  --read-var-info=no --read-inline-info=yes --track-origins=yes --read-var-info=yes --read-inline-info=yes --suppressions=/tmp/1662-1788003.suppress
+=== std out ===
+=== std err ===
+=== valgrind report ===
+==1788143== Memcheck, a memory error detector
+==1788143== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==1788143== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==1788143== Command: /usr/libexec/pcp/bin/pmproxy -Ddev0,discovery -f -t -A -c /tmp/1662-1788003.conf -U pcpqa -T 10sec -l /tmp/1662-1788003.pmproxy -r 54321 -p 54322 -s /tmp/1662-1788003.pmproxy.sock
+==1788143== Parent PID: 1788128
+==1788143== 
+==1788143== 
+==1788143== HEAP SUMMARY:
+==1788143==     in use at exit: 108,991 bytes in 2,529 blocks
+==1788143==   total heap usage: 4,200 allocs, 1,671 frees, 362,653 bytes allocated
+==1788143== 
+==1788143== 59 bytes in 1 blocks are possibly lost in loss record 578 of 652
+==1788143==    at 0x487B50E: calloc (vg_replace_malloc.c:1616)
+==1788143==    by 0x48F440B: vk_malloc (alloc.h:60)
+==1788143==    by 0x48F440B: sdsnewlen (sds.c:99)
+==1788143==    by 0x4016C17: setup_http_module (http.c:1389)
+==1788143==    by 0x4016C17: setup_proxy (server.c:862)
+==1788143==    by 0x4FFBFBD: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1788143==    by 0x400C35E: main_loop (server.c:921)
+==1788143==    by 0x400B11D: main (pmproxy.c:473)
+==1788143== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   fun:vk_malloc
+   fun:sdsnewlen
+   fun:setup_http_module
+   fun:setup_proxy
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1788143== 160 bytes in 1 blocks are definitely lost in loss record 605 of 652
+==1788143==    at 0x487B50E: calloc (vg_replace_malloc.c:1616)
+==1788143==    by 0x48DB44D: keysSchemaLoad (schema.c:1475)
+==1788143==    by 0x48DB44D: keySlotsReconnect (slots.c:377)
+==1788143==    by 0x48DC990: keySlotsConnect (slots.c:407)
+==1788143==    by 0x40167AF: setup_keys_module (keys.c:240)
+==1788143==    by 0x4016A35: setup_proxy (server.c:861)
+==1788143==    by 0x4FFBFBD: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1788143==    by 0x400C35E: main_loop (server.c:921)
+==1788143==    by 0x400B11D: main (pmproxy.c:473)
+==1788143== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:keysSchemaLoad
+   fun:keySlotsReconnect
+   fun:keySlotsConnect
+   fun:setup_keys_module
+   fun:setup_proxy
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1788143== 328 bytes in 1 blocks are possibly lost in loss record 616 of 652
+==1788143==    at 0x487B50E: calloc (vg_replace_malloc.c:1616)
+==1788143==    by 0x48CFE2E: vk_malloc (alloc.h:60)
+==1788143==    by 0x48CFE2E: valkeyLibuvAttach (libuv.h:182)
+==1788143==    by 0x48CFE2E: valkeyLibuvAttachAdapter (libuv.h:202)
+==1788143==    by 0x48FDBAD: valkeyClusterGetValkeyAsyncContext.part.0 (cluster.c:2707)
+==1788143==    by 0x48D583A: valkeyClusterGetValkeyAsyncContext (sds.h:102)
+==1788143==    by 0x48D583A: valkeyClusterAsyncFormattedCommandToNode (cluster.c:3181)
+==1788143==    by 0x48D583A: keySlotsRequestFirstNode (slots.c:688)
+==1788143==    by 0x48C4FCC: keys_load_version.lto_priv.0 (schema.c:1342)
+==1788143==    by 0x48DC990: keySlotsConnect (slots.c:407)
+==1788143==    by 0x40167AF: setup_keys_module (keys.c:240)
+==1788143==    by 0x4016A35: setup_proxy (server.c:861)
+==1788143==    by 0x4FFBFBD: uv_run (in /usr/lib64/libuv.so.1.0.0)
+==1788143==    by 0x400C35E: main_loop (server.c:921)
+==1788143==    by 0x400B11D: main (pmproxy.c:473)
+==1788143== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   fun:vk_malloc
+   fun:valkeyLibuvAttach
+   fun:valkeyLibuvAttachAdapter
+   fun:valkeyClusterGetValkeyAsyncContext.part.0
+   fun:valkeyClusterGetValkeyAsyncContext
+   fun:valkeyClusterAsyncFormattedCommandToNode
+   fun:keySlotsRequestFirstNode
+   fun:keys_load_version.lto_priv.0
+   fun:keySlotsConnect
+   fun:setup_keys_module
+   fun:setup_proxy
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+==1788143== LEAK SUMMARY:
+==1788143==    definitely lost: 160 bytes in 1 blocks
+==1788143==    indirectly lost: 0 bytes in 0 blocks
+==1788143==      possibly lost: 387 bytes in 2 blocks
+==1788143==    still reachable: 108,444 bytes in 2,526 blocks
+==1788143==         suppressed: 0 bytes in 0 blocks
+==1788143== Reachable blocks (those to which a pointer was found) are not shown.
+==1788143== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1788143== 
+==1788143== For lists of detected and suppressed errors, rerun with: -s
+==1788143== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: /usr/libexec/pcp/bin/pmproxy -Ddev0,discovery -f -t -A -c /tmp/1662-1788003.conf -U pcpqa -T 10sec -l /tmp/1662-1788003.pmproxy -r 54321 -p 54322 -s /tmp/1662-1788003.pmproxy.sock
+59 bytes in 1 blocks are possibly lost in loss record 578 of 652
+at 0x487B50E: calloc (vg_replace_malloc.c:1616)
+by 0x48F440B: vk_malloc (alloc.h:60)
+by 0x48F440B: sdsnewlen (sds.c:99)
+by 0x4016C17: setup_http_module (http.c:1389)
+by 0x4016C17: setup_proxy (server.c:862)
+by 0x4FFBFBD: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x400C35E: main_loop (server.c:921)
+by 0x400B11D: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   fun:vk_malloc
+   fun:sdsnewlen
+   fun:setup_http_module
+   fun:setup_proxy
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+160 bytes in 1 blocks are definitely lost in loss record 605 of 652
+at 0x487B50E: calloc (vg_replace_malloc.c:1616)
+by 0x48DB44D: keysSchemaLoad (schema.c:1475)
+by 0x48DB44D: keySlotsReconnect (slots.c:377)
+by 0x48DC990: keySlotsConnect (slots.c:407)
+by 0x40167AF: setup_keys_module (keys.c:240)
+by 0x4016A35: setup_proxy (server.c:861)
+by 0x4FFBFBD: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x400C35E: main_loop (server.c:921)
+by 0x400B11D: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:keysSchemaLoad
+   fun:keySlotsReconnect
+   fun:keySlotsConnect
+   fun:setup_keys_module
+   fun:setup_proxy
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+328 bytes in 1 blocks are possibly lost in loss record 616 of 652
+at 0x487B50E: calloc (vg_replace_malloc.c:1616)
+by 0x48CFE2E: vk_malloc (alloc.h:60)
+by 0x48CFE2E: valkeyLibuvAttach (libuv.h:182)
+by 0x48CFE2E: valkeyLibuvAttachAdapter (libuv.h:202)
+by 0x48FDBAD: valkeyClusterGetValkeyAsyncContext.part.0 (cluster.c:2707)
+by 0x48D583A: valkeyClusterGetValkeyAsyncContext (sds.h:102)
+by 0x48D583A: valkeyClusterAsyncFormattedCommandToNode (cluster.c:3181)
+by 0x48D583A: keySlotsRequestFirstNode (slots.c:688)
+by 0x48C4FCC: keys_load_version.lto_priv.0 (schema.c:1342)
+by 0x48DC990: keySlotsConnect (slots.c:407)
+by 0x40167AF: setup_keys_module (keys.c:240)
+by 0x4016A35: setup_proxy (server.c:861)
+by 0x4FFBFBD: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x400C35E: main_loop (server.c:921)
+by 0x400B11D: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   fun:vk_malloc
+   fun:valkeyLibuvAttach
+   fun:valkeyLibuvAttachAdapter
+   fun:valkeyClusterGetValkeyAsyncContext.part.0
+   fun:valkeyClusterGetValkeyAsyncContext
+   fun:valkeyClusterAsyncFormattedCommandToNode
+   fun:keySlotsRequestFirstNode
+   fun:keys_load_version.lto_priv.0
+   fun:keySlotsConnect
+   fun:setup_keys_module
+   fun:setup_proxy
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+LEAK SUMMARY:
+definitely lost: 160 bytes in 1 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 3 errors from 3 contexts ...
+time_stamp: step 7 delta 12.895821 secs tag pmproxy exited
+=== key server log ===
+1788098:M 06 Oct 2026 02:47:29.222 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1788098:M 06 Oct 2026 02:47:29.222 * oO0OoO0OoO0Oo Valkey is starting oO0OoO0OoO0Oo
+1788098:M 06 Oct 2026 02:47:29.222 * Valkey version=8.1.10, bits=64, commit=00000000, modified=1, pid=1788098, just started
+1788098:M 06 Oct 2026 02:47:29.222 * Configuration loaded
+1788098:M 06 Oct 2026 02:47:29.222 * monotonic clock: POSIX clock_gettime
+1788098:M 06 Oct 2026 02:47:29.223 * Running mode=standalone, port=54321.
+1788098:M 06 Oct 2026 02:47:29.223 * Server initialized
+1788098:M 06 Oct 2026 02:47:29.223 * Ready to accept connections tcp
+=== pmlogger log ===
+Log for pmlogger on 0256d00e2345 started Tue Oct  6 02:47:29 2026
+
+[Tue Oct  6 02:47:29] pmlogger(1788115) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "0256d00e2345" via "local:"
+Archive basename: /tmp/1662-1788003.qa1662/test
+New log volume 1, via sample byte size at Tue Oct  6 02:47:29 2026
+New log volume 2, via sample byte size at Tue Oct  6 02:47:30 2026
+New log volume 3, via sample byte size at Tue Oct  6 02:47:30 2026
+New log volume 4, via sample byte size at Tue Oct  6 02:47:32 2026
+New log volume 5, via sample byte size at Tue Oct  6 02:47:34 2026
+New log volume 6, via sample byte size at Tue Oct  6 02:47:37 2026
+[Tue Oct  6 02:47:38] pmlogger(1788115) Info: pmlogger: End of run time, exiting
+
+Log finished Tue Oct  6 02:47:38 2026
+=== pmlogger2 log ===
+Log for pmlogger on 0256d00e2345 started Tue Oct  6 02:47:32 2026
+
+[Tue Oct  6 02:47:32] pmlogger(1788148) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /tmp/1662-1788003.sample
+Warning [/tmp/1662-1788003.sample, line 1]
+Description unavailable for metric "sample.bad.unknown" ... not logged
+Reason: Unknown or illegal metric identifier
+Config parsed
+Starting logger for host "0256d00e2345" via "local:"
+Archive basename: /tmp/1662-1788003.qa1662/test2
+New log volume 1, via sample byte size at Tue Oct  6 02:47:32 2026
+New log volume 2, via sample byte size at Tue Oct  6 02:47:33 2026
+New log volume 3, via sample byte size at Tue Oct  6 02:47:35 2026
+[Tue Oct  6 02:47:36] pmlogger(1788148) Info: pmlogger: End of run time, exiting
+
+Log finished Tue Oct  6 02:47:36 2026
+=== pmproxy log ===
+Log for pmproxy on 0256d00e2345 started Tue Oct  6 02:47:32 2026
+
+[Tue Oct  6 02:47:32] pmproxy(1788143) Error: pmWebTimerSetMetricRegistry: server instrumentation disabled
+pmproxy: PID = 1788143, PDU version = 2, user = pcpqa (993)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    10       unix   /tmp/1662-1788003.pmproxy.sock
+  ok    11 54322 inet   INADDR_ANY
+  ok    12 54322 ipv6   INADDR_ANY
+
+Log finished Tue Oct  6 02:47:42 2026

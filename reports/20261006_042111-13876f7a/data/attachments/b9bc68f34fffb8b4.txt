@@ -1,0 +1,37 @@
+QA output created by 1662
+PING
+PONG
+=== std out ===
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -Ddev0,discovery -f -t -A -c CONFFILE -U USERNAME -T 10sec -l LOGFILE -r KEYSPORT -p PROXYPORT -s PROXYSOCK
+160 bytes in 1 blocks are definitely lost in loss record 7 of 10
+at 0x48465EF: calloc (vg_replace_malloc.c:1328)
+by 0x489B87F: keysSchemaLoad (schema.c:1475)
+by 0x48A5075: keySlotsConnect (slots.c:407)
+by 0x11953F: setup_keys_module (keys.c:240)
+by 0x112503: setup_proxy (server.c:861)
+by 0x4E3BCBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E3F99E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124AE: main_loop (server.c:921)
+by 0x111D29: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:keysSchemaLoad
+   fun:keySlotsConnect
+   fun:setup_keys_module
+   fun:setup_proxy
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+LEAK SUMMARY:
+definitely lost: 160 bytes in 1 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: N errors from N contexts ...
+[triaged]
