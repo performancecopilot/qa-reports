@@ -1,0 +1,39 @@
+QA output created by 1662
+PING
+PONG
+=== std out ===
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -Ddev0,discovery -f -t -A -c CONFFILE -U USERNAME -T 10sec -l LOGFILE -r KEYSPORT -p PROXYPORT -s PROXYSOCK
+160 bytes in 1 blocks are definitely lost in loss record 7 of 11
+at 0x487EE43: calloc (vg_replace_malloc.c:1678)
+by 0x48EDC7E: keySlotsReconnect (in /usr/lib/x86_64-linux-gnu/libpcp_web.so.1)
+by 0x48F1A77: keySlotsConnect (in /usr/lib/x86_64-linux-gnu/libpcp_web.so.1)
+by 0x40170CF: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x4017373: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x5074DED: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x507D1E2: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x400C676: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x400B1F3: ??? (in PCP_BINADM_DIR/pmproxy)
+by 0x51BC600: (below main) (libc_start_call_main.h:59)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:keySlotsReconnect
+   fun:keySlotsConnect
+   obj:PCP_BINADM_DIR/pmproxy
+   obj:PCP_BINADM_DIR/pmproxy
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv_run
+   obj:PCP_BINADM_DIR/pmproxy
+   obj:PCP_BINADM_DIR/pmproxy
+   fun:(below main)
+}
+LEAK SUMMARY:
+definitely lost: 160 bytes in 1 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: N errors from N contexts ...
+[triaged]

@@ -1,0 +1,67 @@
+time_stamp: step 2 delta 0.006099 secs tag cleanup old archives
+pmproxy_was_running=false
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Mon Oct 12 00:10:12 UTC 2026
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1742309       1 16 00:10 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -F -A
+pmproxy_pid=1742309
+time_stamp: step 3 delta 0.510792 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.305889 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.021364 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.243069 secs tag compression
+=== restarting pmlogger
++++ pmproxy.log +++
+Log for pmproxy on 762cda7814a3 started Mon Oct 12 00:10:12 2026
+
+pmproxy: PID = 1742309, PDU version = 2, user = pcp (988)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Mon Oct 12 00:10:12] pmproxy(1742309) Info: Key server slots, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on 762cda7814a3 started Mon Oct 12 00:07:08 2026
+
+pmproxy: PID = 1708667, PDU version = 2, user = pcp (988)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Mon Oct 12 00:07:08] pmproxy(1708667) Info: Key server slots, schema version setup
+[Mon Oct 12 00:07:16] pmproxy(1708667) Info: pmproxy caught SIGTERM
+[Mon Oct 12 00:07:16] pmproxy(1708667) Info: pmproxy Shutdown
+
+Log finished Mon Oct 12 00:07:16 2026
++++ pmlogger.log +++
+Log for pmlogger on 762cda7814a3 started Mon Oct 12 00:10:13 2026
+
+[Mon Oct 12 00:10:13] pmlogger(1742423) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "762cda7814a3" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Mon Oct 12 00:10:16] pmlogger(1742423) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Mon Oct 12 00:10:16 2026
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 762cda7814a3
+PMCD host        762cda7814a3
+log started      Mon Oct 12 00:10:41.242984589 2026 (times in local time)
+last log entry   Mon Oct 12 00:10:41.975007414 2026
+current time     Mon Oct 12 00:10:43.001594676 2026
+log volume       0
+log size         72224
+Stopping pmproxy ...
