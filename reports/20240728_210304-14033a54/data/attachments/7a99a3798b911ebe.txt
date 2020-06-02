@@ -1,0 +1,249 @@
+
+=== 1. pcp2elasticsearch one-shot one-metric ===
+start socat 20:03:45.271702211
+start pcp2elasticsearch 20:03:47.273704621
+kill pcp2elasticsearch 20:03:52.345897202
+--- pcp2elasticsearch stdout --
+Sending 1 metrics to Elasticsearch at http://localhost:9200/ every 1.0 sec:
+1 samples(s) with 1.0 sec interval ~ 0 sec runtime.
+--- pcp2elasticsearch stderr --
+Cannot connect to Elasticsearch server http://localhost:9200/: Remote end closed connection without response, continuing.
+--- socket cat stdout --
+--- socket cat stderr --
+> 2024/07/28 20:03:47.333904  length=117 from=0 to=116
+GET / HTTP/1.1\r
+Accept-Encoding: identity\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Connection: close\r
+\r
+< 2024/07/28 20:03:47.334469  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:47.335987  length=306 from=0 to=305
+PUT //pcp HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 132\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"ignore": 400, "mappings": {"pcp-metric": {"properties": {"@timestamp": {"type": "epoch_milli"}, "@host-id": {"type": "string"}}}}}--- socket cat logfile --
+2024/07/28 20:03:47 socat[1276915] E write(6, 0x559f809d8440, 306): Broken pipe
+=== 2. pcp2elasticsearch non-default targets ===
+--- pcp2elasticsearch stdout --
+Sending 1 metrics to Elasticsearch at http://localhost:9200/ every 1.0 sec:
+1 samples(s) with 1.0 sec interval ~ 0 sec runtime.
+--- pcp2elasticsearch stderr --
+--- socket cat stdout --
+--- socket cat stderr --
+> 2024/07/28 20:03:54.423844  length=117 from=0 to=116
+GET / HTTP/1.1\r
+Accept-Encoding: identity\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Connection: close\r
+\r
+< 2024/07/28 20:03:54.424462  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:54.426065  length=308 from=0 to=307
+PUT //INDEX HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 132\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"ignore": 400, "mappings": {"pcp-metric": {"properties": {"@timestamp": {"type": "epoch_milli"}, "@host-id": {"type": "string"}}}}}< 2024/07/28 20:03:54.427014  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:54.427943  length=259 from=0 to=258
+POST //INDEX/pcp-metric HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 72\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"@host-id": "QAHOST", "@timestamp": 1722197034425, "hinv": {"ncpu": 4}}< 2024/07/28 20:03:54.428714  length=21 from=0 to=20
+HTTP/1.1 201 Created
+--- socket cat logfile --
+2024/07/28 20:03:54 socat[1276954] E write(6, 0x560b9218c440, 308): Broken pipe
+=== 3. pcp2elasticsearch full-blown archive replay session ===
+--- pcp2elasticsearch stdout --
+Sending 21 archived metrics to Elasticsearch at http://localhost:9200/...
+(Ctrl-C to stop)
+--- pcp2elasticsearch stderr --
+--- socket cat stdout --
+--- socket cat stderr --
+> 2024/07/28 20:03:58.515704  length=117 from=0 to=116
+GET / HTTP/1.1\r
+Accept-Encoding: identity\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Connection: close\r
+\r
+< 2024/07/28 20:03:58.516273  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.517775  length=306 from=0 to=305
+PUT //pcp HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 132\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"ignore": 400, "mappings": {"pcp-metric": {"properties": {"@timestamp": {"type": "epoch_milli"}, "@host-id": {"type": "string"}}}}}< 2024/07/28 20:03:58.518689  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.519727  length=858 from=0 to=857
+POST //pcp/pcp-metric HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 672\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"@host-id": "slack", "@timestamp": 1455075553883, "proc": {"psinfo": {"@instances": [{"@id": "000001 /usr/lib/systemd/systemd --switched-root --system --deserialize 21", "start_time": 20}]}}, "network": {"tcpconn": {"close": 0}, "interface": {"@instances": [{"@id": "enp0s25", "baudrate": 3168713760, "speed": 781261.938}]}}, "mem": {"util": {"used": 13573328}, "physmem": 16053852}, "kernel": {"all": {"uptime": 507689, "lastpid": 15707, "@instances": [{"@id": "1 minute", "load": 0.09}], "hz": 100}, "uname": {"sysname": "Linux"}}, "hinv": {"machine": "linux", "cpu": {"@instances": [{"@id": "cpu0", "bogomips": 5587.42, "clock": 3029.031}]}, "nfilesys": 3, "ncpu": 8}}< 2024/07/28 20:03:58.522115  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.523332  length=306 from=0 to=305
+PUT //pcp HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 132\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"ignore": 400, "mappings": {"pcp-metric": {"properties": {"@timestamp": {"type": "epoch_milli"}, "@host-id": {"type": "string"}}}}}< 2024/07/28 20:03:58.524235  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.525288  length=979 from=0 to=978
+POST //pcp/pcp-metric HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 793\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"@host-id": "slack", "@timestamp": 1455075554883, "proc": {"psinfo": {"@instances": [{"@id": "000001 /usr/lib/systemd/systemd --switched-root --system --deserialize 21", "start_time": 20}]}}, "network": {"tcpconn": {"close": 0}, "interface": {"@instances": [{"@id": "enp0s25", "baudrate": 3168713760, "speed": 781261.938}]}}, "mem": {"util": {"used": 13573380}, "physmem": 16053852}, "kernel": {"all": {"uptime": 507690, "lastpid": 15707, "@instances": [{"@id": "1 minute", "load": 0.09}], "hz": 100, "sysfork": 0.0}, "uname": {"sysname": "Linux"}, "percpu": {"cpu": {"@instances": [{"@id": "cpu0", "user": 0.0}]}}}, "hinv": {"machine": "linux", "cpu": {"@instances": [{"@id": "cpu0", "bogomips": 5587.42, "clock": 2723.437}]}, "nfilesys": 3, "ncpu": 8}, "disk": {"all": {"read_bytes": 0.0}}}< 2024/07/28 20:03:58.527955  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.529119  length=306 from=0 to=305
+PUT //pcp HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 132\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"ignore": 400, "mappings": {"pcp-metric": {"properties": {"@timestamp": {"type": "epoch_milli"}, "@host-id": {"type": "string"}}}}}< 2024/07/28 20:03:58.530023  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.531028  length=977 from=0 to=976
+POST //pcp/pcp-metric HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 791\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"@host-id": "slack", "@timestamp": 1455075555882, "proc": {"psinfo": {"@instances": [{"@id": "000001 /usr/lib/systemd/systemd --switched-root --system --deserialize 21", "start_time": 20}]}}, "network": {"tcpconn": {"close": 0}, "interface": {"@instances": [{"@id": "enp0s25", "baudrate": 3168713760, "speed": 781261.938}]}}, "mem": {"util": {"used": 13573256}, "physmem": 16053852}, "kernel": {"all": {"uptime": 507691, "lastpid": 15707, "@instances": [{"@id": "1 minute", "load": 0.08}], "hz": 100, "sysfork": 0.0}, "uname": {"sysname": "Linux"}, "percpu": {"cpu": {"@instances": [{"@id": "cpu0", "user": 0.0}]}}}, "hinv": {"machine": "linux", "cpu": {"@instances": [{"@id": "cpu0", "bogomips": 5587.42, "clock": 2800.0}]}, "nfilesys": 3, "ncpu": 8}, "disk": {"all": {"read_bytes": 0.0}}}< 2024/07/28 20:03:58.533715  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.534808  length=306 from=0 to=305
+PUT //pcp HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 132\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"ignore": 400, "mappings": {"pcp-metric": {"properties": {"@timestamp": {"type": "epoch_milli"}, "@host-id": {"type": "string"}}}}}< 2024/07/28 20:03:58.535710  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.536761  length=979 from=0 to=978
+POST //pcp/pcp-metric HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 793\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"@host-id": "slack", "@timestamp": 1455075556882, "proc": {"psinfo": {"@instances": [{"@id": "000001 /usr/lib/systemd/systemd --switched-root --system --deserialize 21", "start_time": 20}]}}, "network": {"tcpconn": {"close": 0}, "interface": {"@instances": [{"@id": "enp0s25", "baudrate": 3168713760, "speed": 781261.938}]}}, "mem": {"util": {"used": 13573256}, "physmem": 16053852}, "kernel": {"all": {"uptime": 507692, "lastpid": 15708, "@instances": [{"@id": "1 minute", "load": 0.08}], "hz": 100, "sysfork": 1.0}, "uname": {"sysname": "Linux"}, "percpu": {"cpu": {"@instances": [{"@id": "cpu0", "user": 9.999}]}}}, "hinv": {"machine": "linux", "cpu": {"@instances": [{"@id": "cpu0", "bogomips": 5587.42, "clock": 2800.0}]}, "nfilesys": 3, "ncpu": 8}, "disk": {"all": {"read_bytes": 0.0}}}< 2024/07/28 20:03:58.539437  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.540706  length=306 from=0 to=305
+PUT //pcp HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 132\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"ignore": 400, "mappings": {"pcp-metric": {"properties": {"@timestamp": {"type": "epoch_milli"}, "@host-id": {"type": "string"}}}}}< 2024/07/28 20:03:58.541682  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:03:58.542681  length=979 from=0 to=978
+POST //pcp/pcp-metric HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 793\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"@host-id": "slack", "@timestamp": 1455075557882, "proc": {"psinfo": {"@instances": [{"@id": "000001 /usr/lib/systemd/systemd --switched-root --system --deserialize 21", "start_time": 20}]}}, "network": {"tcpconn": {"close": 0}, "interface": {"@instances": [{"@id": "enp0s25", "baudrate": 3168713760, "speed": 781261.938}]}}, "mem": {"util": {"used": 13573800}, "physmem": 16053852}, "kernel": {"all": {"uptime": 507693, "lastpid": 15710, "@instances": [{"@id": "1 minute", "load": 0.08}], "hz": 100, "sysfork": 2.0}, "uname": {"sysname": "Linux"}, "percpu": {"cpu": {"@instances": [{"@id": "cpu0", "user": 0.0}]}}}, "hinv": {"machine": "linux", "cpu": {"@instances": [{"@id": "cpu0", "bogomips": 5587.42, "clock": 2800.109}]}, "nfilesys": 3, "ncpu": 8}, "disk": {"all": {"read_bytes": 0.0}}}< 2024/07/28 20:03:58.545397  length=21 from=0 to=20
+HTTP/1.1 201 Created
+--- socket cat logfile --
+2024/07/28 20:03:58 socat[1276991] E write(6, 0x555d49efc440, 306): Broken pipe
+2024/07/28 20:03:58 socat[1276994] E write(6, 0x555d49efc440, 858): Broken pipe
+2024/07/28 20:03:58 socat[1276997] E write(6, 0x555d49efc440, 306): Broken pipe
+2024/07/28 20:03:58 socat[1277000] E write(6, 0x555d49efc440, 979): Broken pipe
+2024/07/28 20:03:58 socat[1277003] E write(6, 0x555d49efc440, 306): Broken pipe
+2024/07/28 20:03:58 socat[1277006] E write(6, 0x555d49efc440, 977): Broken pipe
+2024/07/28 20:03:58 socat[1277009] E write(6, 0x555d49efc440, 306): Broken pipe
+2024/07/28 20:03:58 socat[1277012] E write(6, 0x555d49efc440, 979): Broken pipe
+2024/07/28 20:03:58 socat[1277015] E write(6, 0x555d49efc440, 306): Broken pipe
+2024/07/28 20:03:58 socat[1277018] E write(6, 0x555d49efc440, 979): Broken pipe
+=== 4. pcp2elasticsearch with custom --es-search-type ===
+--- pcp2elasticsearch stdout --
+Sending 1 metrics to Elasticsearch at http://localhost:9200/ every 1.0 sec:
+1 samples(s) with 1.0 sec interval ~ 0 sec runtime.
+--- pcp2elasticsearch stderr --
+--- socket cat stdout --
+--- socket cat stderr --
+> 2024/07/28 20:04:02.662461  length=117 from=0 to=116
+GET / HTTP/1.1\r
+Accept-Encoding: identity\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Connection: close\r
+\r
+< 2024/07/28 20:04:02.663047  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:04:02.664554  length=308 from=0 to=307
+PUT //INDEX HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 132\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"ignore": 400, "mappings": {"pcp-metric": {"properties": {"@timestamp": {"type": "epoch_milli"}, "@host-id": {"type": "string"}}}}}< 2024/07/28 20:04:02.665486  length=21 from=0 to=20
+HTTP/1.1 201 Created
+> 2024/07/28 20:04:02.666422  length=265 from=0 to=264
+POST //INDEX/test_search_type HTTP/1.1\r
+Accept-Encoding: identity\r
+Content-Length: 72\r
+Host: localhost:9200\r
+User-Agent: Python-urllib/3.8\r
+Content-Type: application/json\r
+Connection: close\r
+\r
+{"@host-id": "QAHOST", "@timestamp": 1722197042663, "hinv": {"ncpu": 4}}< 2024/07/28 20:04:02.667183  length=21 from=0 to=20
+HTTP/1.1 201 Created
+--- socket cat logfile --
+2024/07/28 20:04:02 socat[1277113] E write(6, 0x55cc421dc440, 308): Broken pipe

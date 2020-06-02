@@ -1,0 +1,47 @@
+QA output created by 1662
+PING
+PONG
+=== std out ===
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -f -t -A -c CONFFILE -U USERNAME -T 10sec -l LOGFILE -r REDISPORT -p PROXYPORT -s PROXYSOCK
+8,095 (1,664 direct, 6,431 indirect) bytes in 2 blocks are definitely lost in loss record 224 of 253
+at 0x4849E60: calloc (vg_replace_malloc.c:1595)
+by 0x489A6FE: pmSeriesDiscoverSource (load.c:1211)
+by 0x48ACE73: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+by 0x48AD789: pmDiscoverNewSource (discover.c:1186)
+by 0x48B58C3: UnknownInlinedFun (discover.c:1607)
+by 0x48B58C3: directory_changed_cb (discover.c:1711)
+by 0x48B5D19: UnknownInlinedFun (discover.c:185)
+by 0x48B5D19: changed_callback.lto_priv.0 (discover.c:1772)
+by 0x48B2A00: fs_change_callBack.lto_priv.0 (discover.c:459)
+by 0x4DDCF9A: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4DDE64A: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x4DC56E7: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x1130C6: main_loop (server.c:903)
+by 0x111B7C: main (pmproxy.c:468)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:pmDiscoverNewSource
+   fun:UnknownInlinedFun
+   fun:directory_changed_cb
+   fun:UnknownInlinedFun
+   fun:changed_callback.lto_priv.0
+   fun:fs_change_callBack.lto_priv.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+LEAK SUMMARY:
+definitely lost: 1,664 bytes in 2 blocks
+indirectly lost: 6,431 bytes in 174 blocks
+ERROR SUMMARY: N errors from N contexts ...
+[triaged]
