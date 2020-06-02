@@ -1,0 +1,158 @@
+time_stamp: step 2 delta 0.003545 secs tag cleanup old archives
+pmproxy_was_running=true
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Sat Nov 28 03:49:57 UTC 2026
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1800936       1  8 03:49 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -F -A
+pmproxy_pid=1800936
+time_stamp: step 3 delta 0.532550 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.820419 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.021585 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.232369 secs tag compression
+=== restarting pmlogger
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host runnervm3lb7s
+PMCD host        runnervm3lb7s
+log started      Sat Nov 28 03:50:02.215337644 2026 (times in local time)
+last log entry   Sat Nov 28 03:50:03.048100471 2026
+current time     Sat Nov 28 03:50:04.063875294 2026
+log volume       0
+log size         190572
+time_stamp: step 7 delta 2.811378 secs tag restart pmcd & pmlogger
+=== wait for pmproxy to process filesystem events
+time_stamp: step 8 delta 2.006759 secs tag wait for pmproxy
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 9 delta 0.016688 secs tag check for deleted files
+=== checking pmproxy correctly switches logvol when pmlogger bumps to a new logvol
+primary pmlogger archive path: /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50
+contents of /proc/1800936/fd/ ...
+total 0
+lr-x------  1 pcp pcp 64 Nov 28 03:49 0 -> /dev/null
+l-wx------  1 pcp pcp 64 Nov 28 03:49 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------  1 pcp pcp 64 Nov 28 03:50 10 -> /dev/null
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 11 -> socket:[4363825]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 12 -> socket:[4363826]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 13 -> socket:[4363827]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 14 -> socket:[4363828]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 15 -> socket:[4363829]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:49 16 -> socket:[4363845]
+lr-x------+ 1 pcp pcp 64 Nov 28 03:50 17 -> /usr/share/pcp/lib/pmsearch.index
+lr-x------  1 pcp pcp 64 Nov 28 03:50 18 -> anon_inode:inotify
+lr-x------  1 pcp pcp 64 Nov 28 03:50 199 -> /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50.0
+l-wx------  1 pcp pcp 64 Nov 28 03:49 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------  1 pcp pcp 64 Nov 28 03:50 200 -> /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50.index
+lr-x------  1 pcp pcp 64 Nov 28 03:50 201 -> /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50.meta
+lr-x------  1 pcp pcp 64 Nov 28 03:50 202 -> /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50.meta
+lrwx------  1 pcp pcp 64 Nov 28 03:49 3 -> anon_inode:[eventpoll]
+lrwx------  1 pcp pcp 64 Nov 28 03:49 4 -> anon_inode:[io_uring]
+lr-x------  1 pcp pcp 64 Nov 28 03:50 5 -> pipe:[4363823]
+l-wx------  1 pcp pcp 64 Nov 28 03:50 6 -> pipe:[4363823]
+lr-x------  1 pcp pcp 64 Nov 28 03:50 7 -> pipe:[4363824]
+l-wx------  1 pcp pcp 64 Nov 28 03:50 8 -> pipe:[4363824]
+lrwx------  1 pcp pcp 64 Nov 28 03:50 9 -> anon_inode:[eventfd]
+curlogvol=0
+time_stamp: step 10 delta 0.024870 secs tag found old volume #
+
+pmproxy.discover.logvol.change_vol
+    value 0
+Connected to primary pmlogger at local:
+New log volume 1
+
+pmproxy.discover.logvol.change_vol
+    value 0
+primary pmlogger archive path: /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50
+contents of /proc/1800936/fd/ ...
+total 0
+lr-x------  1 pcp pcp 64 Nov 28 03:49 0 -> /dev/null
+l-wx------  1 pcp pcp 64 Nov 28 03:49 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------  1 pcp pcp 64 Nov 28 03:50 10 -> /dev/null
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 11 -> socket:[4363825]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 12 -> socket:[4363826]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 13 -> socket:[4363827]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 14 -> socket:[4363828]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:50 15 -> socket:[4363829]
+lrwx------+ 1 pcp pcp 64 Nov 28 03:49 16 -> socket:[4363845]
+lr-x------+ 1 pcp pcp 64 Nov 28 03:50 17 -> /usr/share/pcp/lib/pmsearch.index
+lr-x------  1 pcp pcp 64 Nov 28 03:50 18 -> anon_inode:inotify
+lr-x------  1 pcp pcp 64 Nov 28 03:50 199 -> /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50.0
+l-wx------  1 pcp pcp 64 Nov 28 03:49 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------  1 pcp pcp 64 Nov 28 03:50 200 -> /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50.index
+lr-x------  1 pcp pcp 64 Nov 28 03:50 201 -> /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50.meta
+lr-x------  1 pcp pcp 64 Nov 28 03:50 202 -> /var/log/pcp/pmlogger/runnervm3lb7s/20261128.03.50.meta
+lrwx------  1 pcp pcp 64 Nov 28 03:49 3 -> anon_inode:[eventpoll]
+lrwx------  1 pcp pcp 64 Nov 28 03:49 4 -> anon_inode:[io_uring]
+lr-x------  1 pcp pcp 64 Nov 28 03:50 5 -> pipe:[4363823]
+l-wx------  1 pcp pcp 64 Nov 28 03:50 6 -> pipe:[4363823]
+lr-x------  1 pcp pcp 64 Nov 28 03:50 7 -> pipe:[4363824]
+l-wx------  1 pcp pcp 64 Nov 28 03:50 8 -> pipe:[4363824]
+lrwx------  1 pcp pcp 64 Nov 28 03:50 9 -> anon_inode:[eventfd]
+newlogvol=0
+time_stamp: step 11 delta 2.043343 secs tag found new volume #
+=== checking pmproxy survives pmlogger restart
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host runnervm3lb7s
+PMCD host        runnervm3lb7s
+log started      Sat Nov 28 03:50:09.189424476 2026 (times in local time)
+last log entry   Sat Nov 28 03:50:09.999210047 2026
+current time     Sat Nov 28 03:50:11.021350290 2026
+log volume       0
+log size         185008
+time_stamp: step 12 delta 2.877304 secs tag check pmproxy survives
++++ pmproxy.log +++
+Log for pmproxy on runnervm3lb7s started Sat Nov 28 03:49:57 2026
+
+pmproxy: PID = 1800936, PDU version = 2, user = pcp (978)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Sat Nov 28 03:49:57] pmproxy(1800936) Info: Key server slots, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on runnervm3lb7s started Sat Nov 28 03:47:14 2026
+
+pmproxy: PID = 1771015, PDU version = 2, user = pcp (978)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Sat Nov 28 03:47:14] pmproxy(1771015) Info: Key server slots, schema version setup
+[Sat Nov 28 03:49:57] pmproxy(1771015) Info: pmproxy caught SIGTERM
+[Sat Nov 28 03:49:57] pmproxy(1771015) Info: pmproxy Shutdown
+
+Log finished Sat Nov 28 03:49:57 2026
++++ pmlogger.log +++
+Log for pmlogger on runnervm3lb7s started Sat Nov 28 03:49:57 2026
+
+[Sat Nov 28 03:49:57] pmlogger(1801062) Info: Start
+preprocessor cmd: /usr/lib/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "runnervm3lb7s" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Sat Nov 28 03:50:01] pmlogger(1801062) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Sat Nov 28 03:50:01 2026
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host runnervm3lb7s
+PMCD host        runnervm3lb7s
+log started      Sat Nov 28 03:50:13.710126351 2026 (times in local time)
+last log entry   Sat Nov 28 03:50:14.242240749 2026
+current time     Sat Nov 28 03:50:15.271096125 2026
+log volume       0
+log size         186328
+Restart pmproxy ...
+exit: 0

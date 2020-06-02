@@ -1,0 +1,603 @@
+QA output created by 1662
+PING
+PONG
+=== std out ===
+=== std err ===
+Segmentation fault (core dumped)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -Ddev0,discovery -f -t -A -c CONFFILE -U USERNAME -T 10sec -l LOGFILE -r KEYSPORT -p PROXYPORT -s PROXYSOCK
+Invalid read of size 8
+at 0x48946FB: key_map_request_callback (schema.c:150)
+by 0x5784ECF: ???
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C4888: valkeyRunCallback (async.c:300)
+by 0x48C4888: valkeyProcessCallbacks (async.c:633)
+by 0x48A40E4: valkeyLibuvPoll (libuv.h:54)
+by 0x4E55E6B: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E429E3: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1128F2: close_proxy (server.c:886)
+by 0x1128F2: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Address 0x579ce28 is 8 bytes inside a block of size 16 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A660D: keyMapsClose (maps.c:156)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48A64E9: keyMapsInit (maps.c:128)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr8
+   fun:key_map_request_callback
+   obj:*
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyProcessCallbacks
+   fun:valkeyLibuvPoll
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv_run
+   fun:close_proxy
+   fun:shutdown_ports
+   fun:Shutdown
+   fun:main
+}
+Invalid read of size 8
+at 0x4894771: key_map_publish (schema.c:128)
+by 0x4894771: key_map_request_callback (schema.c:156)
+by 0x5784ECF: ???
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C4888: valkeyRunCallback (async.c:300)
+by 0x48C4888: valkeyProcessCallbacks (async.c:633)
+by 0x48A40E4: valkeyLibuvPoll (libuv.h:54)
+by 0x4E55E6B: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E429E3: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1128F2: close_proxy (server.c:886)
+by 0x1128F2: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Address 0x579ce28 is 8 bytes inside a block of size 16 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A660D: keyMapsClose (maps.c:156)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48A64E9: keyMapsInit (maps.c:128)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr8
+   fun:key_map_publish
+   fun:key_map_request_callback
+   obj:*
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyProcessCallbacks
+   fun:valkeyLibuvPoll
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv_run
+   fun:close_proxy
+   fun:shutdown_ports
+   fun:Shutdown
+   fun:main
+}
+Invalid read of size 1
+at 0x4847782: strlen (vg_replace_strmem.c:494)
+by 0x48D1AF1: sdscatfmt (sds.c:688)
+by 0x4894791: key_map_publish (schema.c:128)
+by 0x4894791: key_map_request_callback (schema.c:156)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C4888: valkeyRunCallback (async.c:300)
+by 0x48C4888: valkeyProcessCallbacks (async.c:633)
+by 0x48A40E4: valkeyLibuvPoll (libuv.h:54)
+by 0x4E55E6B: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E429E3: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1128F2: close_proxy (server.c:886)
+by 0x1128F2: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Address 0x579cee1 is 1 bytes inside a block of size 13 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A65FA: keyMapsClose (maps.c:154)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48D000D: vk_malloc (alloc.h:60)
+by 0x48D000D: sdsnewlen (sds.c:99)
+by 0x48A650E: keyMapsInit (maps.c:130)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:strlen
+   fun:sdscatfmt
+   fun:key_map_publish
+   fun:key_map_request_callback
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyProcessCallbacks
+   fun:valkeyLibuvPoll
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv_run
+   fun:close_proxy
+   fun:shutdown_ports
+   fun:Shutdown
+   fun:main
+}
+Invalid read of size 1
+at 0x4847794: strlen (vg_replace_strmem.c:494)
+by 0x48D1AF1: sdscatfmt (sds.c:688)
+by 0x4894791: key_map_publish (schema.c:128)
+by 0x4894791: key_map_request_callback (schema.c:156)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C4888: valkeyRunCallback (async.c:300)
+by 0x48C4888: valkeyProcessCallbacks (async.c:633)
+by 0x48A40E4: valkeyLibuvPoll (libuv.h:54)
+by 0x4E55E6B: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E429E3: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1128F2: close_proxy (server.c:886)
+by 0x1128F2: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Address 0x579cee2 is 2 bytes inside a block of size 13 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A65FA: keyMapsClose (maps.c:154)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48D000D: vk_malloc (alloc.h:60)
+by 0x48D000D: sdsnewlen (sds.c:99)
+by 0x48A650E: keyMapsInit (maps.c:130)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:strlen
+   fun:sdscatfmt
+   fun:key_map_publish
+   fun:key_map_request_callback
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyProcessCallbacks
+   fun:valkeyLibuvPoll
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv_run
+   fun:close_proxy
+   fun:shutdown_ports
+   fun:Shutdown
+   fun:main
+}
+Invalid read of size 1
+at 0x484B430: memmove (vg_replace_strmem.c:1382)
+by 0x48D19AA: memcpy (string_fortified.h:29)
+by 0x48D19AA: sdscatfmt (sds.c:694)
+by 0x4894791: key_map_publish (schema.c:128)
+by 0x4894791: key_map_request_callback (schema.c:156)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C4888: valkeyRunCallback (async.c:300)
+by 0x48C4888: valkeyProcessCallbacks (async.c:633)
+by 0x48A40E4: valkeyLibuvPoll (libuv.h:54)
+by 0x4E55E6B: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E429E3: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1128F2: close_proxy (server.c:886)
+by 0x1128F2: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Address 0x579cee1 is 1 bytes inside a block of size 13 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A65FA: keyMapsClose (maps.c:154)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48D000D: vk_malloc (alloc.h:60)
+by 0x48D000D: sdsnewlen (sds.c:99)
+by 0x48A650E: keyMapsInit (maps.c:130)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:memmove
+   fun:memcpy
+   fun:sdscatfmt
+   fun:key_map_publish
+   fun:key_map_request_callback
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyProcessCallbacks
+   fun:valkeyLibuvPoll
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv_run
+   fun:close_proxy
+   fun:shutdown_ports
+   fun:Shutdown
+   fun:main
+}
+Invalid read of size 1
+at 0x484B43D: memmove (vg_replace_strmem.c:1382)
+by 0x48D19AA: memcpy (string_fortified.h:29)
+by 0x48D19AA: sdscatfmt (sds.c:694)
+by 0x4894791: key_map_publish (schema.c:128)
+by 0x4894791: key_map_request_callback (schema.c:156)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C4888: valkeyRunCallback (async.c:300)
+by 0x48C4888: valkeyProcessCallbacks (async.c:633)
+by 0x48A40E4: valkeyLibuvPoll (libuv.h:54)
+by 0x4E55E6B: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E429E3: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1128F2: close_proxy (server.c:886)
+by 0x1128F2: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Address 0x579cee3 is 3 bytes inside a block of size 13 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A65FA: keyMapsClose (maps.c:154)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48D000D: vk_malloc (alloc.h:60)
+by 0x48D000D: sdsnewlen (sds.c:99)
+by 0x48A650E: keyMapsInit (maps.c:130)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:memmove
+   fun:memcpy
+   fun:sdscatfmt
+   fun:key_map_publish
+   fun:key_map_request_callback
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyProcessCallbacks
+   fun:valkeyLibuvPoll
+   obj:/usr/lib/x86_64-linux-gnu/libuv.so.1.0.0
+   fun:uv_run
+   fun:close_proxy
+   fun:shutdown_ports
+   fun:Shutdown
+   fun:main
+}
+Invalid read of size 1
+at 0x4847782: strlen (vg_replace_strmem.c:494)
+by 0x4FB8257: __vfprintf_internal (vfprintf-process-arg.c:397)
+by 0x4FD8757: __vsnprintf_internal (vsnprintf.c:114)
+by 0x48D1233: vsnprintf (stdio2.h:68)
+by 0x48D1233: sdscatvprintf (sds.c:598)
+by 0x48A5C72: reportReplyError (slots.c:801)
+by 0x48A60AD: checkIntegerReply (slots.c:864)
+by 0x489472B: key_map_request_callback (schema.c:150)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C3A5E: valkeyRunCallback (async.c:300)
+by 0x48C3A5E: valkeyAsyncFreeInternal (async.c:349)
+by 0x48C5883: freeValkeyClusterNode.part.0 (cluster.c:248)
+by 0x48CCF4C: _dictClear (dict.c:249)
+by 0x48CCF4C: dictRelease (dict.c:266)
+Address 0x579cee1 is 1 bytes inside a block of size 13 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A65FA: keyMapsClose (maps.c:154)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48D000D: vk_malloc (alloc.h:60)
+by 0x48D000D: sdsnewlen (sds.c:99)
+by 0x48A650E: keyMapsInit (maps.c:130)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:strlen
+   fun:__vfprintf_internal
+   fun:__vsnprintf_internal
+   fun:vsnprintf
+   fun:sdscatvprintf
+   fun:reportReplyError
+   fun:checkIntegerReply
+   fun:key_map_request_callback
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyAsyncFreeInternal
+   fun:freeValkeyClusterNode.part.0
+   fun:_dictClear
+   fun:dictRelease
+}
+Invalid read of size 1
+at 0x4847794: strlen (vg_replace_strmem.c:494)
+by 0x4FB8257: __vfprintf_internal (vfprintf-process-arg.c:397)
+by 0x4FD8757: __vsnprintf_internal (vsnprintf.c:114)
+by 0x48D1233: vsnprintf (stdio2.h:68)
+by 0x48D1233: sdscatvprintf (sds.c:598)
+by 0x48A5C72: reportReplyError (slots.c:801)
+by 0x48A60AD: checkIntegerReply (slots.c:864)
+by 0x489472B: key_map_request_callback (schema.c:150)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C3A5E: valkeyRunCallback (async.c:300)
+by 0x48C3A5E: valkeyAsyncFreeInternal (async.c:349)
+by 0x48C5883: freeValkeyClusterNode.part.0 (cluster.c:248)
+by 0x48CCF4C: _dictClear (dict.c:249)
+by 0x48CCF4C: dictRelease (dict.c:266)
+Address 0x579cee2 is 2 bytes inside a block of size 13 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A65FA: keyMapsClose (maps.c:154)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48D000D: vk_malloc (alloc.h:60)
+by 0x48D000D: sdsnewlen (sds.c:99)
+by 0x48A650E: keyMapsInit (maps.c:130)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:strlen
+   fun:__vfprintf_internal
+   fun:__vsnprintf_internal
+   fun:vsnprintf
+   fun:sdscatvprintf
+   fun:reportReplyError
+   fun:checkIntegerReply
+   fun:key_map_request_callback
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyAsyncFreeInternal
+   fun:freeValkeyClusterNode.part.0
+   fun:_dictClear
+   fun:dictRelease
+}
+Invalid read of size 1
+at 0x4FDD270: _IO_default_xsputn (genops.c:394)
+by 0x4FDD270: _IO_default_xsputn (genops.c:370)
+by 0x4FB80FE: outstring_func (vfprintf-internal.c:239)
+by 0x4FB80FE: __vfprintf_internal (vfprintf-process-arg.c:421)
+by 0x4FD8757: __vsnprintf_internal (vsnprintf.c:114)
+by 0x48D1233: vsnprintf (stdio2.h:68)
+by 0x48D1233: sdscatvprintf (sds.c:598)
+by 0x48A5C72: reportReplyError (slots.c:801)
+by 0x48A60AD: checkIntegerReply (slots.c:864)
+by 0x489472B: key_map_request_callback (schema.c:150)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C3A5E: valkeyRunCallback (async.c:300)
+by 0x48C3A5E: valkeyAsyncFreeInternal (async.c:349)
+by 0x48C5883: freeValkeyClusterNode.part.0 (cluster.c:248)
+by 0x48CCF4C: _dictClear (dict.c:249)
+by 0x48CCF4C: dictRelease (dict.c:266)
+Address 0x579cee1 is 1 bytes inside a block of size 13 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A65FA: keyMapsClose (maps.c:154)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48D000D: vk_malloc (alloc.h:60)
+by 0x48D000D: sdsnewlen (sds.c:99)
+by 0x48A650E: keyMapsInit (maps.c:130)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:_IO_default_xsputn
+   fun:_IO_default_xsputn
+   fun:outstring_func
+   fun:__vfprintf_internal
+   fun:__vsnprintf_internal
+   fun:vsnprintf
+   fun:sdscatvprintf
+   fun:reportReplyError
+   fun:checkIntegerReply
+   fun:key_map_request_callback
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyAsyncFreeInternal
+   fun:freeValkeyClusterNode.part.0
+   fun:_dictClear
+   fun:dictRelease
+}
+Invalid read of size 1
+at 0x4FDD27F: _IO_default_xsputn (genops.c:393)
+by 0x4FDD27F: _IO_default_xsputn (genops.c:370)
+by 0x4FB80FE: outstring_func (vfprintf-internal.c:239)
+by 0x4FB80FE: __vfprintf_internal (vfprintf-process-arg.c:421)
+by 0x4FD8757: __vsnprintf_internal (vsnprintf.c:114)
+by 0x48D1233: vsnprintf (stdio2.h:68)
+by 0x48D1233: sdscatvprintf (sds.c:598)
+by 0x48A5C72: reportReplyError (slots.c:801)
+by 0x48A60AD: checkIntegerReply (slots.c:864)
+by 0x489472B: key_map_request_callback (schema.c:150)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C3A5E: valkeyRunCallback (async.c:300)
+by 0x48C3A5E: valkeyAsyncFreeInternal (async.c:349)
+by 0x48C5883: freeValkeyClusterNode.part.0 (cluster.c:248)
+by 0x48CCF4C: _dictClear (dict.c:249)
+by 0x48CCF4C: dictRelease (dict.c:266)
+Address 0x579cee3 is 3 bytes inside a block of size 13 free'd
+at 0x484417B: free (vg_replace_malloc.c:872)
+by 0x48A65FA: keyMapsClose (maps.c:154)
+by 0x11B6EF: pmseries_servlet_close (series.c:1049)
+by 0x11819D: close_http_module (http.c:1507)
+by 0x1128E1: close_proxy (server.c:885)
+by 0x1128E1: shutdown_ports (server.c:966)
+by 0x1122E4: Shutdown (pmproxy.c:310)
+by 0x111D55: main (pmproxy.c:477)
+Block was alloc'd at
+at 0x48417B4: malloc (vg_replace_malloc.c:381)
+by 0x48D000D: vk_malloc (alloc.h:60)
+by 0x48D000D: sdsnewlen (sds.c:99)
+by 0x48A650E: keyMapsInit (maps.c:130)
+by 0x489BC9D: pmSeriesSetup (schema.c:1734)
+by 0x118075: register_servlet (http.c:1424)
+by 0x118075: setup_http_module (http.c:1487)
+by 0x11257B: setup_proxy (server.c:1019)
+by 0x4E3ECBD: ??? (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x4E4299E: uv_run (in /usr/lib/x86_64-linux-gnu/libuv.so.1.0.0)
+by 0x1124D5: main_loop (server.c:1078)
+by 0x111D49: main (pmproxy.c:473)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr1
+   fun:_IO_default_xsputn
+   fun:_IO_default_xsputn
+   fun:outstring_func
+   fun:__vfprintf_internal
+   fun:__vsnprintf_internal
+   fun:vsnprintf
+   fun:sdscatvprintf
+   fun:reportReplyError
+   fun:checkIntegerReply
+   fun:key_map_request_callback
+   fun:keySlotsReplyCallback
+   fun:valkeyClusterAsyncCallback
+   fun:valkeyRunCallback
+   fun:valkeyAsyncFreeInternal
+   fun:freeValkeyClusterNode.part.0
+   fun:_dictClear
+   fun:dictRelease
+}
+Process terminating with default action of signal 11 (SIGSEGV)
+General Protection Fault
+at 0x4847782: strlen (vg_replace_strmem.c:494)
+by 0x4FB8257: __vfprintf_internal (vfprintf-process-arg.c:397)
+by 0x4FD8757: __vsnprintf_internal (vsnprintf.c:114)
+by 0x48D1233: vsnprintf (stdio2.h:68)
+by 0x48D1233: sdscatvprintf (sds.c:598)
+by 0x48A5C72: reportReplyError (slots.c:801)
+by 0x48A60AD: checkIntegerReply (slots.c:864)
+by 0x489472B: key_map_request_callback (schema.c:150)
+by 0x48A4335: keySlotsReplyCallback (slots.c:590)
+by 0x48CB107: valkeyClusterAsyncCallback (cluster.c:3053)
+by 0x48C3A5E: valkeyRunCallback (async.c:300)
+by 0x48C3A5E: valkeyAsyncFreeInternal (async.c:349)
+by 0x48C5883: freeValkeyClusterNode.part.0 (cluster.c:248)
+by 0x48CCF4C: _dictClear (dict.c:249)
+by 0x48CCF4C: dictRelease (dict.c:266)
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: N errors from N contexts ...
+[triaged]

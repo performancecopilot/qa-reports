@@ -1,0 +1,128 @@
+hostname=5b47f635e48c
+pmproxy_was_running=false
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+== pmproxy not running ==
+== simplest default case ==
+startup delay i=1
+sample.long.hundred 1 100
+sts=1
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       828765       1  0 01:36 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       831013       1  0 01:36 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -l /tmp/651-830886.log -Dcontext -U pcp
+pcpqa     831020  830886  0 01:36 ?        00:00:00 grep -E PID|pmproxy|pmcd
+== simple explicit host case ==
+== non-standard PMPROXY_PORT, expect failure ==
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+1st pmproxy log ...
+Log for pmproxy on 5b47f635e48c started Wed Nov 18 01:36:31 2026
+
+Warning: nports=1 from PMPROXY_PORT=44322 in environment
+pmproxy: PID = 831013, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 44322 inet   INADDR_ANY
+  ok    11 44322 ipv6   INADDR_ANY
+[Wed Nov 18 01:36:31] pmproxy(831013) Error: unsupported key server (got v4, expected v5 or above)
+on_client_connection: accept new client 0x5f658087d5c0
+pcp_client_connect_pmcd: connecting to pmcd on host 5b47f635e48c, port 44321
+on_client_close: client 0x5f658087d5c0 connection closed
+on_client_connection: accept new client 0x5f658087e100
+pcp_client_connect_pmcd: connecting to pmcd on host 5b47f635e48c, port 44321
+on_client_close: client 0x5f658087e100 connection closed
+on_client_connection: accept new client 0x5f658087e430
+pcp_client_connect_pmcd: connecting to pmcd on host localhost, port 44321
+on_client_close: client 0x5f658087e430 connection closed
+[Wed Nov 18 01:36:31] pmproxy(831013) Info: pmproxy caught SIGTERM
+[Wed Nov 18 01:36:31] pmproxy(831013) Info: pmproxy Shutdown
+
+Log finished Wed Nov 18 01:36:31 2026
+== non-standard PMPROXY_PORT, expect success ==
+startup delay i=1
+sample.long.hundred 1 100
+sts=1
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       828765       1  0 01:36 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       831083       1  0 01:36 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -l /tmp/651-830886.log -Dcontext -U pcp
+pcpqa     831090  830886  0 01:36 ?        00:00:00 grep -E PID|pmproxy|pmcd
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+2nd pmproxy log ...
+Log for pmproxy on 5b47f635e48c started Wed Nov 18 01:36:31 2026
+
+Warning: nports=1 from PMPROXY_PORT=94322 in environment
+pmproxy: PID = 831083, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  ok    10 28786 inet   INADDR_ANY
+  ok    11 28786 ipv6   INADDR_ANY
+[Wed Nov 18 01:36:31] pmproxy(831083) Error: unsupported key server (got v4, expected v5 or above)
+on_client_connection: accept new client 0x602614edb5c0
+pcp_client_connect_pmcd: connecting to pmcd on host 5b47f635e48c, port 44321
+on_client_close: client 0x602614edb5c0 connection closed
+on_client_connection: accept new client 0x602614edc100
+pcp_client_connect_pmcd: connecting to pmcd on host 5b47f635e48c, port 44321
+on_client_close: client 0x602614edc100 connection closed
+[Wed Nov 18 01:36:31] pmproxy(831083) Info: pmproxy caught SIGTERM
+[Wed Nov 18 01:36:31] pmproxy(831083) Info: pmproxy Shutdown
+
+Log finished Wed Nov 18 01:36:31 2026
+== restricted interface for connections, expect failure ==
+startup delay i=1
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+startup delay i=2
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+startup delay i=3
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+startup delay i=4
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+startup delay i=5
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+startup delay i=6
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+startup delay i=7
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+startup delay i=8
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+startup delay i=9
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+Failed to probe pmproxy
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp       828765       1  0 01:36 ?        00:00:00 /usr/lib/pcp/bin/pmcd -A -T 3 -C 512
+pcp       831141       1  0 01:36 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -i 127.0.0.1 -l /tmp/651-830886.log -Dcontext -U pcp
+pcpqa     831178  830886  0 01:36 ?        00:00:00 grep -E PID|pmproxy|pmcd
+Log for pmproxy on 5b47f635e48c started Wed Nov 18 01:36:31 2026
+
+[Wed Nov 18 01:36:31] pmproxy(831141) Error: pmproxy: open_request_port - uv_listen failed port=44322 [EADDRINUSE]: address already in use
+pmproxy: PID = 831141, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  err   -1 44322 inet   127.0.0.1
+  ok    10 44323 inet   127.0.0.1
+[Wed Nov 18 01:36:31] pmproxy(831141) Error: unsupported key server (got v4, expected v5 or above)
+== restricted interface for connections, expect success ==
+shutdown delay i=1
+pmprobe: Cannot connect to PMCD on host "5b47f635e48c": Connection refused
+final pmproxy log ...
+Log for pmproxy on 5b47f635e48c started Wed Nov 18 01:36:31 2026
+
+[Wed Nov 18 01:36:31] pmproxy(831141) Error: pmproxy: open_request_port - uv_listen failed port=44322 [EADDRINUSE]: address already in use
+pmproxy: PID = 831141, PDU version = 2, user = pcp (998)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     9       unix   /run/pcp/pmproxy.socket
+  err   -1 44322 inet   127.0.0.1
+  ok    10 44323 inet   127.0.0.1
+[Wed Nov 18 01:36:31] pmproxy(831141) Error: unsupported key server (got v4, expected v5 or above)
+[Wed Nov 18 01:36:40] pmproxy(831141) Info: pmproxy caught SIGTERM
+[Wed Nov 18 01:36:40] pmproxy(831141) Info: pmproxy Shutdown
+
+Log finished Wed Nov 18 01:36:40 2026
