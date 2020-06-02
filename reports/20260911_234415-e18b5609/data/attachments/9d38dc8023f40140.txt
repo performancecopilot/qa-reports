@@ -1,0 +1,56 @@
+QA output created by 1602
+== Start a key server cluster
+== Start node 1
+PONG
+OK
+== Start node 2
+PONG
+OK
+== Start node 3
+PONG
+OK
+
+== Create key server cluster
+[OK] All nodes agree about slots configuration.
+[OK] All 16384 slots covered.
+
+== Wait for cluster to get ready
+OK
+
+== Cluster status
+cluster_state:ok
+cluster_known_nodes:3
+cluster_size:3
+
+== start pmproxy
+pmproxy failed to start on port 54324 after 20 seconds
+likely looking processes ...
+pmproxy logfile (/tmp/1602-1626451.pmproxy.log) ...
+Log for pmproxy on runnervmlun5p started Fri Sep 11 22:46:13 2026
+
+[Fri Sep 11 22:46:13] pmproxy(1627147) Error: pmWebTimerSetMetricRegistry: server instrumentation disabled
+[Fri Sep 11 22:46:13] pmproxy(1627147) Error: pmproxy: open_request_local - uv_pipe_bind /run/pcp/pmproxy.socket failed [EACCES]: permission denied
+[Fri Sep 11 22:46:13] pmproxy(1627147) Error: pmproxy: open_request_port - uv_listen failed port=54324 [EADDRINUSE]: address already in use
+[Fri Sep 11 22:46:13] pmproxy(1627147) Error: pmproxy: open_request_port - uv_listen failed port=54324 [EADDRINUSE]: address already in use
+[Fri Sep 11 22:46:13] pmproxy(1627147) Error: pmproxy: can't open any request ports, exiting
+[Fri Sep 11 22:46:13] pmproxy(1627147) Error: pmproxy not started due to errors!
+
+Log finished Fri Sep 11 22:46:13 2026
+--- start systemctl status for pmproxy.service ---
+* pmproxy.service - Proxy for Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmproxy.service; enabled; preset: enabled)
+     Active: inactive (dead) since Fri 2026-09-11 22:45:58 UTC; 33s ago
+   Duration: 51.002s
+       Docs: man:pmproxy(1)
+    Process: 1613315 ExecStart=/usr/lib/pcp/services/pmproxy start-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 1613315 (code=exited, status=0/SUCCESS)
+        CPU: 1.156s
+--- end systemctl status for pmproxy.service ---
+--- start journalctl entries in last minute for -u pmproxy ---
+Sep 11 22:45:58 runnervmlun5p systemd[1]: Stopping pmproxy.service - Proxy for Performance Metrics Collector Daemon...
+Sep 11 22:45:58 runnervmlun5p systemd[1]: pmproxy.service: Deactivated successfully.
+Sep 11 22:45:58 runnervmlun5p systemd[1]: Stopped pmproxy.service - Proxy for Performance Metrics Collector Daemon.
+Sep 11 22:45:58 runnervmlun5p systemd[1]: pmproxy.service: Consumed 1.156s CPU time, 86.4M memory peak, 0B memory swap peak.
+--- end recent journalctl entries for -u pmproxy ---
+/usr/lib/pcp/bin/pmsignal: 129: kill: No such process
+pmsignal: failing command:  kill  TERM 1627147
