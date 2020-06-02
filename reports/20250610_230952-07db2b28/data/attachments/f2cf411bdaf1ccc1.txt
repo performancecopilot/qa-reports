@@ -1,0 +1,81 @@
+/usr/bin/pcp2influxdb
+
+=== 1. pcp2influxdb one-shot noauth ===
+--- pcp2influxdb stdout --
+Using database 'roar' and tags ''.
+Sending 2 metrics to InfluxDB at http://127.0.0.1:8086 every 1.0 sec...
+(Ctrl-C to stop)
+--- pcp2influxdb stderr --
+Can't connect to InfluxDB server http://127.0.0.1:8086: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=roar (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xf648a10c>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=roar (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xf58cf36c>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+--- socket cat stdout --
+POST /write?db=roar HTTP/1.1
+Host: 127.0.0.1:8086
+User-Agent: python-requests/2.18.4
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Length: 79
+
+hinv_ncpu value=4 1749593170508204032
+sample_control value= 1749593170508204032--- socket cat stderr --
+=== 2. pcp2influxdb noauth with tags ===
+--- pcp2influxdb stdout --
+Using database 'roar' and tags 'host=me.example.com'.
+Sending 1 metrics to InfluxDB at http://127.0.0.1:8086 every 1.0 sec...
+(Ctrl-C to stop)
+--- pcp2influxdb stderr --
+Can't connect to InfluxDB server http://127.0.0.1:8086: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=roar (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xe9ec9eac>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=roar (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xe9e5e1ec>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+--- socket cat stdout --
+POST /write?db=roar HTTP/1.1
+Host: 127.0.0.1:8086
+User-Agent: python-requests/2.18.4
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Length: 57
+
+hinv_ncpu,host=me.example.com value=4 1749593175537656064--- socket cat stderr --
+=== 3. pcp2influxdb auth with tags ===
+--- pcp2influxdb stdout --
+Using database 'roar' and tags 'host=me.example.com'.
+Sending 1 metrics to InfluxDB at http://127.0.0.1:8086 every 1.0 sec...
+(Ctrl-C to stop)
+--- pcp2influxdb stderr --
+Can't connect to InfluxDB server http://127.0.0.1:8086: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=roar (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xf5b5d74c>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=roar (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xf5bb762c>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+--- socket cat stdout --
+POST /write?db=roar HTTP/1.1
+Host: 127.0.0.1:8086
+User-Agent: python-requests/2.18.4
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Length: 57
+Authorization: Basic cGNwOmhleQ==
+
+hinv_ncpu,host=me.example.com value=4 1749593180564186112--- socket cat stderr --
+=== 4. pcp2influxdb bad-instance tolerance ===
+--- pcp2influxdb stdout --
+Using database 'pcp' and tags ''.
+Sending 3 metrics to InfluxDB at http://127.0.0.1:8086 every 2.0 sec...
+(Ctrl-C to stop)
+--- pcp2influxdb stderr --
+Can't connect to InfluxDB server http://127.0.0.1:8086: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=pcp (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xe738b6cc>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=pcp (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xe732048c>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+Can't connect to InfluxDB server http://127.0.0.1:8086: HTTPConnectionPool(host='127.0.0.1', port=8086): Max retries exceeded with url: /write?db=pcp (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xe7320e4c>: Failed to establish a new connection: [Errno 111] Connection refused',)), continuing.
+--- socket cat stdout --
+POST /write?db=pcp HTTP/1.1
+Host: 127.0.0.1:8086
+User-Agent: python-requests/2.18.4
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Length: 58
+
+sample_string_hullo value=hullo world! 1749593185596338944--- socket cat stderr --
