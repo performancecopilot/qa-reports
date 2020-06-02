@@ -1,0 +1,247 @@
+QA output created by 1900
+
+=== bpf agent installation ===
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+[...install files, make output...]
+Updating the PMCD control file, and notifying PMCD ...
+Check bpf metrics have appeared ... X metrics and X values
+
+
+== Running pmdabpf with valgrind
+=== std out ===
+
+bpf.disk.all.latency PMID: 157.1.0 [Disk latency]
+    Data Type: 64-bit unsigned int  InDom: 157.3 0x27400003
+    Semantics: counter  Units: microsec
+Help:
+Disk latency histogram across all disks, for both reads and writes.
+
+bpf.runq.latency PMID: 157.0.0 [Run queue latency (ns)]
+    Data Type: 64-bit unsigned int  InDom: 157.2 0x27400002
+    Semantics: counter  Units: nanosec
+Help:
+Run queue latency from task switches,
+ie: how long each task sat in queue from entry to queue until executing.
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: pminfo -L -K clear -K add,157,/var/lib/pcp/pmdas/bpf/pmda_bpf,bpf_init -dmtT bpf.disk bpf.runq
+Syscall param bpf(attr->expected_attach_type) points to uninitialised byte(s)
+at 0x4A1D719: syscall (syscall.S:38)
+by 0x5944286: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x594FB9D: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59533A6: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5955526: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59608FB: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596238F: bpf_object__load (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596488C: bpf_object__load_skeleton (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5A07747: runqlat_init (in /usr/lib/pcp/pmdas/bpf/modules/runqlat.so)
+by 0x485436C: bpf_load_modules (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x4854B3F: bpf_init (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x48BBF80: ??? (in /usr/lib/libpcp.so.3)
+Address 0x1ffeffde14 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->expected_attach_type)
+   fun:syscall
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:bpf_init
+   obj:/usr/lib/libpcp.so.3
+}
+Syscall param bpf(attr->prog_ifindex) points to uninitialised byte(s)
+at 0x4A1D719: syscall (syscall.S:38)
+by 0x5944286: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x594FB9D: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59533A6: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5955526: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59608FB: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596238F: bpf_object__load (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596488C: bpf_object__load_skeleton (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5A07747: runqlat_init (in /usr/lib/pcp/pmdas/bpf/modules/runqlat.so)
+by 0x485436C: bpf_load_modules (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x4854B3F: bpf_init (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x48BBF80: ??? (in /usr/lib/libpcp.so.3)
+Address 0x1ffeffde10 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->prog_ifindex)
+   fun:syscall
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:bpf_init
+   obj:/usr/lib/libpcp.so.3
+}
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+Use --track-origins=yes to see where uninitialised values come from
+ERROR SUMMARY: 2 errors from 2 contexts ...
+
+== Checking if metric bpf.disk.all.latency has any values
+=== std out ===
+Found a value for bpf.disk.all.latency
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/wait_for_values -L -K clear -K add,157,/var/lib/pcp/pmdas/bpf/pmda_bpf,bpf_init -w 10000 bpf.disk.all.latency
+Syscall param bpf(attr->expected_attach_type) points to uninitialised byte(s)
+at 0x4A1D719: syscall (syscall.S:38)
+by 0x5944286: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x594FB9D: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59533A6: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5955526: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59608FB: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596238F: bpf_object__load (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596488C: bpf_object__load_skeleton (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5A07747: runqlat_init (in /usr/lib/pcp/pmdas/bpf/modules/runqlat.so)
+by 0x485436C: bpf_load_modules (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x4854B3F: bpf_init (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x48BBF80: ??? (in /usr/lib/libpcp.so.3)
+Address 0x1ffeffddf4 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->expected_attach_type)
+   fun:syscall
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:bpf_init
+   obj:/usr/lib/libpcp.so.3
+}
+Syscall param bpf(attr->prog_ifindex) points to uninitialised byte(s)
+at 0x4A1D719: syscall (syscall.S:38)
+by 0x5944286: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x594FB9D: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59533A6: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5955526: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59608FB: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596238F: bpf_object__load (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596488C: bpf_object__load_skeleton (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5A07747: runqlat_init (in /usr/lib/pcp/pmdas/bpf/modules/runqlat.so)
+by 0x485436C: bpf_load_modules (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x4854B3F: bpf_init (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x48BBF80: ??? (in /usr/lib/libpcp.so.3)
+Address 0x1ffeffddf0 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->prog_ifindex)
+   fun:syscall
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:bpf_init
+   obj:/usr/lib/libpcp.so.3
+}
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+Use --track-origins=yes to see where uninitialised values come from
+ERROR SUMMARY: 2 errors from 2 contexts ...
+
+== Checking if metric bpf.runq.latency has any values
+=== std out ===
+Found a value for bpf.runq.latency
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/wait_for_values -L -K clear -K add,157,/var/lib/pcp/pmdas/bpf/pmda_bpf,bpf_init -w 10000 bpf.runq.latency
+Syscall param bpf(attr->expected_attach_type) points to uninitialised byte(s)
+at 0x4A1D719: syscall (syscall.S:38)
+by 0x5944286: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x594FB9D: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59533A6: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5955526: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59608FB: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596238F: bpf_object__load (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596488C: bpf_object__load_skeleton (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5A07747: runqlat_init (in /usr/lib/pcp/pmdas/bpf/modules/runqlat.so)
+by 0x485436C: bpf_load_modules (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x4854B3F: bpf_init (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x48BBF80: ??? (in /usr/lib/libpcp.so.3)
+Address 0x1ffeffddf4 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->expected_attach_type)
+   fun:syscall
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:bpf_init
+   obj:/usr/lib/libpcp.so.3
+}
+Syscall param bpf(attr->prog_ifindex) points to uninitialised byte(s)
+at 0x4A1D719: syscall (syscall.S:38)
+by 0x5944286: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x594FB9D: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59533A6: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5955526: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x59608FB: ??? (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596238F: bpf_object__load (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x596488C: bpf_object__load_skeleton (in /usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0)
+by 0x5A07747: runqlat_init (in /usr/lib/pcp/pmdas/bpf/modules/runqlat.so)
+by 0x485436C: bpf_load_modules (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x4854B3F: bpf_init (in /usr/lib/pcp/pmdas/bpf/pmda_bpf.so)
+by 0x48BBF80: ??? (in /usr/lib/libpcp.so.3)
+Address 0x1ffeffddf0 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->prog_ifindex)
+   fun:syscall
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libbpf.so.1.1.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:bpf_init
+   obj:/usr/lib/libpcp.so.3
+}
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+Use --track-origins=yes to see where uninitialised values come from
+ERROR SUMMARY: 2 errors from 2 contexts ...
+[triaged]

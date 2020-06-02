@@ -1,0 +1,100 @@
+Usage: pmiectl [options] command [host ...]
+
+Options:
+  -a, --all             apply action to all matching hosts
+  -c NAME, --class=NAME pmie instances belong to the NAME class
+                        [default: default]
+  -C ARGS, --checkargs=ARGS
+                        pass command line ARGS to pmie_check
+  -f, --force           force action if possible
+  -i IDENT, --ident=IDENT
+                        over-ride instance id (only for create and cond-create)
+  -m, --migrate         migrate matching processes to farm services (for create and check)
+  -N, --showme          perform a dry run, showing what would be done
+  -p POLICY, --policy=POLICY
+                        use POLICY as the class policy file
+                        [default: /etc/pcp/pmie/class.d/<class>]
+  -V, --verbose         increase verbosity
+  -?, --help            show this usage message and exit
+
+Avaliable commands:
+   [-c classname] create  host ...
+   {-c classname|-i ident} cond-create host ...
+   [-c classname] {start|stop|restart|destroy|check|status} [host ...]
+
+   and host may be a valid hostname or an egrep(1) pattern that matches
+   the start of a hostname
+== -N -V create
+--- start control file ---
+# created by pmiectl on Tue Mar 19 19:58:09 UTC 2024
+$class=default
+#DO NOT REMOVE OR EDIT THE FOLLOWING LINE
+$version=1.1
+localhost n n PCP_LOG_DIR/pmie/localhost/pmie.log -c ./localhost.config
+--- end control file ---
+Installing control file: /etc/pcp/pmie/control.d/localhost
++ cp /var/tmp/pmiectl.8CYilNdfY/control /etc/pcp/pmie/control.d/localhost
++ /usr/libexec/pcp/bin/runaspcp /usr/libexec/pcp/bin/pmie_check  -c "/etc/pcp/pmie/control.d/localhost"
+
+== create
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+af25406fc767            23          23 primary  1421488 running 
+localhost               21          21 default  1421885 running 
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               21          21 default  1421885 running 
+
+== stop
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+af25406fc767            23          23 primary  1421488 running 
+localhost               21          21 default  1422589 running 
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               21          21 default  1422589 running 
+
+== start
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+af25406fc767            23          23 primary  1421488 running 
+localhost               21          21 default  1422589 running 
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               21          21 default  1422589 running 
+
+== restart
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+af25406fc767            23          23 primary  1421488 running 
+localhost               21          21 default  1423553 running 
+== status localhost
+pmcd Host            Rules Evaluations Class        PID State   
+localhost               21          21 default  1423553 running 
+
+== destroy
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+af25406fc767            23          23 primary  1421488 running 
+== status localhost
+Warning: host localhost not defined in any pmie control file
+pmcd Host            Rules Evaluations Class        PID State   
+af25406fc767            23          23 primary  1421488 running 
+
+== cond-create
+== status
+pmcd Host            Rules Evaluations Class        PID State   
+af25406fc767            23          23 primary  1421488 running 
+localhost               21          21 pmfind   1424426 running 
+
+== cond-create -i 1226-foo
+== status
+pmcd Host            Rules Evaluations Class        PID State    Instance Id
+af25406fc767            23          23 primary  1421488 running  af25406fc767
+localhost               21          21 pmfind   1424975 running  1226-foo
+_cleanup: ...
+Warning: host localhost not defined in class default for any pmie control file
+Error: no matching host(s) to destroy
+Warning: host localhost not defined in any pmie control file
+pmcd Host            Rules Evaluations Class        PID State   
+af25406fc767            23          23 primary  1421488 running 

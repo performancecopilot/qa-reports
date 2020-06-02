@@ -1,0 +1,407 @@
+QA output created by 1491
+basic stuff ...
+-- no args --
+/usr/share/pcp/lib/pmcheck/pmcd: 44: local: --: bad variable name
+pmcd            OK
+/usr/share/pcp/lib/pmcheck/pmda-overhead: 44: local: --: bad variable name
+pmda-overhead   OK
+/usr/share/pcp/lib/pmcheck/pmda-sample: 44: local: --: bad variable name
+pmda-sample     OK
+/usr/share/pcp/lib/pmcheck/pmie: 44: local: --: bad variable name
+pmie            OK
+/usr/share/pcp/lib/pmcheck/pmlogger: 44: local: --: bad variable name
+pmlogger        OK
+/usr/share/pcp/lib/pmcheck/pmproxy: 44: local: --: bad variable name
+pmproxy         OK
+/usr/share/pcp/lib/pmcheck/zeroconf: 44: local: --: bad variable name
+zeroconf        OK
+-- -l --
+pmcd           
+pmda-overhead  
+pmda-sample    
+pmie           
+pmlogger       
+pmproxy        
+zeroconf       
+-- -lv --
+/usr/share/pcp/lib/pmcheck/pmcd: 44: local: -v: bad variable name
+pmcd           
+/usr/share/pcp/lib/pmcheck/pmda-overhead: 44: local: -v: bad variable name
+pmda-overhead  
+/usr/share/pcp/lib/pmcheck/pmda-sample: 44: local: -v: bad variable name
+pmda-sample    
+/usr/share/pcp/lib/pmcheck/pmie: 44: local: -v: bad variable name
+pmie           
+/usr/share/pcp/lib/pmcheck/pmlogger: 44: local: -v: bad variable name
+pmlogger       
+/usr/share/pcp/lib/pmcheck/pmproxy: 44: local: -v: bad variable name
+pmproxy        
+/usr/share/pcp/lib/pmcheck/zeroconf: 44: local: -v: bad variable name
+zeroconf       
+-- -s --
+/usr/share/pcp/lib/pmcheck/pmcd: 44: local: --: bad variable name
+pmcd            OK
+/usr/share/pcp/lib/pmcheck/pmda-overhead: 44: local: --: bad variable name
+pmda-overhead   OK
+/usr/share/pcp/lib/pmcheck/pmda-sample: 44: local: --: bad variable name
+pmda-sample     OK
+/usr/share/pcp/lib/pmcheck/pmie: 44: local: --: bad variable name
+pmie            OK
+/usr/share/pcp/lib/pmcheck/pmlogger: 44: local: --: bad variable name
+pmlogger        OK
+/usr/share/pcp/lib/pmcheck/pmproxy: 44: local: --: bad variable name
+pmproxy         OK
+/usr/share/pcp/lib/pmcheck/zeroconf: 44: local: --: bad variable name
+zeroconf        OK
+
+=== usage ===
+-- --help --
+Usage: pmcheck [options] [component ...]
+
+options:
+  -a, --activate        activate component(s)
+  -c SCRIPT, --file=SCRIPT
+                        use this executable SCRIPT file instead of a standard component
+  -d, --deactivate      deactivate component(s)
+  -l, --list            list components
+  -n, --show-me         dry run
+  -s, --state           report state of component(s)
+  -v, --verbose         increase verbosity
+  -x, --trace           run component script with sh -x
+  -?, --help            show this usage message
+
+component is one or more manageable components and may include shell
+glob metacharacters, e.g. pmda.* or pm[cl]*
+-- -l + -c --
+/bin/echo       success              -l
+-- -l + component arg --
+pmcd           
+-- -c does not exist --
+pmcheck: Error: "/no.such.file" does not exist
+-- -c not executable --
+pmcheck: Error: "TMP.pmcheck" must be an executable script
+-- -c + component arg --
+pmcheck: Error: option -c and component arguments are mutually exclusive
+-- component arg + no action opt --
+/usr/share/pcp/lib/pmcheck/pmcd: 44: local: --: bad variable name
+pmcd            active              
+-- -n without -a or -d --
+pmcheck: Warning: neither -a nor -d specified, so -n ignored
+/usr/share/pcp/lib/pmcheck/pmcd: 44: local: -s: bad variable name
+pmcd            active              
+-- -c + no action opt --
+/bin/echo       active               -s
+-- multiple actions --
+pmcheck: Error: at most one of -a, -d, -l or -s may be specified
+pmcheck: Error: at most one of -a, -d, -l or -s may be specified
+-- bad option --
+pmcheck: invalid option -- 'f'
+pmcheck: invalid option -- 'o'
+pmcheck: invalid option -- 'o'
+Usage: pmcheck [options] [component ...]
+
+options:
+  -a, --activate        activate component(s)
+  -c SCRIPT, --file=SCRIPT
+                        use this executable SCRIPT file instead of a standard component
+  -d, --deactivate      deactivate component(s)
+  -l, --list            list components
+  -n, --show-me         dry run
+  -s, --state           report state of component(s)
+  -v, --verbose         increase verbosity
+  -x, --trace           run component script with sh -x
+  -?, --help            show this usage message
+
+component is one or more manageable components and may include shell
+glob metacharacters, e.g. pmda.* or pm[cl]*
+pmcheck: invalid option -- 'f'
+pmcheck: invalid option -- 'o'
+pmcheck: invalid option -- 'o'
+Usage: pmcheck [options] [component ...]
+
+options:
+  -a, --activate        activate component(s)
+  -c SCRIPT, --file=SCRIPT
+                        use this executable SCRIPT file instead of a standard component
+  -d, --deactivate      deactivate component(s)
+  -l, --list            list components
+  -n, --show-me         dry run
+  -s, --state           report state of component(s)
+  -v, --verbose         increase verbosity
+  -x, --trace           run component script with sh -x
+  -?, --help            show this usage message
+
+component is one or more manageable components and may include shell
+glob metacharacters, e.g. pmda.* or pm[cl]*
+
+=== parsing and arg hand-off to component script ===
+-- -c ... -s --
+TMP.pmcheck active               component called, 1 args: -s
+-- -c ... -nav --
+component called, 3 args: -n -a -v
+-- -c ... -lv --
+TMP.pmcheck: 44: local: -v: bad variable name
+TMP.pmcheck success             
+-- RC=0 -c ... -s --
+TMP.pmcheck active              
+-- RC=1 -c ... -s --
+TMP.pmcheck could be activated  
+-- RC=2 -c ... -s --
+TMP.pmcheck cannot be activated 
+-- RC=0 -c ... -a --
+TMP.pmcheck success             
+-- RC=0 -c ... -av --
+TMP.pmcheck: 44: local: -v: bad variable name
+TMP.pmcheck success             
+-- RC=0 -c ... -an --
+TMP.pmcheck: 44: local: -n: bad variable name
+-- RC=0 -c ... -anv --
+TMP.pmcheck: 44: local: -n: bad variable name
+-- RC=0 -c ... -d --
+TMP.pmcheck success             
+-- RC=0 -c ... -dv --
+TMP.pmcheck: 44: local: -v: bad variable name
+TMP.pmcheck success             
+-- RC=0 -c ... -dn --
+TMP.pmcheck: 44: local: -n: bad variable name
+-- RC=0 -c ... -dnv --
+TMP.pmcheck: 44: local: -n: bad variable name
+-- RC=1 -c ... -a --
+TMP.pmcheck failure             
+-- RC=1 -c ... -av --
+TMP.pmcheck: 44: local: -v: bad variable name
+TMP.pmcheck success             
+-- RC=1 -c ... -an --
+TMP.pmcheck: 44: local: -n: bad variable name
+-- RC=1 -c ... -anv --
+TMP.pmcheck: 44: local: -n: bad variable name
+-- RC=1 -c ... -d --
+TMP.pmcheck failure             
+-- RC=1 -c ... -dv --
+TMP.pmcheck: 44: local: -v: bad variable name
+TMP.pmcheck success             
+-- RC=1 -c ... -dn --
+TMP.pmcheck: 44: local: -n: bad variable name
+-- RC=1 -c ... -dnv --
+TMP.pmcheck: 44: local: -n: bad variable name
+
+=== glob expansion ===
+-- -s pm[cl]* --
+/usr/share/pcp/lib/pmcheck/pmcd: 44: local: --: bad variable name
+pmcd            active              
+/usr/share/pcp/lib/pmcheck/pmlogger: 44: local: --: bad variable name
+pmlogger        active              
+
+=== actions ===
+-- -d --
+/usr/share/pcp/lib/pmcheck/pmcd: 44: local: --: bad variable name
+pmcd            success             
+Wed Mar 27 20:15:49 UTC 2024
+Arrgh ... pmcd failed to stop after 20 seconds
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1631722       1  2 20:14 ?        00:00:01 /usr/lib/pcp/bin/pmcd -A -T 3
+=== successful pmprobes stdout ===
+-- 0 --
+pmcd.numclients 1
+-- 1 --
+pmcd.numclients 1
+-- 2 --
+pmcd.numclients 1
+-- 3 --
+pmcd.numclients 1
+-- 4 --
+pmcd.numclients 1
+-- 5 --
+pmcd.numclients 1
+-- 6 --
+pmcd.numclients 1
+-- 7 --
+pmcd.numclients 1
+-- 8 --
+pmcd.numclients 1
+-- 9 --
+pmcd.numclients 1
+-- 10 --
+pmcd.numclients 1
+-- 11 --
+pmcd.numclients 1
+-- 12 --
+pmcd.numclients 1
+-- 13 --
+pmcd.numclients 1
+-- 14 --
+pmcd.numclients 1
+-- 15 --
+pmcd.numclients 1
+-- 16 --
+pmcd.numclients 1
+-- 17 --
+pmcd.numclients 1
+-- 18 --
+pmcd.numclients 1
+-- 19 --
+pmcd.numclients 1
+=== successful pmprobes stderr ===
+-- 0 --
+-- 1 --
+-- 2 --
+-- 3 --
+-- 4 --
+-- 5 --
+-- 6 --
+-- 7 --
+-- 8 --
+-- 9 --
+-- 10 --
+-- 11 --
+-- 12 --
+-- 13 --
+-- 14 --
+-- 15 --
+-- 16 --
+-- 17 --
+-- 18 --
+-- 19 --
+... and now
++ pmprobe -n /var/lib/pcp/pmns/root_pmcd pmcd.numclients
+pmWhichContext() -> -12376, cur=-1
+__pmSetSocketIPC: fd=3
+IPC table fd(PDU version):
+[1645838]pmGetPDU: ERROR fd=3 len=20 from=0
+000:       14     7000        0        0 440e0102 
+__pmDecodeXtendError: got error PDU (code=0, datum=1141768450, version=2)
+__pmSetFeaturesIPC: fd=3 version=2 features=3652
+IPC table fd(PDU version): 3(2,1)
+__pmSendCreds: #0 = 1020000
+[1645838]pmXmitPDU: CREDS fd=3 len=20
+000:       14     700c   191d0e  1000000      201 
+__pmConnectPMCD(/run/pcp/pmcd.socket): pmcd connection path=/run/pcp/pmcd.socket fd=3 PDU version=2
+IPC table fd(PDU version): 3(2,1)
+pmNewContext(1, local:) -> 0
+Dump Contexts: current -> contexts[0] handle 0
+contexts[0] handle 0: host /run/pcp/pmcd.socket: pmcd=CONNECTED profile=NOT_SENT fd=3 origin=0.000000000 delta=0.000000000
+Dump Instance Profile state=INCLUDE, 0 profiles
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+pmWhichContext() -> 0, cur=0
+[1645838]pmXmitPDU: PROFILE fd=3 len=28
+000:       1c     7002        0        0        0        0        0 
+[1645838]pmXmitPDU: HIGHRES_FETCH fd=3 len=32
+000:       20     7014        0        0        0        0  1000000  3008000 
+[1645838]pmGetPDU: HIGHRES_RESULT fd=3 len=52 from=0
+000:       34     7015        0  1000000        0 757e0466        0 f5e6d22c 
+008:  3008000  1000000        0 ffffffff  2000000 
+__pmResult dump from 0x55c1b061b520 timestamp: 1711570549.752019189 20:15:49.752019189 numpmid: 1
+  2.0.3 (pmcd.numclients): numval: 1 valfmt: 0 vlist[]:
+   value 2
+pmDestroyContext(0) -> 0, curr_handle=-1
+pmcd.numclients 1
+=== pmcd.log ===
+Log for pmcd on 920b9b09a56e started Wed Mar 27 20:14:46 2024
+
+
+active agent dom   pid  in out ver protocol parameters
+============ === ===== === === === ======== ==========
+root           1 1631725   6   7   2 bin pipe cmd=/var/lib/pcp/pmdas/root/pmdaroot
+pmcd           2                 2 dso i:6  lib=/var/lib/pcp/pmdas/pmcd/pmda_pmcd.so entry=pmcd_init [0x7f8aa59521c0]
+proc           3 1631726   9  10   2 bin pipe cmd=/var/lib/pcp/pmdas/proc/pmdaproc -d 3
+pmproxy        4                 2 dso i:7  lib=/var/lib/pcp/pmdas/mmv/pmda_mmv.so entry=pmproxy_init [0x7f8aa4f13cd0]
+xfs           11 1631727  11  12   2 bin pipe cmd=/var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+sample        29 1631728  13  14   2 bin pipe cmd=/var/lib/pcp/pmdas/sample/pmdasample -d 29
+sampledso     30                 2 dso i:7  lib=/var/lib/pcp/pmdas/sample/pmda_sample.so entry=sample_init [0x7f8aa4f01d60]
+linux         60 1631729  15  16   2 bin pipe cmd=/var/lib/pcp/pmdas/linux/pmdalinux
+nfsclient     62 1631730  17  18   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+mmv           70                 2 dso i:7  lib=/var/lib/pcp/pmdas/mmv/pmda_mmv.so entry=mmv_init [0x7f8aa4f13d10]
+kvm           95 1631734  19  20   2 bin pipe cmd=/var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+jbd2         122                 2 dso i:4  lib=/var/lib/pcp/pmdas/jbd2/pmda_jbd2.so entry=jbd2_init [0x7f8aa4ee7fd0]
+dm           129 1631735  21  22   2 bin pipe cmd=/var/lib/pcp/pmdas/dm/pmdadm -d 129
+openmetrics  144 1631736  23  24   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+simple       253 1631740  25  26   2 bin pipe cmd=/var/lib/pcp/pmdas/simple/pmdasimple -d 253
+
+Host access list:
+00 01 Cur/MaxCons host-spec                               host-mask                               lvl host-name
+== == =========== ======================================= ======================================= === ==============
+ y  y     0     0 10.88.0.2                               255.255.255.255                           0 localhost
+ y  y     0     0 /                                       /                                         1 unix:
+    n     0     0 0.0.0.0                                 0.0.0.0                                   4 .*
+    n     0     0 ::                                      ::                                        8 :*
+User access list empty: user-based access control turned off
+Group access list empty: group-based access control turned off
+
+
+pmcd: PID = 1631722, PDU version = 2
+pmcd request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok     4       unix   /run/pcp/pmcd.socket
+  ok     0 44321 inet   INADDR_ANY
+  ok     3 44321 ipv6   INADDR_ANY
+[Wed Mar 27 20:14:47] pmcd(1631722) Info: PMNS file "DEFAULT" is unchanged
+[Wed Mar 27 20:14:54] pmcd(1631722) Info: PMNS file "DEFAULT" is unchanged
+[Wed Mar 27 20:15:05] pmcd(1631722) Info: 
+
+pmcd RESTARTED at Wed Mar 27 20:15:05 2024
+
+
+Current PMCD clients ...
+     fd  client connection from                    ipc ver  operations denied
+     ==  ========================================  =======  =================
+     27  /run/pcp/pmcd.socket                            2
+
+
+active agent dom   pid  in out ver protocol parameters
+============ === ===== === === === ======== ==========
+root           1 1631725   6   7   2 bin pipe cmd=/var/lib/pcp/pmdas/root/pmdaroot
+pmcd           2                 2 dso i:6  lib=/var/lib/pcp/pmdas/pmcd/pmda_pmcd.so entry=pmcd_init [0x7f8aa59521c0]
+proc           3 1631726   9  10   2 bin pipe cmd=/var/lib/pcp/pmdas/proc/pmdaproc -d 3
+pmproxy        4                 2 dso i:7  lib=/var/lib/pcp/pmdas/mmv/pmda_mmv.so entry=pmproxy_init [0x7f8aa4f13cd0]
+xfs           11 1631727  11  12   2 bin pipe cmd=/var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+sample        29 1631728  13  14   2 bin pipe cmd=/var/lib/pcp/pmdas/sample/pmdasample -d 29
+sampledso     30                 2 dso i:7  lib=/var/lib/pcp/pmdas/sample/pmda_sample.so entry=sample_init [0x7f8aa4f01d60]
+linux         60 1631729  15  16   2 bin pipe cmd=/var/lib/pcp/pmdas/linux/pmdalinux
+nfsclient     62 1631730  17  18   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+mmv           70                 2 dso i:7  lib=/var/lib/pcp/pmdas/mmv/pmda_mmv.so entry=mmv_init [0x7f8aa4f13d10]
+kvm           95 1631734  19  20   2 bin pipe cmd=/var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+jbd2         122                 2 dso i:4  lib=/var/lib/pcp/pmdas/jbd2/pmda_jbd2.so entry=jbd2_init [0x7f8aa4ee7fd0]
+dm           129 1631735  21  22   2 bin pipe cmd=/var/lib/pcp/pmdas/dm/pmdadm -d 129
+openmetrics  144 1631736  23  24   2 bin pipe cmd=/usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+simple       253 1631740  25  26   2 bin pipe cmd=/var/lib/pcp/pmdas/simple/pmdasimple -d 253
+
+Host access list:
+00 01 Cur/MaxCons host-spec                               host-mask                               lvl host-name
+== == =========== ======================================= ======================================= === ==============
+ y  y     0     0 10.88.0.2                               255.255.255.255                           0 localhost
+ y  y     0     0 /                                       /                                         1 unix:
+    n     0     0 0.0.0.0                                 0.0.0.0                                   4 .*
+    n     0     0 ::                                      ::                                        8 :*
+User access list empty: user-based access control turned off
+Group access list empty: group-based access control turned off
+
+[Wed Mar 27 20:15:05] pmcd(1631722) Info: PMNS file "DEFAULT" is unchanged
+● pmcd.service - Performance Metrics Collector Daemon
+     Loaded: loaded (/lib/systemd/system/pmcd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2024-03-27 20:14:47 UTC; 1min 2s ago
+       Docs: man:pmcd(1)
+   Main PID: 1631722 (pmcd)
+      Tasks: 11 (limit: 19179)
+     Memory: 33.5M
+     CGroup: /machine.slice/libpod-920b9b09a56eb44b6155f35aedf38a5a12504695512b53cc53f048bfb2dd828d.scope/system.slice/pmcd.service
+             ├─1631722 /usr/lib/pcp/bin/pmcd -A -T 3
+             ├─1631725 /var/lib/pcp/pmdas/root/pmdaroot
+             ├─1631726 /var/lib/pcp/pmdas/proc/pmdaproc -d 3
+             ├─1631727 /var/lib/pcp/pmdas/xfs/pmdaxfs -d 11
+             ├─1631728 /var/lib/pcp/pmdas/sample/pmdasample -d 29
+             ├─1631729 /var/lib/pcp/pmdas/linux/pmdalinux
+             ├─1631730 /usr/bin/python3 /var/lib/pcp/pmdas/nfsclient/pmdanfsclient.python
+             ├─1631734 /var/lib/pcp/pmdas/kvm/pmdakvm -d 95
+             ├─1631735 /var/lib/pcp/pmdas/dm/pmdadm -d 129
+             ├─1631736 /usr/bin/python3 /var/lib/pcp/pmdas/openmetrics/pmdaopenmetrics.python
+             └─1631740 /var/lib/pcp/pmdas/simple/pmdasimple -d 253
+
+Mar 27 20:14:46 920b9b09a56e systemd[1]: Starting Performance Metrics Collector Daemon...
+Mar 27 20:14:47 920b9b09a56e systemd[1]: Started Performance Metrics Collector Daemon.

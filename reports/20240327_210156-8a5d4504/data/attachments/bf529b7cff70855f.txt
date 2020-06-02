@@ -1,0 +1,83 @@
+QA output created by 1662
+PING
+PONG
+=== std out ===
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: PCP_BINADM_DIR/pmproxy -f -t -A -c CONFFILE -U USERNAME -T 10sec -l LOGFILE -r REDISPORT -p PROXYPORT -s PROXYSOCK
+4,047 (832 direct, 3,215 indirect) bytes in 1 blocks are definitely lost in loss record 214 of 255
+at 0x4C40963: calloc (vg_replace_malloc.c:1595)
+by 0x50813CE: pmSeriesDiscoverSource (load.c:1211)
+by 0x50A5AFB: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+by 0x50A5C93: pmDiscoverNewSource (discover.c:1186)
+by 0x50A9647: pmDiscoverInvokeCallBacks (discover.c:1607)
+by 0x50A9647: directory_changed_cb (discover.c:1711)
+by 0x50A9647: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A9647: changed_callback (discover.c:1772)
+by 0x50A8AB5: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+by 0x112584: main_loop (server.c:903)
+by 0x111908: main (pmproxy.c:468)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:pmDiscoverNewSource
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+   fun:main_loop
+   fun:main
+}
+4,048 (96 direct, 3,952 indirect) bytes in 1 blocks are definitely lost in loss record 215 of 255
+at 0x4C39185: malloc (vg_replace_malloc.c:442)
+by 0x508370C: zmalloc (util.c:43)
+by 0x5088E79: dictCreate (dict.c:108)
+by 0x508099C: initSeriesLoadBaton (load.c:1092)
+by 0x508141B: pmSeriesDiscoverSource (load.c:1224)
+by 0x50A5AFB: pmDiscoverInvokeSourceCallBacks (discover.c:674)
+by 0x50A5C93: pmDiscoverNewSource (discover.c:1186)
+by 0x50A9647: pmDiscoverInvokeCallBacks (discover.c:1607)
+by 0x50A9647: directory_changed_cb (discover.c:1711)
+by 0x50A9647: pmDiscoverTraverseArg (discover.c:185)
+by 0x50A9647: changed_callback (discover.c:1772)
+by 0x50A8AB5: fs_change_callBack (discover.c:459)
+by 0x5C9A189: ??? (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C98D14: uv__io_poll (in /usr/lib64/libuv.so.1.0.0)
+by 0x5C87A73: uv_run (in /usr/lib64/libuv.so.1.0.0)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:zmalloc
+   fun:dictCreate
+   fun:initSeriesLoadBaton
+   fun:pmSeriesDiscoverSource
+   fun:pmDiscoverInvokeSourceCallBacks
+   fun:pmDiscoverNewSource
+   fun:pmDiscoverInvokeCallBacks
+   fun:directory_changed_cb
+   fun:pmDiscoverTraverseArg
+   fun:changed_callback
+   fun:fs_change_callBack
+   obj:/usr/lib64/libuv.so.1.0.0
+   fun:uv__io_poll
+   fun:uv_run
+}
+LEAK SUMMARY:
+definitely lost: 928 bytes in 2 blocks
+indirectly lost: 7,167 bytes in 174 blocks
+ERROR SUMMARY: N errors from N contexts ...
+[triaged]

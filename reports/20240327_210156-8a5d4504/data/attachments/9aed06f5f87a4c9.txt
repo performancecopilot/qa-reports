@@ -1,0 +1,271 @@
+QA output created by 1900
+
+=== bpf agent installation ===
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+[...install files, make output...]
+Updating the PMCD control file, and notifying PMCD ...
+Check bpf metrics have appeared ... X metrics and X values
+
+
+== Running pmdabpf with valgrind
+=== std out ===
+
+bpf.disk.all.latency PMID: 157.1.0 [Disk latency]
+    Data Type: 64-bit unsigned int  InDom: 157.3 0x27400003
+    Semantics: counter  Units: microsec
+Help:
+Disk latency histogram across all disks, for both reads and writes.
+
+bpf.runq.latency PMID: 157.0.0 [Run queue latency (ns)]
+    Data Type: 64-bit unsigned int  InDom: 157.2 0x27400002
+    Semantics: counter  Units: nanosec
+Help:
+Run queue latency from task switches,
+ie: how long each task sat in queue from entry to queue until executing.
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: pminfo -L -K clear -K add,157,/var/lib/pcp/pmdas/bpf/pmda_bpf,bpf_init -dmtT bpf.disk bpf.runq
+Syscall param bpf(attr->expected_attach_type) points to uninitialised byte(s)
+at 0x4A2813D: syscall (in /usr/lib64/libc.so.6)
+by 0x5C73E35: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5A12D: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5C8BE: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C600B3: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C63643: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C64D66: bpf_object__load (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C7B460: bpf_object__load_skeleton (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5D098BD: UnknownInlinedFun (runqlat.c:89)
+by 0x5D098BD: runqlat_init (runqlat.c:91)
+by 0x5BA9855: bpf_load_modules (bpf.c:272)
+by 0x5BAA021: UnknownInlinedFun (bpf.c:576)
+by 0x5BAA021: bpf_init (bpf.c:556)
+by 0x48C4EA3: __pmConnectLocal (connectlocal.c:443)
+Address 0x1ffeffdb34 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->expected_attach_type)
+   fun:syscall
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:UnknownInlinedFun
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:UnknownInlinedFun
+   fun:bpf_init
+   fun:__pmConnectLocal
+}
+Syscall param bpf(attr->prog_ifindex) points to uninitialised byte(s)
+at 0x4A2813D: syscall (in /usr/lib64/libc.so.6)
+by 0x5C73E35: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5A12D: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5C8BE: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C600B3: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C63643: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C64D66: bpf_object__load (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C7B460: bpf_object__load_skeleton (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5D098BD: UnknownInlinedFun (runqlat.c:89)
+by 0x5D098BD: runqlat_init (runqlat.c:91)
+by 0x5BA9855: bpf_load_modules (bpf.c:272)
+by 0x5BAA021: UnknownInlinedFun (bpf.c:576)
+by 0x5BAA021: bpf_init (bpf.c:556)
+by 0x48C4EA3: __pmConnectLocal (connectlocal.c:443)
+Address 0x1ffeffdb30 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->prog_ifindex)
+   fun:syscall
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:UnknownInlinedFun
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:UnknownInlinedFun
+   fun:bpf_init
+   fun:__pmConnectLocal
+}
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+Use --track-origins=yes to see where uninitialised values come from
+ERROR SUMMARY: 2 errors from 2 contexts ...
+
+== Checking if metric bpf.disk.all.latency has any values
+=== std out ===
+Found a value for bpf.disk.all.latency
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/wait_for_values -L -K clear -K add,157,/var/lib/pcp/pmdas/bpf/pmda_bpf,bpf_init -w 10000 bpf.disk.all.latency
+Syscall param bpf(attr->expected_attach_type) points to uninitialised byte(s)
+at 0x4A2013D: syscall (in /usr/lib64/libc.so.6)
+by 0x5C6BE35: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5212D: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C548BE: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C580B3: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5B643: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5CD66: bpf_object__load (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C73460: bpf_object__load_skeleton (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5D018BD: UnknownInlinedFun (runqlat.c:89)
+by 0x5D018BD: runqlat_init (runqlat.c:91)
+by 0x5BA1855: bpf_load_modules (bpf.c:272)
+by 0x5BA2021: UnknownInlinedFun (bpf.c:576)
+by 0x5BA2021: bpf_init (bpf.c:556)
+by 0x48BCEA3: __pmConnectLocal (connectlocal.c:443)
+Address 0x1ffeffdb14 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->expected_attach_type)
+   fun:syscall
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:UnknownInlinedFun
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:UnknownInlinedFun
+   fun:bpf_init
+   fun:__pmConnectLocal
+}
+Syscall param bpf(attr->prog_ifindex) points to uninitialised byte(s)
+at 0x4A2013D: syscall (in /usr/lib64/libc.so.6)
+by 0x5C6BE35: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5212D: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C548BE: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C580B3: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5B643: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5CD66: bpf_object__load (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C73460: bpf_object__load_skeleton (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5D018BD: UnknownInlinedFun (runqlat.c:89)
+by 0x5D018BD: runqlat_init (runqlat.c:91)
+by 0x5BA1855: bpf_load_modules (bpf.c:272)
+by 0x5BA2021: UnknownInlinedFun (bpf.c:576)
+by 0x5BA2021: bpf_init (bpf.c:556)
+by 0x48BCEA3: __pmConnectLocal (connectlocal.c:443)
+Address 0x1ffeffdb10 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->prog_ifindex)
+   fun:syscall
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:UnknownInlinedFun
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:UnknownInlinedFun
+   fun:bpf_init
+   fun:__pmConnectLocal
+}
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+Use --track-origins=yes to see where uninitialised values come from
+ERROR SUMMARY: 2 errors from 2 contexts ...
+
+== Checking if metric bpf.runq.latency has any values
+=== std out ===
+Found a value for bpf.runq.latency
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/wait_for_values -L -K clear -K add,157,/var/lib/pcp/pmdas/bpf/pmda_bpf,bpf_init -w 10000 bpf.runq.latency
+Syscall param bpf(attr->expected_attach_type) points to uninitialised byte(s)
+at 0x4A2013D: syscall (in /usr/lib64/libc.so.6)
+by 0x5C6BE35: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5212D: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C548BE: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C580B3: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5B643: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5CD66: bpf_object__load (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C73460: bpf_object__load_skeleton (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5D018BD: UnknownInlinedFun (runqlat.c:89)
+by 0x5D018BD: runqlat_init (runqlat.c:91)
+by 0x5BA1855: bpf_load_modules (bpf.c:272)
+by 0x5BA2021: UnknownInlinedFun (bpf.c:576)
+by 0x5BA2021: bpf_init (bpf.c:556)
+by 0x48BCEA3: __pmConnectLocal (connectlocal.c:443)
+Address 0x1ffeffdb14 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->expected_attach_type)
+   fun:syscall
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:UnknownInlinedFun
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:UnknownInlinedFun
+   fun:bpf_init
+   fun:__pmConnectLocal
+}
+Syscall param bpf(attr->prog_ifindex) points to uninitialised byte(s)
+at 0x4A2013D: syscall (in /usr/lib64/libc.so.6)
+by 0x5C6BE35: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5212D: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C548BE: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C580B3: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5B643: ??? (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C5CD66: bpf_object__load (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5C73460: bpf_object__load_skeleton (in /usr/lib64/libbpf.so.1.3.0)
+by 0x5D018BD: UnknownInlinedFun (runqlat.c:89)
+by 0x5D018BD: runqlat_init (runqlat.c:91)
+by 0x5BA1855: bpf_load_modules (bpf.c:272)
+by 0x5BA2021: UnknownInlinedFun (bpf.c:576)
+by 0x5BA2021: bpf_init (bpf.c:556)
+by 0x48BCEA3: __pmConnectLocal (connectlocal.c:443)
+Address 0x1ffeffdb10 is on thread 1's stack
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   bpf(attr->prog_ifindex)
+   fun:syscall
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   obj:/usr/lib64/libbpf.so.1.3.0
+   fun:bpf_object__load
+   fun:bpf_object__load_skeleton
+   fun:UnknownInlinedFun
+   fun:runqlat_init
+   fun:bpf_load_modules
+   fun:UnknownInlinedFun
+   fun:bpf_init
+   fun:__pmConnectLocal
+}
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+Use --track-origins=yes to see where uninitialised values come from
+ERROR SUMMARY: 2 errors from 2 contexts ...
+[triaged]

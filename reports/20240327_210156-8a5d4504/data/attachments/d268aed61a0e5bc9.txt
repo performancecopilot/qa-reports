@@ -1,0 +1,310 @@
+time_stamp: step 2 delta 0.004900 secs tag cleanup old archives
+pmproxy_was_running=true
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Wed Mar 27 20:18:56 UTC 2024
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1625987       1  1 20:18 ?        00:00:00 /usr/libexec/pcp/bin/pmproxy -F -A
+pmproxy_pid=1625987
+time_stamp: step 3 delta 0.351526 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.268400 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.011930 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.142344 secs tag compression
+=== restarting pmlogger
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 23f6f74a8570
+PMCD host        23f6f74a8570
+log started      Wed Mar 27 20:19:00.203042820 2024 (times in local time)
+last log entry   Wed Mar 27 20:19:00.569108037 2024
+current time     Wed Mar 27 20:19:00.570552431 2024
+log volume       0
+log size         43568
+time_stamp: step 7 delta 1.026470 secs tag restart pmcd & pmlogger
+=== wait for pmproxy to process filesystem events
+time_stamp: step 8 delta 2.007900 secs tag wait for pmproxy
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 9 delta 0.012271 secs tag check for deleted files
+=== checking pmproxy correctly switches logvol when pmlogger bumps to a new logvol
+primary pmlogger archive path: /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19
+contents of /proc/1625987/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 10 -> socket:[2435639]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 11 -> socket:[2435640]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 12 -> socket:[2435641]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 13 -> socket:[2435642]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 14 -> socket:[2435643]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 15 -> socket:[2434875]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 17 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 18 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 19 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.index
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 20 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 21 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 22 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 23 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 24 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 25 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 26 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 27 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 28 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 4 -> pipe:[2435637]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 5 -> pipe:[2435637]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 6 -> pipe:[2435638]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 7 -> pipe:[2435638]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 9 -> /dev/null
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19
+contents of /proc/1625987/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 10 -> socket:[2435639]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 11 -> socket:[2435640]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 12 -> socket:[2435641]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 13 -> socket:[2435642]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 14 -> socket:[2435643]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 15 -> socket:[2434875]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 17 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 18 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 19 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.index
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 20 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 21 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 22 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 23 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 24 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 25 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 26 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 27 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 28 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 4 -> pipe:[2435637]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 5 -> pipe:[2435637]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 6 -> pipe:[2435638]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 7 -> pipe:[2435638]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 9 -> /dev/null
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19
+contents of /proc/1625987/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 10 -> socket:[2435639]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 11 -> socket:[2435640]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 12 -> socket:[2435641]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 13 -> socket:[2435642]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 14 -> socket:[2435643]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 15 -> socket:[2434875]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 17 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 18 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 19 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.index
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 20 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 21 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 22 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 23 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 24 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 25 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 26 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 27 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 28 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 4 -> pipe:[2435637]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 5 -> pipe:[2435637]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 6 -> pipe:[2435638]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 7 -> pipe:[2435638]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 9 -> /dev/null
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19
+contents of /proc/1625987/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 10 -> socket:[2435639]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 11 -> socket:[2435640]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 12 -> socket:[2435641]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 13 -> socket:[2435642]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 14 -> socket:[2435643]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 15 -> socket:[2434875]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 17 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 18 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 19 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.index
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 20 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 21 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 22 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 23 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 24 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 25 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 26 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 27 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 28 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 4 -> pipe:[2435637]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 5 -> pipe:[2435637]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 6 -> pipe:[2435638]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 7 -> pipe:[2435638]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 9 -> /dev/null
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19
+contents of /proc/1625987/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 10 -> socket:[2435639]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 11 -> socket:[2435640]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 12 -> socket:[2435641]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 13 -> socket:[2435642]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 14 -> socket:[2435643]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 15 -> socket:[2434875]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 17 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 18 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 19 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.index
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 20 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 21 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 22 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 23 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 24 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 25 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 26 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 27 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 28 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 29 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19.0
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 30 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 31 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 32 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 4 -> pipe:[2435637]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 5 -> pipe:[2435637]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 6 -> pipe:[2435638]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 7 -> pipe:[2435638]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 9 -> /dev/null
+curlogvol=0
+time_stamp: step 10 delta 8.078195 secs tag found old volume #
+
+pmproxy.discover.logvol.change_vol
+    value 0
+Connected to primary pmlogger at local:
+New log volume 1
+
+pmproxy.discover.logvol.change_vol
+    value 0
+primary pmlogger archive path: /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19
+contents of /proc/1625987/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 10 -> socket:[2435639]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 11 -> socket:[2435640]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 12 -> socket:[2435641]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 13 -> socket:[2435642]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 14 -> socket:[2435643]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 15 -> socket:[2434875]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 17 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 18 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 19 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.index
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 20 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.17.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 21 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 22 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 23 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 24 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18-00.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 25 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.0
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 26 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 27 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 28 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.18.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 29 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19.0
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 30 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 31 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19.index
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 32 -> /var/log/pcp/pmlogger/23f6f74a8570/20240327.20.19.meta
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 4 -> pipe:[2435637]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 5 -> pipe:[2435637]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 6 -> pipe:[2435638]
+l-wx------ 1 pcp pcp 64 Mar 27 20:18 7 -> pipe:[2435638]
+lrwx------ 1 pcp pcp 64 Mar 27 20:18 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Mar 27 20:18 9 -> /dev/null
+newlogvol=0
+time_stamp: step 11 delta 2.035193 secs tag found new volume #
+=== checking pmproxy survives pmlogger restart
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 23f6f74a8570
+PMCD host        23f6f74a8570
+log started      Wed Mar 27 20:19:13.421739427 2024 (times in local time)
+last log entry   Wed Mar 27 20:19:13.789471369 2024
+current time     Wed Mar 27 20:19:13.790971041 2024
+log volume       0
+log size         43580
+time_stamp: step 12 delta 1.095829 secs tag check pmproxxy survives
++++ pmproxy.log +++
+Log for pmproxy on 23f6f74a8570 started Wed Mar 27 20:18:56 2024
+
+pmproxy: PID = 1625987, PDU version = 2, user = pcp (990)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    10       unix   /run/pcp/pmproxy.socket
+  ok    11 44322 inet   INADDR_ANY
+  ok    12 44322 ipv6   INADDR_ANY
+  ok    13 44323 inet   INADDR_ANY
+  ok    14 44323 ipv6   INADDR_ANY
+[Wed Mar 27 20:18:56] pmproxy(1625987) Info: Redis slots, command keys, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on 23f6f74a8570 started Wed Mar 27 20:18:30 2024
+
+pmproxy: PID = 1619078, PDU version = 2, user = pcp (990)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    10       unix   /run/pcp/pmproxy.socket
+  ok    11 44322 inet   INADDR_ANY
+  ok    12 44322 ipv6   INADDR_ANY
+  ok    13 44323 inet   INADDR_ANY
+  ok    14 44323 ipv6   INADDR_ANY
+[Wed Mar 27 20:18:30] pmproxy(1619078) Info: Redis slots, command keys, schema version setup
+[Wed Mar 27 20:18:56] pmproxy(1619078) Info: pmproxy caught SIGTERM
+[Wed Mar 27 20:18:56] pmproxy(1619078) Info: pmproxy Shutdown
+
+Log finished Wed Mar 27 20:18:56 2024
++++ pmlogger.log +++
+Log for pmlogger on 23f6f74a8570 started Wed Mar 27 20:18:56 2024
+
+[Wed Mar 27 20:18:56] pmlogger(1626096) Info: Start
+preprocessor cmd: /usr/libexec/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "23f6f74a8570" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Wed Mar 27 20:18:59] pmlogger(1626096) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Wed Mar 27 20:18:59 2024
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host 23f6f74a8570
+PMCD host        23f6f74a8570
+log started      Wed Mar 27 20:19:15.473699509 2024 (times in local time)
+last log entry   Wed Mar 27 20:19:15.868688077 2024
+current time     Wed Mar 27 20:19:16.835611143 2024
+log volume       0
+log size         63768
+Restart pmproxy ...
+exit: 0

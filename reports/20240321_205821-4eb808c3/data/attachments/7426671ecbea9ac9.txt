@@ -1,0 +1,316 @@
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== std out ===
+blah;trickme
+__pmProcessExec -> 0
+=== std err ===
+__pmProcessExec: argc=2 toss=0 "/bin/echo" "blah;trickme"
+__pmProcessExec: child pid=947733
+__pmProcessExec: child pid=947733 wait_pid=947733 exit=0
+=== valgrind report ===
+==947732== Memcheck, a memory error detector
+==947732== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==947732== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==947732== Command: src/exectest -Dexec -- /bin/echo blah;trickme
+==947732== Parent PID: 947719
+==947732== 
+==947732== 
+==947732== HEAP SUMMARY:
+==947732==     in use at exit: 0 bytes in 0 blocks
+==947732==   total heap usage: 12 allocs, 12 frees, 13,831 bytes allocated
+==947732== 
+==947732== All heap blocks were freed -- no leaks are possible
+==947732== 
+==947732== For lists of detected and suppressed errors, rerun with: -s
+==947732== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/exectest -Dexec -- /bin/echo blah;trickme
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== std out ===
+f o o
+__pmProcessExec -> 1015 signal=15
+=== std err ===
+__pmProcessExec: argc=3 toss=0 "/bin/sh" "-c" "echo 'f o o'; kill -TERM $$; sleep 1; echo b\ a\ r"
+__pmProcessExec: child pid=947766
+__pmProcessExec: child pid=947766 wait_pid=947766 signal=15
+=== valgrind report ===
+==947765== Memcheck, a memory error detector
+==947765== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==947765== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==947765== Command: src/exectest -Dexec -- /bin/sh -c echo\ 'f\ o\ o';\ kill\ -TERM\ $$;\ sleep\ 1;\ echo\ b\\\ a\\\ r
+==947765== Parent PID: 947752
+==947765== 
+==947765== 
+==947765== HEAP SUMMARY:
+==947765==     in use at exit: 0 bytes in 0 blocks
+==947765==   total heap usage: 14 allocs, 14 frees, 13,910 bytes allocated
+==947765== 
+==947765== All heap blocks were freed -- no leaks are possible
+==947765== 
+==947765== For lists of detected and suppressed errors, rerun with: -s
+==947765== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/exectest -Dexec -- /bin/sh -c echo\ 'f\ o\ o';\ kill\ -TERM\ $$;\ sleep\ 1;\ echo\ b\\\ a\\\ r
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== std out ===
+__pmProcessPipe(..., "r", ...) -> 0
+--- start pipe output ---
+hullo world
+--- end ---
+__pmProcessPipeClose() -> 0
+=== std err ===
+__pmProcessPipe: argc=3 type="r" toss=0 "echo" "hullo" "world"
+__pmProcessPipe: map[0 of 1] child pid=947801 fp=0x54bf3a0
+__pmProcessPipeClose: child pid=947801 wait_pid=947801 exit=0
+=== valgrind report ===
+==947798== Memcheck, a memory error detector
+==947798== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==947798== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==947798== Command: src/exectest -Dexec -p -- echo hullo world
+==947798== Parent PID: 947785
+==947798== 
+==947798== 
+==947798== HEAP SUMMARY:
+==947798==     in use at exit: 16 bytes in 1 blocks
+==947798==   total heap usage: 17 allocs, 16 frees, 18,457 bytes allocated
+==947798== 
+==947798== LEAK SUMMARY:
+==947798==    definitely lost: 0 bytes in 0 blocks
+==947798==    indirectly lost: 0 bytes in 0 blocks
+==947798==      possibly lost: 0 bytes in 0 blocks
+==947798==    still reachable: 16 bytes in 1 blocks
+==947798==         suppressed: 0 bytes in 0 blocks
+==947798== Reachable blocks (those to which a pointer was found) are not shown.
+==947798== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==947798== 
+==947798== For lists of detected and suppressed errors, rerun with: -s
+==947798== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/exectest -Dexec -p -- echo hullo world
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== std out ===
+__pmProcessPipe(..., "w", ...) -> 0
+--- start pipe input ---
+hello other world
+--- end ---
+0000000   h   e   l   l   o       o   t   h   e   r       w   o   r   l
+0000020   d  \n
+0000022
+__pmProcessPipeClose() -> 0
+=== std err ===
+__pmProcessPipe: argc=2 type="w" toss=0 "od" "-c"
+__pmProcessPipe: map[0 of 1] child pid=947836 fp=0x54bf510
+__pmProcessPipeClose: child pid=947836 wait_pid=947836 exit=0
+=== valgrind report ===
+==947835== Memcheck, a memory error detector
+==947835== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==947835== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==947835== Command: src/exectest -Dexec -P /var/tmp/681-947659.data -- od -c
+==947835== Parent PID: 947820
+==947835== 
+==947835== 
+==947835== HEAP SUMMARY:
+==947835==     in use at exit: 16 bytes in 1 blocks
+==947835==   total heap usage: 17 allocs, 16 frees, 22,982 bytes allocated
+==947835== 
+==947835== LEAK SUMMARY:
+==947835==    definitely lost: 0 bytes in 0 blocks
+==947835==    indirectly lost: 0 bytes in 0 blocks
+==947835==      possibly lost: 0 bytes in 0 blocks
+==947835==    still reachable: 16 bytes in 1 blocks
+==947835==         suppressed: 0 bytes in 0 blocks
+==947835== Reachable blocks (those to which a pointer was found) are not shown.
+==947835== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==947835== 
+==947835== For lists of detected and suppressed errors, rerun with: -s
+==947835== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/exectest -Dexec -P /var/tmp/681-947659.data -- od -c
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== std out ===
+my arg echoer ...
+[0] /var/tmp/681-947659.sh
+[1] blah;trickme|foo
+[2] cat
+[3] and
+[4] dog
+__pmProcessExec -> 0
+=== std err ===
+__pmProcessExec: argc=5 toss=0 "/var/tmp/681-947659.sh" "blah;trickme|foo" "cat" "and" "dog"
+__pmProcessExec: child pid=947872
+__pmProcessExec: child pid=947872 wait_pid=947872 exit=0
+=== valgrind report ===
+==947871== Memcheck, a memory error detector
+==947871== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==947871== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==947871== Command: src/exectest -Dexec /var/tmp/681-947659.sh blah;trickme|foo cat and dog
+==947871== Parent PID: 947858
+==947871== 
+==947871== 
+==947871== HEAP SUMMARY:
+==947871==     in use at exit: 0 bytes in 0 blocks
+==947871==   total heap usage: 18 allocs, 18 frees, 13,997 bytes allocated
+==947871== 
+==947871== All heap blocks were freed -- no leaks are possible
+==947871== 
+==947871== For lists of detected and suppressed errors, rerun with: -s
+==947871== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/exectest -Dexec /var/tmp/681-947659.sh blah;trickme|foo cat and dog
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== std out ===
+__pmProcessPipe(..., "r", ...) -> 0
+--- start pipe output ---
+my arg echoer ...
+[0] /var/tmp/681-947659.sh
+[1] blah;trickme|foo
+[2] cat
+[3] and
+[4] dog
+--- end ---
+__pmProcessPipeClose() -> 0
+=== std err ===
+__pmProcessPipe: argc=5 type="r" toss=0 "/var/tmp/681-947659.sh" "blah;trickme|foo" "cat" "and" "dog"
+__pmProcessPipe: map[0 of 1] child pid=947910 fp=0x54bf550
+__pmProcessPipeClose: child pid=947910 wait_pid=947910 exit=0
+=== valgrind report ===
+==947909== Memcheck, a memory error detector
+==947909== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==947909== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==947909== Command: src/exectest -Dexec -p /var/tmp/681-947659.sh blah;trickme|foo cat and dog
+==947909== Parent PID: 947896
+==947909== 
+==947909== 
+==947909== HEAP SUMMARY:
+==947909==     in use at exit: 16 bytes in 1 blocks
+==947909==   total heap usage: 21 allocs, 20 frees, 18,588 bytes allocated
+==947909== 
+==947909== LEAK SUMMARY:
+==947909==    definitely lost: 0 bytes in 0 blocks
+==947909==    indirectly lost: 0 bytes in 0 blocks
+==947909==      possibly lost: 0 bytes in 0 blocks
+==947909==    still reachable: 16 bytes in 1 blocks
+==947909==         suppressed: 0 bytes in 0 blocks
+==947909== Reachable blocks (those to which a pointer was found) are not shown.
+==947909== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==947909== 
+==947909== For lists of detected and suppressed errors, rerun with: -s
+==947909== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/exectest -Dexec -p /var/tmp/681-947659.sh blah;trickme|foo cat and dog
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== std out ===
+__pmProcessExec -> 127 exit=127
+=== std err ===
+__pmProcessExec: argc=4 toss=0 "/a/b/c" "-f" "oo" "bar"
+__pmProcessExec: child pid=947947
+__pmProcessExec: child pid=947947 execvp(/a/b/c, ...) failed
+__pmProcessExec: child pid=947947 wait_pid=947947 exit=127
+=== valgrind report ===
+==947946== Memcheck, a memory error detector
+==947946== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==947946== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==947946== Command: src/exectest -Dexec -- /a/b/c -f oo bar
+==947946== Parent PID: 947933
+==947946== 
+==947947== 
+==947947== HEAP SUMMARY:
+==947947==     in use at exit: 139 bytes in 8 blocks
+==947947==   total heap usage: 16 allocs, 8 frees, 9,819 bytes allocated
+==947947== 
+==947947== 7 bytes in 1 blocks are definitely lost in loss record 2 of 6
+==947947==    at 0x484280F: malloc (vg_replace_malloc.c:442)
+==947947==    by 0x49C203E: strdup (in /usr/lib64/libc.so.6)
+==947947==    by 0x48C0502: __pmProcessAddArg (exec.c:163)
+==947947==    by 0x1093F3: main (exectest.c:97)
+==947947== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:strdup
+   fun:__pmProcessAddArg
+   fun:main
+}
+==947947== LEAK SUMMARY:
+==947947==    definitely lost: 7 bytes in 1 blocks
+==947947==    indirectly lost: 0 bytes in 0 blocks
+==947947==      possibly lost: 0 bytes in 0 blocks
+==947947==    still reachable: 132 bytes in 7 blocks
+==947947==         suppressed: 0 bytes in 0 blocks
+==947947== Reachable blocks (those to which a pointer was found) are not shown.
+==947947== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==947947== 
+==947947== For lists of detected and suppressed errors, rerun with: -s
+==947947== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==947946== 
+==947946== HEAP SUMMARY:
+==947946==     in use at exit: 0 bytes in 0 blocks
+==947946==   total heap usage: 16 allocs, 16 frees, 13,913 bytes allocated
+==947946== 
+==947946== All heap blocks were freed -- no leaks are possible
+==947946== 
+==947946== For lists of detected and suppressed errors, rerun with: -s
+==947946== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: src/exectest -Dexec -- /a/b/c -f oo bar
+7 bytes in 1 blocks are definitely lost in loss record 2 of 6
+at 0x484280F: malloc (vg_replace_malloc.c:442)
+by 0x49C203E: strdup (in /usr/lib64/libc.so.6)
+by 0x48C0502: __pmProcessAddArg (exec.c:163)
+by 0x1093F3: main (exectest.c:97)
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:strdup
+   fun:__pmProcessAddArg
+   fun:main
+}
+LEAK SUMMARY:
+definitely lost: 7 bytes in 1 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 1 errors from 1 contexts ...
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
