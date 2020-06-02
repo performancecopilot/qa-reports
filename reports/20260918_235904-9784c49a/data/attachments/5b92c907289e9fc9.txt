@@ -1,0 +1,81 @@
+QA output created by 1388
+Creating temporary sasldb, add user running QA to it
+Verify saslpasswd2 has successfully added a new user
+USER@HOST: userPassword
+Ensure pmcd can read the password file
+Start pmcd with this shiny new sasldb
+Start pmproxy with mandatory authentication
+Start test Python PMDA to check if username is in per-context state
+Updating the Performance Metrics Name Space (PMNS) ...
+Terminate PMDA if already installed ...
+[...install files, make output...]
+Updating the PMCD control file, and notifying PMCD ...
+Check test_python metrics have appeared ... 6 metrics and 7 values
+
+=== invalid username with pminfo ===
+Error: test_python.current_username: Authentication - user not found
+
+=== invalid password with pminfo ===
+Error: test_python.current_username: Authentication - authentication failure
+
+=== correct password with pminfo ===
+
+test_python.current_username
+    value "ctx ? user USER"
+
+=== no authentication ===
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json; print(json.load(sys.stdin)["context"])
+                           ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib64/python3.14/json/__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/usr/lib64/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib64/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+=== invalid username ===
+pmjson failed: No data available
+
+=== invalid password ===
+pmjson failed: No data available
+
+=== correct password ===
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,json; print(json.load(sys.stdin)["context"])
+                           ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib64/python3.14/json/__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/usr/lib64/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib64/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.14/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+=== using unauthenticated context ===
+pmjson failed: No data available
+
+=== using authenticated context, missing HTTP auth headers (expect failure) ===
+pmjson failed: No data available
+
+=== using authenticated context, with HTTP auth headers (expect success) ===
+pmjson failed: No data available
