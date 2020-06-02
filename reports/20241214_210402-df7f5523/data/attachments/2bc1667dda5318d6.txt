@@ -1,0 +1,478 @@
+time_stamp: step 2 delta 0.003568 secs tag cleanup old archives
+pmproxy_was_running=true
+=== restarting pmproxy service to ensure sane starting condition
+exit: 0
+Sat Dec 14 20:37:36 UTC 2024
+UID          PID    PPID  C STIME TTY          TIME CMD
+pcp      1724795       1  0 20:37 ?        00:00:00 /usr/lib/pcp/bin/pmproxy -F -A
+pmproxy_pid=1724795
+time_stamp: step 3 delta 0.279462 secs tag restart pmproxy
+=== creating archive in new archive directory
+time_stamp: step 4 delta 3.262324 secs tag pmlogger done
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 5 delta 0.009438 secs tag fd check
+=== compressing the new archives, which also deletes the originals
+time_stamp: step 6 delta 0.166165 secs tag compression
+=== restarting pmlogger
+_wait_for_pmlogger() success at iter 0 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host fv-az2024-672
+PMCD host        fv-az2024-672
+log started      Sat Dec 14 20:37:40.260051378 2024 (times in local time)
+last log entry   Sat Dec 14 20:37:40.280169036 2024
+current time     Sat Dec 14 20:37:40.321767520 2024
+log volume       0
+log size         8148
+time_stamp: step 7 delta 0.717529 secs tag restart pmcd & pmlogger
+=== wait for pmproxy to process filesystem events
+time_stamp: step 8 delta 2.005373 secs tag wait for pmproxy
+=== checking pmproxy file descriptors for deleted files, should be none
+time_stamp: step 9 delta 0.009249 secs tag check for deleted files
+=== checking pmproxy correctly switches logvol when pmlogger bumps to a new logvol
+primary pmlogger archive path: /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01
+contents of /proc/1724795/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 10 -> socket:[2784393]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 11 -> socket:[2784394]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 12 -> socket:[2784395]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 13 -> socket:[2784396]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 14 -> socket:[2784397]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 15 -> socket:[2783610]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 17 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 18 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 19 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.index
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 20 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 21 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 22 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 23 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 24 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 25 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 26 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 27 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 28 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 29 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.0
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 30 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 31 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 32 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 33 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 34 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 35 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 36 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 37 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 38 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 39 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 4 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 40 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 41 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 42 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 43 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 44 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 45 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 46 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 47 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 48 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 49 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.0
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 5 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 50 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 51 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 52 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 53 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 54 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 55 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 56 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 6 -> pipe:[2784392]
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 7 -> pipe:[2784392]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 9 -> /dev/null
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01
+contents of /proc/1724795/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 10 -> socket:[2784393]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 11 -> socket:[2784394]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 12 -> socket:[2784395]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 13 -> socket:[2784396]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 14 -> socket:[2784397]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 15 -> socket:[2783610]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 17 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 18 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 19 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.index
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 20 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 21 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 22 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 23 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 24 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 25 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 26 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 27 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 28 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 29 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.0
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 30 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 31 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 32 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 33 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 34 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 35 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 36 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 37 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 38 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 39 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 4 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 40 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 41 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 42 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 43 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 44 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 45 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 46 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 47 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 48 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 49 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.0
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 5 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 50 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 51 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 52 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 53 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 54 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 55 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 56 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 6 -> pipe:[2784392]
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 7 -> pipe:[2784392]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 9 -> /dev/null
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01
+contents of /proc/1724795/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 10 -> socket:[2784393]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 11 -> socket:[2784394]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 12 -> socket:[2784395]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 13 -> socket:[2784396]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 14 -> socket:[2784397]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 15 -> socket:[2783610]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 17 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 18 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 19 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.index
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 20 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 21 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 22 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 23 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 24 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 25 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 26 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 27 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 28 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 29 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.0
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 30 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 31 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 32 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 33 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 34 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 35 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 36 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 37 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 38 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 39 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 4 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 40 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 41 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 42 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 43 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 44 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 45 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 46 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 47 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 48 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 49 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.0
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 5 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 50 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 51 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 52 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 53 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 54 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 55 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 56 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 6 -> pipe:[2784392]
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 7 -> pipe:[2784392]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 9 -> /dev/null
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01
+contents of /proc/1724795/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 10 -> socket:[2784393]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 11 -> socket:[2784394]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 12 -> socket:[2784395]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 13 -> socket:[2784396]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 14 -> socket:[2784397]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 15 -> socket:[2783610]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 17 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 18 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 19 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.index
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 20 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 21 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 22 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 23 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 24 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 25 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 26 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 27 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 28 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 29 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.0
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 30 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 31 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 32 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 33 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 34 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 35 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 36 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 37 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 38 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 39 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 4 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 40 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 41 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 42 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 43 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 44 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 45 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 46 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 47 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 48 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 49 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.0
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 5 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 50 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 51 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 52 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 53 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 54 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 55 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 56 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 6 -> pipe:[2784392]
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 7 -> pipe:[2784392]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 9 -> /dev/null
+curlogvol=
+primary pmlogger archive path: /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01
+contents of /proc/1724795/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 10 -> socket:[2784393]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 11 -> socket:[2784394]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 12 -> socket:[2784395]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 13 -> socket:[2784396]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 14 -> socket:[2784397]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 15 -> socket:[2783610]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 17 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 18 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 19 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.index
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 20 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 21 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 22 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 23 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 24 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 25 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 26 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 27 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 28 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 29 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.0
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 30 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 31 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 32 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 33 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 34 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 35 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 36 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 37 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 38 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 39 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 4 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 40 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 41 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 42 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 43 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 44 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 45 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 46 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 47 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 48 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 49 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.0
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 5 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 50 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 51 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 52 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 53 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 54 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 55 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 56 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 57 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 58 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 59 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 6 -> pipe:[2784392]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 60 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01.meta
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 7 -> pipe:[2784392]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 9 -> /dev/null
+curlogvol=0
+time_stamp: step 10 delta 8.067247 secs tag found old volume #
+
+pmproxy.discover.logvol.change_vol
+    value 0
+Connected to primary pmlogger at local:
+New log volume 1
+
+pmproxy.discover.logvol.change_vol
+    value 0
+primary pmlogger archive path: /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01
+contents of /proc/1724795/fd/ ...
+total 0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 0 -> /dev/null
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 1 -> /var/log/pcp/pmproxy/pmproxy.log
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 10 -> socket:[2784393]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 11 -> socket:[2784394]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 12 -> socket:[2784395]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 13 -> socket:[2784396]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 14 -> socket:[2784397]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 15 -> socket:[2783610]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 16 -> anon_inode:inotify
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 17 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 18 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 19 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.index
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 2 -> /var/log/pcp/pmproxy/pmproxy.log
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 20 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 21 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 22 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 23 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 24 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.08.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 25 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 26 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 27 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 28 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.03.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 29 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.0
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 3 -> anon_inode:[eventpoll]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 30 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 31 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 32 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 33 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 34 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 35 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 36 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.43.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 37 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 38 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 39 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 4 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 40 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 41 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 42 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 43 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 44 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 45 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 46 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 47 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 48 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.19.19-00.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 49 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.0
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 5 -> pipe:[2784391]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 50 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 51 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 52 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.35.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 53 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 54 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 55 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 56 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.18.58-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 57 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01.0
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 58 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01.index
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 59 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01.meta
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 6 -> pipe:[2784392]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 60 -> /var/log/pcp/pmlogger/fv-az2024-672/20241214.20.37-01.meta
+l-wx------ 1 pcp pcp 64 Dec 14 20:37 7 -> pipe:[2784392]
+lrwx------ 1 pcp pcp 64 Dec 14 20:37 8 -> anon_inode:[eventfd]
+lr-x------ 1 pcp pcp 64 Dec 14 20:37 9 -> /dev/null
+newlogvol=0
+time_stamp: step 11 delta 2.028167 secs tag found new volume #
+=== checking pmproxy survives pmlogger restart
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host fv-az2024-672
+PMCD host        fv-az2024-672
+log started      Sat Dec 14 20:37:53.153853119 2024 (times in local time)
+last log entry   Sat Dec 14 20:37:53.673081726 2024
+current time     Sat Dec 14 20:37:54.638933024 2024
+log volume       0
+log size         172228
+time_stamp: step 12 delta 2.211587 secs tag check pmproxy survives
++++ pmproxy.log +++
+Log for pmproxy on fv-az2024-672 started Sat Dec 14 20:37:36 2024
+
+pmproxy: PID = 1724795, PDU version = 2, user = pcp (997)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    10       unix   /run/pcp/pmproxy.socket
+  ok    11 44322 inet   INADDR_ANY
+  ok    12 44322 ipv6   INADDR_ANY
+  ok    13 44323 inet   INADDR_ANY
+  ok    14 44323 ipv6   INADDR_ANY
+[Sat Dec 14 20:37:36] pmproxy(1724795) Info: Key server slots, schema version setup
++++ pmproxy.log.prev +++
+Log for pmproxy on fv-az2024-672 started Sat Dec 14 20:37:09 2024
+
+pmproxy: PID = 1719188, PDU version = 2, user = pcp (997)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    10       unix   /run/pcp/pmproxy.socket
+  ok    11 44322 inet   INADDR_ANY
+  ok    12 44322 ipv6   INADDR_ANY
+  ok    13 44323 inet   INADDR_ANY
+  ok    14 44323 ipv6   INADDR_ANY
+[Sat Dec 14 20:37:09] pmproxy(1719188) Info: Key server slots, schema version setup
+[Sat Dec 14 20:37:36] pmproxy(1719188) Info: pmproxy caught SIGTERM
+[Sat Dec 14 20:37:36] pmproxy(1719188) Info: pmproxy Shutdown
+
+Log finished Sat Dec 14 20:37:36 2024
++++ pmlogger.log +++
+Log for pmlogger on fv-az2024-672 started Sat Dec 14 20:37:36 2024
+
+[Sat Dec 14 20:37:36] pmlogger(1724890) Info: Start
+preprocessor cmd: /usr/lib/pcp/bin/pmcpp -rs -I /var/lib/pcp/config/pmlogger /var/lib/pcp/config/pmlogger/config.default
+Config parsed
+Starting logger for host "fv-az2024-672" via "local:"
+Archive basename: /var/log/pcp/pmlogger/qa1661/testarchive
+[Sat Dec 14 20:37:39] pmlogger(1724890) Info: pmlogger: Sample limit reached, exiting
+
+Log finished Sat Dec 14 20:37:39 2024
+_wait_for_pmlogger() success at iter 1 ...
+Connected to primary pmlogger at local:
+pmlogger [primary] on host local: is logging metrics from host fv-az2024-672
+PMCD host        fv-az2024-672
+log started      Sat Dec 14 20:37:56.465761911 2024 (times in local time)
+last log entry   Sat Dec 14 20:37:56.921807421 2024
+current time     Sat Dec 14 20:37:57.893362275 2024
+log volume       0
+log size         173792
+Restart pmproxy ...
+exit: 0
