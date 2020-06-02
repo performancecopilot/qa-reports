@@ -1,0 +1,57 @@
+QA output created by 1616
+QA output created by 1611 --valgrind
+
+=== Running pmlogger in remote recording mode
+=== std out ===
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: pmlogger -c TMP.conf -T 5sec http://localhost:44322
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+## Found remote archive files
+REMOTE_ARCHIVE.0
+REMOTE_ARCHIVE.index
+REMOTE_ARCHIVE.meta
+## with the following metrics
+disk.all.read
+disk.all.write
+hinv.ncpu
+hinv.ndisk
+kernel.all.load
+kernel.all.pswitch
+sample.datasize
+pmproxy failed to start on port 44322 after 20 seconds
+likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmproxy logfile (/var/log/pcp/pmproxy/pmproxy.log) ...
+Log for pmproxy on 89f56beed904 started Tue Aug 26 20:51:50 2025
+
+pmproxy: PID = 1723906, PDU version = 2, user = pcp (990)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Tue Aug 26 20:51:50] pmproxy(1723906) Info: Key server slots setup
+[Tue Aug 26 20:51:55] pmproxy(1723906) Info: pmproxy caught SIGTERM
+[Tue Aug 26 20:51:55] pmproxy(1723906) Info: pmproxy Shutdown
+
+Log finished Tue Aug 26 20:51:55 2025
+--- start systemctl status for pmproxy.service ---
+x pmproxy.service - Proxy for Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmproxy.service; disabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             `-10-timeout-abort.conf, 50-keep-warm.conf
+     Active: failed (Result: start-limit-hit) since Tue 2025-08-26 20:51:55 UTC; 19s ago
+   Duration: 5.871s
+ Invocation: 90fd4767844f47638cccadf066f0ef0d
+       Docs: man:pmproxy(1)
+    Process: 1723906 ExecStart=/etc/pcp/pmproxy/rc start-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 1723906 (code=exited, status=0/SUCCESS)
+--- end systemctl status for pmproxy.service ---

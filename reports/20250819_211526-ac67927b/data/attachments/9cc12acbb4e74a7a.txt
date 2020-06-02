@@ -1,0 +1,54 @@
+QA output created by 1602
+== Start a key server cluster
+== Start node 1
+PONG
+OK
+== Start node 2
+PONG
+OK
+== Start node 3
+PONG
+OK
+
+== Create key server cluster
+[OK] All nodes agree about slots configuration.
+[OK] All 16384 slots covered.
+
+== Wait for cluster to get ready
+OK
+
+== Cluster status
+cluster_state:ok
+cluster_known_nodes:3
+cluster_size:3
+
+== start pmproxy
+pmproxy failed to start on port 54324 after 20 seconds
+likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmproxy logfile (/var/tmp/1602-1642229.pmproxy.log) ...
+Log for pmproxy on 18485be4d8d1 started Tue Aug 19 20:51:03 2025
+
+[Tue Aug 19 20:51:03] pmproxy(1642481) Error: pmWebTimerSetMetricRegistry: server instrumentation disabled
+[Tue Aug 19 20:51:03] pmproxy(1642481) Error: pmproxy: open_request_local - uv_pipe_bind /run/pcp/pmproxy.socket failed [EACCES]: permission denied
+[Tue Aug 19 20:51:03] pmproxy(1642481) Error: pmproxy: open_request_port - uv_listen failed port=54324 [EADDRINUSE]: address already in use
+[Tue Aug 19 20:51:03] pmproxy(1642481) Error: pmproxy: open_request_port - uv_listen failed port=54324 [EADDRINUSE]: address already in use
+[Tue Aug 19 20:51:03] pmproxy(1642481) Error: pmproxy: can't open any request ports, exiting
+[Tue Aug 19 20:51:03] pmproxy(1642481) Error: pmproxy not started due to errors!
+
+Log finished Tue Aug 19 20:51:03 2025
+--- start systemctl status for pmproxy.service ---
+* pmproxy.service - Proxy for Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmproxy.service; disabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             `-10-timeout-abort.conf, 50-keep-warm.conf
+     Active: inactive (dead) since Tue 2025-08-19 20:51:00 UTC; 22s ago
+   Duration: 1min 30.004s
+ Invocation: e18e438bf114453bb554460d3eb9f195
+       Docs: man:pmproxy(1)
+    Process: 1626531 ExecStart=/etc/pcp/pmproxy/rc start-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 1626531 (code=exited, status=0/SUCCESS)
+   Mem peak: 84.2M
+        CPU: 2.396s
+--- end systemctl status for pmproxy.service ---
+/usr/libexec/pcp/bin/pmsignal: line 125: kill: (1642481) - No such process

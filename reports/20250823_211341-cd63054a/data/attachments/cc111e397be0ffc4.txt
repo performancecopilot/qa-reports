@@ -1,0 +1,239 @@
+pmproxy_was_running=true
+TIME:20:40:13.052802243
+exit: 0
+TIME:20:40:13.375661802
+Warning: no extra suppressions found for valgrind version 3.22.0
+Warning: using extra  --read-var-info=no --read-inline-info=yes
+=== valgrind report ===
+==1754094== Memcheck, a memory error detector
+==1754094== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==1754094== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==1754094== Command: pmlogger -c /var/tmp/1616-1753908.conf -T 5sec http://localhost:44322
+==1754094== Parent PID: 1754084
+==1754094== 
+==1754094== 
+==1754094== HEAP SUMMARY:
+==1754094==     in use at exit: 24,894 bytes in 222 blocks
+==1754094==   total heap usage: 997 allocs, 775 frees, 268,836 bytes allocated
+==1754094== 
+==1754094== LEAK SUMMARY:
+==1754094==    definitely lost: 0 bytes in 0 blocks
+==1754094==    indirectly lost: 0 bytes in 0 blocks
+==1754094==      possibly lost: 0 bytes in 0 blocks
+==1754094==    still reachable: 24,498 bytes in 218 blocks
+==1754094==         suppressed: 396 bytes in 4 blocks
+==1754094== Reachable blocks (those to which a pointer was found) are not shown.
+==1754094== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1754094== 
+==1754094== For lists of detected and suppressed errors, rerun with: -s
+==1754094== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+TIME:20:40:19.248910532
+TIME:20:40:19.255033400
+Stopping pmproxy ...
+Restarting pmproxy ...
+TIME:20:40:19.292054685
+Job for pmproxy.service failed.
+See "systemctl status pmproxy.service" and "journalctl -xeu pmproxy.service" for details.
+_service pmproxy restart: expecting state "active", found state "failed"
+--- start systemctl status for pmproxy.service ---
+x pmproxy.service - Proxy for Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmproxy.service; enabled; preset: enabled)
+     Active: failed (Result: start-limit-hit) since Sat 2025-08-23 20:40:19 UTC; 44ms ago
+   Duration: 5.904s
+       Docs: man:pmproxy(1)
+    Process: 1754036 ExecStart=/etc/pcp/pmproxy/rc start-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 1754036 (code=exited, status=0/SUCCESS)
+        CPU: 60ms
+--- end systemctl status for pmproxy.service ---
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+connect: Connection refused
+exit: 1
+/var/log/pcp/pmproxy
+/var/log/pcp/pmproxy/982c086e0be9
+/var/log/pcp/pmproxy/982c086e0be9/20250823.20.40.index
+/var/log/pcp/pmproxy/982c086e0be9/20250823.20.40.0
+/var/log/pcp/pmproxy/982c086e0be9/20250823.20.40.meta
+/var/log/pcp/pmproxy/pmproxy.log
+/var/log/pcp/pmproxy/pmproxy.log.prev
+Log for pmproxy on 982c086e0be9 started Sat Aug 23 20:40:13 2025
+
+pmproxy: PID = 1754036, PDU version = 2, user = pcp (995)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    12       unix   /run/pcp/pmproxy.socket
+  ok    13 44322 inet   INADDR_ANY
+  ok    14 44322 ipv6   INADDR_ANY
+  ok    15 44323 inet   INADDR_ANY
+  ok    16 44323 ipv6   INADDR_ANY
+[Sat Aug 23 20:40:13] pmproxy(1754036) Info: Key server slots setup
+[Sat Aug 23 20:40:19] pmproxy(1754036) Info: pmproxy caught SIGTERM
+[Sat Aug 23 20:40:19] pmproxy(1754036) Info: pmproxy Shutdown
+
+Log finished Sat Aug 23 20:40:19 2025
+# configuration options for pmproxy, pmseries and associated APIs
+# uncomment/edit lines as required
+
+#####################################################################
+## general settings for the pmproxy(1) daemon
+#####################################################################
+[pmproxy]
+
+# settings related to TLS certificates and keys
+#certificates = /etc/pki/tls/certs/pcp.crt
+#private_key = /etc/pki/tls/private/pcp.key
+#authority = # PEM format file of acceptable client CAs
+#cipher_list = # (TLSv2) colon-separated cipher list to be used
+#cipher_suites = # (TLSv3) colon-separated cipher suites to be used
+
+# maximum pending socket opens
+#maxpending = 128
+
+# delay in seconds for TCP keep-alive (zero to disable)
+#keepalive = 45
+
+# support PCP protocol proxying
+pcp.enabled = true
+
+# serve the PCP REST APIs (HTTP)
+http.enabled = true
+
+# RESP proxying (key server serialisation protocol)
+resp.enabled = false
+
+# support SSL/TLS protocol wrapping
+secure.enabled = true
+
+#####################################################################
+## settings related to HTTP server configuration
+#####################################################################
+[http]
+
+# buffer size for chunked transfer encoding (bytes, default pagesize)
+#chunksize = 4096
+
+# append allowed HTTP header values to returned by this HTTP server -
+# extending: Accept, Accept-Language, Content-Language, Content-Type.
+Access-Control-Allow-Headers = X-Grafana-Device-ID
+
+# adjust max page age setting in seconds, default is 86400 (24 hours)
+#Access-Control-Max-Age = 86400
+
+#####################################################################
+## settings related to RESP key/value server connections
+#####################################################################
+[keys]
+
+# allow completely disabling any/all connection attempts across
+# all of the pmproxy functionality (when this is set to false).
+enabled = true
+
+# connection spec(s) - could be any individual cluster host and
+# every host in the cluster will be automatically discovered --
+# alternately use comma-separated hostspecs (non-cluster setup).
+servers = localhost:6379
+
+# authentication with username and password is only supported in
+# some versions (with RESP ACL support), for older versions only
+# password authentication is supported (leave the username value
+# empty).  Commented or empty values disable authentication.
+#username =
+#password =
+
+#####################################################################
+## settings related to automatically discovered archives
+#####################################################################
+[discover]
+
+# index local pmlogger(1) archive content via key server for querying
+enabled = true
+
+# comma-separated metrics name (globs) to skip during discovery
+exclude.metrics = proc.*,acct.*
+
+# comma-separated list of instance domains to skip during discovery
+exclude.indoms = 3.9,3.40,79.7
+
+#####################################################################
+## settings for metric and indom help text searching via RediSearch
+#####################################################################
+[pmsearch]
+
+# allow REST API queries and indexing of metric and indom help text
+enabled = true
+
+# default number of query results in a batch (paginated)
+count = 10
+
+#####################################################################
+## settings for fast, scalable time series quering via a key server
+#####################################################################
+[pmseries]
+
+# allow REST API queries of fast, scalable time series
+enabled = true
+
+# number of elements from scan calls (https://valkey.io/commands/scan)
+cursor.count = 256
+
+# seconds to expire in-core series (https://valkey.io/commands/expire)
+# all metric values of a series (a series represents a specific metric
+# and host combination) will be removed if there was no update to this
+# series in the specified amount of time (in seconds)
+stream.expire = 86400
+
+# limit elements in individual series keys (https://valkey.io/commands/xadd)
+# indicates the number of metric values to store per series - i.e. per
+# metric and also per host data volumes are considerations here.
+stream.maxlen = 8640
+
+#####################################################################
+## settings for the remote pmlogger archive "push" functionality
+#####################################################################
+[pmlogger]
+
+# allow REST API webhook receiving remote pmlogger(1) archive content
+enabled = true
+
+# bypass persistent storage of pmlogger archives, use key server only
+#cached = true
+
+#####################################################################
+TIME:20:40:38.615134306

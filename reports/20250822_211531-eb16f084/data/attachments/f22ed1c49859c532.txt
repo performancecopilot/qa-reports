@@ -1,0 +1,55 @@
+QA output created by 1616
+QA output created by 1611 --valgrind
+
+=== Running pmlogger in remote recording mode
+=== std out ===
+=== std err ===
+=== filtered valgrind report ===
+Memcheck, a memory error detector
+Command: pmlogger -c TMP.conf -T 5sec http://localhost:44322
+LEAK SUMMARY:
+definitely lost: 0 bytes in 0 blocks
+indirectly lost: 0 bytes in 0 blocks
+ERROR SUMMARY: 0 errors from 0 contexts ...
+## Found remote archive files
+REMOTE_ARCHIVE.0
+REMOTE_ARCHIVE.index
+REMOTE_ARCHIVE.meta
+## with the following metrics
+disk.all.read
+disk.all.write
+hinv.ncpu
+hinv.ndisk
+kernel.all.load
+kernel.all.pswitch
+sample.datasize
+pmproxy failed to start on port 44322 after 20 seconds
+likely looking processes ...
+UID          PID    PPID  C STIME TTY          TIME CMD
+pmproxy logfile (/var/log/pcp/pmproxy/pmproxy.log) ...
+Log for pmproxy on 4a0ffa31cc17 started Fri Aug 22 16:48:26 2025
+
+pmproxy: PID = 1705346, PDU version = 2, user = pcp (995)
+pmproxy request port(s):
+  sts fd   port  family address
+  === ==== ===== ====== =======
+  ok    11       unix   /run/pcp/pmproxy.socket
+  ok    12 44322 inet   INADDR_ANY
+  ok    13 44322 ipv6   INADDR_ANY
+  ok    14 44323 inet   INADDR_ANY
+  ok    15 44323 ipv6   INADDR_ANY
+[Fri Aug 22 16:48:26] pmproxy(1705346) Info: Key server slots setup
+[Fri Aug 22 16:48:31] pmproxy(1705346) Info: pmproxy caught SIGTERM
+[Fri Aug 22 16:48:31] pmproxy(1705346) Info: pmproxy Shutdown
+
+Log finished Fri Aug 22 16:48:31 2025
+--- start systemctl status for pmproxy.service ---
+x pmproxy.service - Proxy for Performance Metrics Collector Daemon
+     Loaded: loaded (/usr/lib/systemd/system/pmproxy.service; disabled; preset: disabled)
+     Active: failed (Result: start-limit-hit) since Fri 2025-08-22 16:48:31 EDT; 19s ago
+   Duration: 5.869s
+ Invocation: b999dc9359df4d55baa8bf948a6f01fa
+       Docs: man:pmproxy(1)
+    Process: 1705346 ExecStart=/etc/pcp/pmproxy/rc start-systemd (code=exited, status=0/SUCCESS)
+   Main PID: 1705346 (code=exited, status=0/SUCCESS)
+--- end systemctl status for pmproxy.service ---
